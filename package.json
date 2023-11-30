@@ -1,0 +1,29 @@
+{
+    "name": "bacon-app",
+    "version": "1.0.0",
+    "main": "node_modules/expo/AppEntry.js",
+    "scripts": {
+        "start": "expo start",
+        "android": "expo start --android",
+        "ios": "expo start --ios",
+        "web": "expo start --web",
+        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
+        "lint:fix": "eslint --fix . --ext ts,tsx --report-unused-disable-directives",
+        "start:clearcache": "npx expo start -c"
+    },
+    "dependencies": {
+        "expo": "~49.0.15",
+        "expo-status-bar": "~1.6.0",
+        "react": "18.2.0",
+        "react-native": "0.72.6"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.20.0",
+        "@types/react": "~18.2.14",
+        "@typescript-eslint/eslint-plugin": "^6.13.1",
+        "eslint": "^8.54.0",
+        "eslint-plugin-simple-import-sort": "^10.0.0",
+        "typescript": "^5.1.3"
+    },
+    "private": true
+}

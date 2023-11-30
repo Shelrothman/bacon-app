@@ -1,9 +1,26 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
+import { BaconFeatureList } from '../../types'
 
-export function ActorsMovies() {
+type ActorsMoviesProps = BaconFeatureList & {
+    actorName: string;
+}
+
+export function ActorsMovies(props: ActorsMoviesProps) {
+
+    // console.log('in actorsMovies comp', props)
+
     return (
-        <View>
-            <Text>ActorsMovies</Text>
+        <View style={{ backgroundColor: 'orange' }}>
+            <Text>Movies for {props.actorName}</Text>
+            <ScrollView>
+                {props.features.map((feature) => {
+                    return (
+                        <Text key={feature.id}>{feature.title} {`\n`} {`\t`}
+                            character: {feature.characterName || 'N/A'}
+                        </Text>
+                    )
+                })}
+            </ScrollView>
         </View>
     )
 }

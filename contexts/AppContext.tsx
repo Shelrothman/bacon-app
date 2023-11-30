@@ -22,7 +22,9 @@ type ContextProps = {
     /** current title requested by user */
     currentMovieTitle: string;
     setCurrentMovieTitle: (movieTitle: string) => void;
-
+    /** current actor selected by user onPress */
+    currentActorName: string;
+    setCurrentActorName: (actorName: string) => void;
 };
 
 const AppContext = createContext<Partial<ContextProps>>({});
@@ -63,6 +65,7 @@ const AppProvider = (props: Props) => {
     const [ currentCardCast, setCurrentCardCast ] = useState<BaconActorList | null>(null);
     const [ currentCardMovies, setCurrentCardMovies ] = useState<BaconFeatureList | null>(null);
     const [ currentMovieTitle, setCurrentMovieTitle ] = useState<string>('');
+    const [ currentActorName, setCurrentActorName ] = useState<string>('');
 
     async function getCast(movieName: string): Promise<BaconActorList | void> {
         try {
@@ -113,6 +116,8 @@ const AppProvider = (props: Props) => {
             setCurrentCardMovies,
             currentMovieTitle,
             setCurrentMovieTitle,
+            currentActorName,
+            setCurrentActorName,
         }}>
             {props.children}
         </AppContext.Provider>

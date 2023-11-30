@@ -1,4 +1,4 @@
-import { /*View*/ Button, StyleSheet, Text, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { /*View*/ Button, StyleSheet, Text, TextInput, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { useState } from 'react';
 
 import { useAppContext } from '../contexts/AppContext';
@@ -17,14 +17,20 @@ export function MainSquare() {
 
     return (
         <KeyboardAvoidingView style={styles.square} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            {/* <View style={styles.square} /> */}
-            {squareState === 'movieInput' ? <MovieInput />
-                : squareState === 'movieCast' ? <MovieCast
-                    id={currentCardCast?.id || 0}
-                    actors={currentCardCast?.actors || []}
-                    title={currentMovieTitle || ''}
+            <View style={styles.square}>
+                {squareState === 'actorsMovies' ? <ActorsMovies
+                    id={currentCardMovies?.id || 0}
+                    features={currentCardMovies?.features || []}
+                    actorName={currentCardCast?.actors[ 0 ].name || ''}
                 />
-                    : <ActorsMovies />}
+                    : squareState === 'movieCast' ? <MovieCast
+                        id={currentCardCast?.id || 0}
+                        actors={currentCardCast?.actors || []}
+                        title={currentMovieTitle || ''}
+                    />
+                        : <MovieInput />
+                }
+            </View>
         </KeyboardAvoidingView>
     );
 }

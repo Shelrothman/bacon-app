@@ -1,11 +1,11 @@
-import { /*View*/ Button, StyleSheet, Text, TextInput, KeyboardAvoidingView, Platform, View } from 'react-native';
-import { useState } from 'react';
-
+import { StyleSheet, KeyboardAvoidingView, Platform, View } from 'react-native';
+// import { useState } from 'react';
 import { useAppContext } from '../contexts/AppContext';
 import { MovieInput } from './squares/MovieInput';
 import { MovieCast } from './squares/MovieCast';
 import { ActorsMovies } from './squares/ActorsMovies';
 
+import LoadingOverlay from './utils/LoadingOverlay';
 
 
 /**
@@ -13,23 +13,27 @@ import { ActorsMovies } from './squares/ActorsMovies';
  * the square that will hold one of the three states.
  */
 export function MainSquare() {
+
     const { squareState, isLoading, currentCardCast, currentCardMovies, currentMovieTitle } = useAppContext();
+
+
+    // TODO: a reset button at bottom in footer
+
 
     return (
         <KeyboardAvoidingView style={styles.square} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <View style={styles.square}>
-                {squareState === 'actorsMovies' ? <ActorsMovies
-                    id={currentCardMovies?.id || 0}
-                    features={currentCardMovies?.features || []}
-                    actorName={currentCardCast?.actors[ 0 ].name || ''}
-                />
-                    : squareState === 'movieCast' ? <MovieCast
+                {isLoading ? <LoadingOverlay /> : (
+                    squareState === 'actorsMovies' ? <ActorsMovies
+                        id={currentCardMovies?.id || 0}
+                        features={currentCardMovies?.features || []}
+                        actorName={currentCardCast?.actors[ 0 ].name || ''}
+                    /> : squareState === 'movieCast' ? <MovieCast
                         id={currentCardCast?.id || 0}
                         actors={currentCardCast?.actors || []}
                         title={currentMovieTitle || ''}
-                    />
-                        : <MovieInput />
-                }
+                    /> : <MovieInput />
+                )}
             </View>
         </KeyboardAvoidingView>
     );

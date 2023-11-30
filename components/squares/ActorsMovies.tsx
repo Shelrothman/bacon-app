@@ -30,7 +30,9 @@ export function ActorsMovies(props: ActorsMoviesProps) {
     }
 
     return (
-        <View style={{ backgroundColor: 'orange' }}>
+        <View 
+        // style={{ backgroundColor: 'orange' }}
+        >
             <Text>Movies for {props.actorName}</Text>
             <ScrollView>
                 {/* TODO: a node component for each movie node */}

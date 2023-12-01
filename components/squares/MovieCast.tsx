@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Button, Pressable } from 'react-native'
+import { View, Text, ScrollView, Pressable } from 'react-native'
 import { BaconActorList } from '../../types'
 import { useAppContext } from '../../contexts/AppContext'
 
@@ -6,17 +6,12 @@ type MovieCastProps = BaconActorList & {
     title: string;
 }
 
+// TODO: option at bottom or somewhere for user to say this is not the movie they meant. ???:
+
 export function MovieCast(props: MovieCastProps) {
-    const {
-        getMovies,
-        setCurrentCardMovies,
-        setSquareState,
-        setIsLoading,
-        setCurrentActorName
-    } = useAppContext();
+    const { getMovies, setCurrentCardMovies, setSquareState, setIsLoading, setCurrentActorName } = useAppContext();
 
     const handleActorNodePress = (id: number, actorName: string) => {
-        // console.log(event.target.id)
         setIsLoading && setIsLoading(true);
         getMovies && getMovies(id).then((result) => {
             if (result) {
@@ -30,7 +25,7 @@ export function MovieCast(props: MovieCastProps) {
     }
 
     return (
-        <View style={{ backgroundColor: 'pink' }}>
+        <View>
             <Text>Cast of {props.title} </Text>
             <ScrollView>
                 {/* TODO: a node component for each actor node */}

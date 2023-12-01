@@ -1,31 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, ScrollView, View, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, ScrollView, View, SafeAreaView, KeyboardAvoidingView, Platform, Button } from 'react-native';
 
 import { MainSquare } from './components/MainSquare';
-import { AppProvider, useAppContext } from './contexts/AppContext';
-import LoadingOverlay from './components/utils/LoadingOverlay';
+import { AppProvider } from './contexts/AppContext';
+import Footer from './components/Footer';
 
 export default function App() {
-
-    const { isLoading } = useAppContext();
 
     return (
         <AppProvider>
             <SafeAreaView style={styles.container}>
                 {/* light so it shows on dark. */}
                 <StatusBar style="light" />
-                {/* {isLoading && <LoadingOverlay />} */}
-                <KeyboardAvoidingView
-                    behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true}
-                    // style={isLoading ? styles.hidden : null}
-                >
-                    {/* info: dismiss it with a tap or a drag anywhere outside the input */}
+                <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
+                    {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
                     <ScrollView keyboardShouldPersistTaps='never' keyboardDismissMode='on-drag' >
                         <View style={styles.squareContainer}>
                             <MainSquare />
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>
+                <View style={styles.footerContainer}>
+                    <Footer />
+                </View>
             </SafeAreaView>
         </AppProvider>
     );
@@ -43,10 +40,11 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 50,
     },
-    hidden: {
-        display: 'none',
-    }
-    // TODO: the footer container holding reset and settings.
-    // footerContainer: {},
-
+    footerContainer: {
+        flexDirection: 'row',
+        // alignItems: 'stretch',
+        justifyContent: 'space-between',
+        position: 'absolute',
+        bottom: 50,
+    },
 });

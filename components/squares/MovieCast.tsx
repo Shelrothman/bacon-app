@@ -1,4 +1,4 @@
-import { Pressable,ScrollView, Text, View } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 
 import { useAppContext } from '../../contexts/AppContext'
 import { BaconActorList } from '../../types'

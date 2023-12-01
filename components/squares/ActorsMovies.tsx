@@ -1,7 +1,8 @@
-import { Pressable,ScrollView, Text, View } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 
 import { useAppContext } from '../../contexts/AppContext'
 import { BaconFeatureList } from '../../types'
+import { MovieButtonNode } from '../nodes/MovieButtonNode'
 
 type ActorsMoviesProps = BaconFeatureList & {
     actorName: string;
@@ -9,13 +10,7 @@ type ActorsMoviesProps = BaconFeatureList & {
 
 export function ActorsMovies(props: ActorsMoviesProps) {
 
-    const {
-        getCast,
-        setCurrentCardCast,
-        setSquareState,
-        setIsLoading,
-        setCurrentMovieTitle
-    } = useAppContext();
+    const { getCast, setCurrentCardCast, setSquareState, setIsLoading, setCurrentMovieTitle } = useAppContext();
 
     const handleFeatureActorNodePress = (id: number, movieTitle: string) => {
         setIsLoading && setIsLoading(true);
@@ -33,19 +28,16 @@ export function ActorsMovies(props: ActorsMoviesProps) {
     return (
         <View >
             <Text>Movies for {props.actorName}</Text>
-            <ScrollView>
-                {/* TODO: a node component for each movie node */}
+            <ScrollView showsVerticalScrollIndicator={true}>
                 {props.features.map((feature) => {
                     return (
-                        <Pressable
-                            onPress={() => handleFeatureActorNodePress(feature.id, feature.title)}
-                            key={feature.id} id={feature.title} style={{ borderColor: 'blue', borderWidth: 1 }}
-                        >
-
-                            <Text key={feature.id}>{feature.title} {`\n`} {`\t`}
-                                character: {feature.characterName || 'N/A'}
-                            </Text>
-                        </Pressable>
+                        <MovieButtonNode
+                            key={feature.id}
+                            id={feature.id}
+                            title={feature.title}
+                            characterName={feature.characterName}
+                            handleMovieNodePress={handleFeatureActorNodePress}
+                        />
                     )
                 })}
             </ScrollView>

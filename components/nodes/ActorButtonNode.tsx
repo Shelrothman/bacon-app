@@ -18,8 +18,7 @@ export function ActorButtonNode(props: ActorButtonNodeProps) {
             onPress={() => handleActorNodePress(id, name)}
             id={name}
             style={({ pressed }) => [
-                // { backgroundColor: pressed ? 'blue' : '#8a8686' },
-                // { boxShadow: pressed ? '0 0 0 2px blue' : null },
+                // TODO: maybe more to make it look like an its going in...
                 { opacity: pressed ? 0.5 : 1 },
                 styles.pressable
             ]}

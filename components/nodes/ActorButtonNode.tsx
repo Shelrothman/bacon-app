@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Text } from 'react-native'
 
 import { BaconActor } from '../../types'
+import { NodeWrapper } from './NodeWrapper';
 
 type ActorButtonNodeProps = BaconActor & {
     handleActorNodePress: (id: number, actorName: string) => void;
@@ -14,34 +15,17 @@ export function ActorButtonNode(props: ActorButtonNodeProps) {
 
 
     return (
-        <Pressable
-            onPress={() => handleActorNodePress(id, name)}
-            id={name}
-            style={({ pressed }) => [
-                // TODO: maybe more to make it look like an its going in...
-                { opacity: pressed ? 0.5 : 1 },
-                styles.pressable
-            ]}
-        >
-            <Text>
-                <Ionicons name="person-circle-outline" size={24} color="black" />
-                {name}
-                {`\n`}
-                character: {characterName}
-            </Text>
-        </Pressable>
+        <NodeWrapper
+            handleOnPress={handleActorNodePress}
+            id={id}
+            nameOrTitle={name}
+            innerText={
+                <Text>
+                    <Ionicons name="person-circle-outline" size={24} color="black" />
+                    {name} {`\n`}
+                    <Text style={{ textAlign: 'right' }}>character: {characterName || 'unknown'}</Text>
+                </Text>
+            }
+        />
     )
 }
-
-
-const styles = StyleSheet.create({
-    pressable: {
-        flexDirection: 'row',
-        marginBottom: 10,
-        borderWidth: 1,
-        borderRadius: 18,
-        backgroundColor: '#bea841',
-        marginHorizontal: 10,
-        padding: 5,
-    },
-});

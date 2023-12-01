@@ -11,7 +11,8 @@ export default function Footer() {
     return (
         <>
             <Button title='reset' onPress={() => setSquareState && setSquareState('movieInput')} />
-            <Button title='Hi' onPress={() => console.log('hi')} />
+            <Button title='Info' onPress={() => console.log('hi')} />
+            <Button title='Back' onPress={() => console.log('go back to previous square state')} />
         </>
     )
 }

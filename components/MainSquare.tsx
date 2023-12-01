@@ -14,11 +14,7 @@ import LoadingOverlay from './utils/LoadingOverlay';
  */
 export function MainSquare() {
 
-    const { squareState, isLoading, currentCardCast, currentCardMovies, currentMovieTitle } = useAppContext();
-
-
-    // TODO: a reset button at bottom in footer
-
+    const { squareState, isLoading, currentCardCast, currentCardMovies, currentMovieTitle, currentActorName } = useAppContext();
 
     return (
         <KeyboardAvoidingView style={styles.square} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -27,7 +23,7 @@ export function MainSquare() {
                     squareState === 'actorsMovies' ? <ActorsMovies
                         id={currentCardMovies?.id || 0}
                         features={currentCardMovies?.features || []}
-                        actorName={currentCardCast?.actors[ 0 ].name || ''}
+                        actorName={currentActorName || ''}
                     /> : squareState === 'movieCast' ? <MovieCast
                         id={currentCardCast?.id || 0}
                         actors={currentCardCast?.actors || []}

@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, Pressable } from 'react-native'
 import { BaconActorList } from '../../types'
 import { useAppContext } from '../../contexts/AppContext'
+import { ActorButtonNode } from '../nodes/ActorButtonNode'
 
 type MovieCastProps = BaconActorList & {
     title: string;
@@ -13,6 +14,7 @@ export function MovieCast(props: MovieCastProps) {
 
     const handleActorNodePress = (id: number, actorName: string) => {
         setIsLoading && setIsLoading(true);
+        console.log('actorPressed:', actorName)
         getMovies && getMovies(id).then((result) => {
             if (result) {
                 setCurrentCardMovies && setCurrentCardMovies(result);
@@ -28,17 +30,15 @@ export function MovieCast(props: MovieCastProps) {
         <View>
             <Text>Cast of {props.title} </Text>
             <ScrollView>
-                {/* TODO: a node component for each actor node */}
                 {props.actors.map((actor) => {
                     return (
-                        <Pressable
-                            onPress={() => handleActorNodePress(actor.id, actor.name)}
-                            key={actor.id} id={actor.name} style={{ borderColor: 'blue', borderWidth: 1 }}
-                        >
-                            <Text>{actor.name} {`\n`} {`\t`}
-                                character: {actor.characterName}
-                            </Text>
-                        </Pressable>
+                        <ActorButtonNode
+                            key={actor.id}
+                            id={actor.id}
+                            name={actor.name}
+                            characterName={actor.characterName}
+                            handleActorNodePress={handleActorNodePress}
+                        />
                     )
                 })}
             </ScrollView>

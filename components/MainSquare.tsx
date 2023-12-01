@@ -1,10 +1,10 @@
-import { StyleSheet, KeyboardAvoidingView, Platform, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
+
 // import { useState } from 'react';
 import { useAppContext } from '../contexts/AppContext';
-import { MovieInput } from './squares/MovieInput';
-import { MovieCast } from './squares/MovieCast';
 import { ActorsMovies } from './squares/ActorsMovies';
-
+import { MovieCast } from './squares/MovieCast';
+import { MovieInput } from './squares/MovieInput';
 import LoadingOverlay from './utils/LoadingOverlay';
 
 
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         width: 320,
         height: 440,
         borderRadius: 18,
-        backgroundColor: 'green',
+        backgroundColor: '#4157be',
         alignItems: 'center',
         justifyContent: 'center', // vertically
     },

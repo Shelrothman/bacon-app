@@ -1,6 +1,10 @@
-import { useContext, createContext, useState, useEffect } from 'react';
-import { BaconMovie, BaconFeature, BaconActor, BaconFeatureList, BaconActorList } from '../types';
+import { createContext, useContext, useState } from 'react';
+
+import * as mockedCast from '../api/mocked/mockedCast.json';
+import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
 import { BaconServiceFactory } from '../api/services/ServiceFactory';
+import { BaconActorList, BaconFeature, BaconFeatureList, BaconMovie } from '../types';
+
 
 type ContextProps = {
     /** can be one of 3: movieInput, movieCast, actorsMovies */
@@ -69,6 +73,16 @@ const AppProvider = (props: Props) => {
 
     async function getCast(movieName: string): Promise<BaconActorList | void> {
         try {
+            // PICKUP: delete this before shipped.. 
+            // just need it so don't use too much API calls while developing.
+            if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
+                console.log('MOCK MODE ON, returning fake data...');
+                console.log('---------------------------------');
+                return {
+                    id: 12345,
+                    actors: mockedCast.cast,
+                }
+            }
             const feature_object = await getMovieID(movieName);
             const featureService = BaconServiceFactory.createFeatureService();
             if (!feature_object) return; // the alert is handled in getMovieID
@@ -87,6 +101,16 @@ const AppProvider = (props: Props) => {
 
     async function getMovies(actorID: number): Promise<BaconFeatureList | void> {
         try {
+            // PICKUP: delete this before shipped.. 
+            // just need it so don't use too much API calls while developing.
+            if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
+                console.log('MOCK MODE ON, returning fake data...');
+                console.log('---------------------------------');
+                return {
+                    id: 12345,
+                    features: mockedFeatures.features,
+                }
+            }
             const actorService = BaconServiceFactory.createActorService({ actor_id: actorID });
             const featureListResult = await actorService.getFeaturesForActor();
             if (!featureListResult) {

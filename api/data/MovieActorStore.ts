@@ -1,6 +1,6 @@
-import { config } from '../config';
 import { BaconActor, BaconFeature } from '../../types';
 import { ActorTMDB, MovieActorTMDB, MovieTMDB } from '../../types/tmdb';
+import { config } from '../config';
 import IDataInterface from './DataInterface';
 
 // FUTURE: an abstracted repository layer if the complexity grows

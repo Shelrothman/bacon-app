@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, ScrollView, View, SafeAreaView, KeyboardAvoidingView, Platform, Button } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 
+import Footer from './components/Footer';
 import { MainSquare } from './components/MainSquare';
 import { AppProvider } from './contexts/AppContext';
-import Footer from './components/Footer';
 
 export default function App() {
 
@@ -14,7 +14,9 @@ export default function App() {
                 <StatusBar style="light" />
                 <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
                     {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
-                    <ScrollView keyboardShouldPersistTaps='never' keyboardDismissMode='on-drag' >
+                    <ScrollView keyboardShouldPersistTaps='never' keyboardDismissMode='on-drag' 
+                        showsVerticalScrollIndicator={true}
+                    >
                         <View style={styles.squareContainer}>
                             <MainSquare />
                         </View>

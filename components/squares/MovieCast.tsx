@@ -1,6 +1,7 @@
-import { View, Text, ScrollView, Pressable } from 'react-native'
-import { BaconActorList } from '../../types'
+import { Pressable,ScrollView, Text, View } from 'react-native'
+
 import { useAppContext } from '../../contexts/AppContext'
+import { BaconActorList } from '../../types'
 import { ActorButtonNode } from '../nodes/ActorButtonNode'
 
 type MovieCastProps = BaconActorList & {

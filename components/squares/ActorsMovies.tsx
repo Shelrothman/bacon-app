@@ -1,6 +1,7 @@
-import { View, Text, ScrollView, Pressable } from 'react-native'
-import { BaconFeatureList } from '../../types'
+import { Pressable,ScrollView, Text, View } from 'react-native'
+
 import { useAppContext } from '../../contexts/AppContext'
+import { BaconFeatureList } from '../../types'
 
 type ActorsMoviesProps = BaconFeatureList & {
     actorName: string;
@@ -30,9 +31,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
     }
 
     return (
-        <View 
-        // style={{ backgroundColor: 'orange' }}
-        >
+        <View >
             <Text>Movies for {props.actorName}</Text>
             <ScrollView>
                 {/* TODO: a node component for each movie node */}

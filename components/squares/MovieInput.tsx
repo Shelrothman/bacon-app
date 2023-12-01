@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native'
+import { Button,StyleSheet, Text, TextInput } from 'react-native'
 
 import { useAppContext } from '../../contexts/AppContext';
+
+// TODO: more user friendly for the submit, like maybe when keyboard is dismissed, or when the user presses the 'done' button on the keyboard...
 
 export function MovieInput() {
 

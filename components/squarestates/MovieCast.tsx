@@ -8,7 +8,7 @@ type MovieCastProps = BaconActorList & {
     title: string;
 }
 
-// TODO: option at bottom or somewhere for user to say this is not the movie they meant. ???:
+// TODO: option at bottom or somewhere for user to say this is not the movie they meant. ???: maybe future thing if requested by my testers.. aka my mom.. lol
 
 export function MovieCast(props: MovieCastProps) {
     const { getMovies, setCurrentCardMovies, setSquareState, setIsLoading, setCurrentActorName } = useAppContext();
@@ -30,7 +30,7 @@ export function MovieCast(props: MovieCastProps) {
     return (
         <View>
             <Text>Cast of {props.title} </Text>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={true}>
                 {props.actors.map((actor) => {
                     return (
                         <ActorButtonNode

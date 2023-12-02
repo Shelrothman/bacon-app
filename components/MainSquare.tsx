@@ -1,12 +1,12 @@
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, View } from 'react-native';
 
 // import { useState } from 'react';
 import { useAppContext } from '../contexts/AppContext';
-import { ActorsMovies } from './squares/ActorsMovies';
-import { MovieCast } from './squares/MovieCast';
-import { MovieInput } from './squares/MovieInput';
+import { ActorsMovies } from './squarestates/ActorsMovies';
+import { MovieCast } from './squarestates/MovieCast';
+import { MovieInput } from './squarestates/MovieInput';
 import LoadingOverlay from './utils/LoadingOverlay';
-
 
 /**
  * @component - MainSquare
@@ -17,8 +17,11 @@ export function MainSquare() {
     const { squareState, isLoading, currentCardCast, currentCardMovies, currentMovieTitle, currentActorName } = useAppContext();
 
     return (
-        <KeyboardAvoidingView style={styles.square} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            <View style={styles.square}>
+        <View style={styles.shadowProp}>
+            <LinearGradient
+                colors={[ '#6779cb', '#4157be', '#4158BE' ]}
+                style={styles.square}
+            >
                 {isLoading ? <LoadingOverlay /> : (
                     squareState === 'actorsMovies' ? <ActorsMovies
                         id={currentCardMovies?.id || 0}
@@ -30,8 +33,8 @@ export function MainSquare() {
                         title={currentMovieTitle || ''}
                     /> : <MovieInput />
                 )}
-            </View>
-        </KeyboardAvoidingView>
+            </LinearGradient>
+        </View>
     );
 }
 
@@ -41,9 +44,15 @@ const styles = StyleSheet.create({
         width: 320,
         height: 440,
         borderRadius: 18,
-        backgroundColor: '#4157be',
         alignItems: 'center',
-        justifyContent: 'center', // vertically
+        justifyContent: 'center',
+        padding: 10,
+    },
+    shadowProp: {
+        shadowColor: '#171717',
+        shadowOffset: { width: 2, height: 7 },
+        shadowOpacity: 0.7,
+        shadowRadius: 3,
     },
     input: {
         backgroundColor: '#25292e',

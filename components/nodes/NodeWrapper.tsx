@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { Pressable, StyleSheet } from 'react-native';
 
 
@@ -7,6 +8,7 @@ type NodeWrapperProps = {
     nameOrTitle: string;
     id: number;
     innerText: React.ReactNode;
+    // backgroundColors: string[];
 }
 
 
@@ -20,16 +22,25 @@ export function NodeWrapper(props: NodeWrapperProps) {
 
 
     return (
+
         <Pressable
             onPress={() => handleOnPress(id, nameOrTitle)}
             id={nameOrTitle}
             style={({ pressed }) => [
                 // TODO: maybe more to make it look like an its going in...
-                { opacity: pressed ? 0.5 : 1 },
-                styles.pressable
+                { opacity: pressed ? 0.5 : 1 }, // , backgroundColor: backgroundColors 
+                // styles.pressable
             ]}
         >
-            {innerText}
+            <LinearGradient
+                // style={{ borderRadius: 18, padding: 5 }
+                style={styles.pressable}
+                colors={[ '#e4d9ae', '#CBB967', '#BEA841', '#BA8E45' ]}
+            // start={{ x: 0.1, y: 0.2 }}
+            // end={{ x: 1, y: 0.2 }}
+            >
+                {innerText}
+            </LinearGradient>
         </Pressable>
     )
 }
@@ -40,7 +51,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderWidth: 1,
         borderRadius: 18,
-        backgroundColor: '#41be69',
+        // #BEA841
+        // backgroundColor: '#41be69',
         marginHorizontal: 10,
         padding: 5,
     },

@@ -1,4 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
+// import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 // import { useState } from 'react';
@@ -41,9 +42,11 @@ export function MainSquare() {
 
 const styles = StyleSheet.create({
     square: {
-        width: 320,
-        height: 440,
+        // width: "95%",
+        width: 350,
+        height: 540,
         borderRadius: 18,
+        alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,

@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
 
 type NodeWrapperProps = {
@@ -8,7 +8,9 @@ type NodeWrapperProps = {
     nameOrTitle: string;
     id: number;
     innerText: React.ReactNode;
-    // backgroundColors: string[];
+    /** 4 colors for the gradient */
+    backgrounds: string[];
+    characterName?: string;
 }
 
 
@@ -18,8 +20,9 @@ type NodeWrapperProps = {
  */
 
 export function NodeWrapper(props: NodeWrapperProps) {
-    const { handleOnPress, nameOrTitle, id, innerText } = props;
+    const { handleOnPress, nameOrTitle, id, innerText, backgrounds, characterName } = props;
 
+    // TODO: maybe more to make it look like an its going in... like pressing the things in duolingo
 
     return (
 
@@ -27,19 +30,17 @@ export function NodeWrapper(props: NodeWrapperProps) {
             onPress={() => handleOnPress(id, nameOrTitle)}
             id={nameOrTitle}
             style={({ pressed }) => [
-                // TODO: maybe more to make it look like an its going in...
-                { opacity: pressed ? 0.5 : 1 }, // , backgroundColor: backgroundColors 
-                // styles.pressable
+                { opacity: pressed ? 0.5 : 1, transform: [ { scale: pressed ? 0.95 : 1 } ] }
             ]}
+            onPressIn={() => console.log('pressed in')}
         >
-            <LinearGradient
-                // style={{ borderRadius: 18, padding: 5 }
-                style={styles.pressable}
-                colors={[ '#e4d9ae', '#CBB967', '#BEA841', '#BA8E45' ]}
-            // start={{ x: 0.1, y: 0.2 }}
-            // end={{ x: 1, y: 0.2 }}
-            >
-                {innerText}
+            <LinearGradient style={styles.pressable} colors={backgrounds} >
+                <Text>
+                    {innerText}
+                    {/* <MaterialCommunityIcons name="movie-open" size={24} color="black" /> */}
+                    <Text style={{ fontFamily: 'Bacon-Bold', fontSize: 20 }}> {nameOrTitle}</Text> {`\n`}
+                    <Text style={{ textAlign: 'right', fontFamily: 'Bacon-Light', fontSize: 20 }}>{characterName || 'unknown'}</Text>
+                </Text>
             </LinearGradient>
         </Pressable>
     )
@@ -51,8 +52,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderWidth: 1,
         borderRadius: 18,
-        // #BEA841
-        // backgroundColor: '#41be69',
         marginHorizontal: 10,
         padding: 5,
     },

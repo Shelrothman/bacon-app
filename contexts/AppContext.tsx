@@ -78,10 +78,13 @@ const AppProvider = (props: Props) => {
             if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
                 console.log('MOCK MODE ON, returning fake data...');
                 console.log('---------------------------------');
+                // setTimeout(() => {
                 return {
                     id: 12345,
                     actors: mockedCast.cast,
                 }
+                // }, 5000);
+
             }
             const feature_object = await getMovieID(movieName);
             const featureService = BaconServiceFactory.createFeatureService();
@@ -106,10 +109,12 @@ const AppProvider = (props: Props) => {
             if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
                 console.log('MOCK MODE ON, returning fake data...');
                 console.log('---------------------------------');
+                // setTimeout(() => {
                 return {
                     id: 12345,
                     features: mockedFeatures.features,
                 }
+                // }, 5000);
             }
             const actorService = BaconServiceFactory.createActorService({ actor_id: actorID });
             const featureListResult = await actorService.getFeaturesForActor();

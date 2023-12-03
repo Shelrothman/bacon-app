@@ -15,7 +15,11 @@ export default function App() {
 
 
     const [ fontsLoaded ] = useFonts({
-        'Canvas-Sans': require('./assets/fonts/PlaypenSans-Regular.ttf'),
+        'Bacon-Play': require('./assets/fonts/PlaypenSans-Regular.ttf'),
+        'Bacon-Reg': require('./assets/fonts/BigShouldersDisplay-Regular.ttf'),
+        'Bacon-Bold': require('./assets/fonts/BigShouldersDisplay-Bold.ttf'),
+        'Bacon-Boldest': require('./assets/fonts/BigShouldersDisplay-Black.ttf'),
+        'Bacon-Light': require('./assets/fonts/BigShouldersDisplay-Light.ttf'),
     });
 
     const onLayoutRootView = useCallback(async () => {
@@ -39,6 +43,8 @@ export default function App() {
                         keyboardShouldPersistTaps='never'
                         keyboardDismissMode='on-drag'
                         showsVerticalScrollIndicator={false}
+                        //???: not sure about this..
+                        // contentContainerStyle={{ maxHeight: '100%' }}
                     >
                         <View style={styles.squareContainer}>
                             <MainSquare />
@@ -60,6 +66,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative',
         justifyContent: 'center',
+        // paddingTop: 40,
     },
     squareContainer: {
         flex: 1,

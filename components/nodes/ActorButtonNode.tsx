@@ -1,8 +1,14 @@
-import { Ionicons } from '@expo/vector-icons';
-// import { LinearGradient } from 'expo-linear-gradient';
-// import { LinearGradient } from 'expo-linear-gradient';
-import { Text } from 'react-native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
+// import { FontAwesome5 } from '@expo/vector-icons';
+// <FontAwesome5 name="theater-masks" size={24} color="black" />
+// import { MaterialIcons } from '@expo/vector-icons';
+//  import { FontAwesome } from '@expo/vector-icons'; 
+//<FontAwesome name="star-o" size={24} color="black" />
+//  <MaterialIcons name="theater-comedy" size={24} color="black" />
+// import { LinearGradient } from 'expo-linear-gradient';
+// import { LinearGradient } from 'expo-linear-gradient';
+// import { Text } from 'react-native'
 import { BaconActor } from '../../types'
 import { NodeWrapper } from './NodeWrapper';
 
@@ -22,13 +28,10 @@ export function ActorButtonNode(props: ActorButtonNodeProps) {
             handleOnPress={handleActorNodePress}
             id={id}
             nameOrTitle={name}
-            innerText={
-                <Text style={{ fontFamily: 'Canvas-Sans' }}>
-                    <Ionicons name="person-circle-outline" size={24} color="black" />
-                    {name} {`\n`}
-                    <Text style={{ textAlign: 'right' }}>character: {characterName || 'unknown'}</Text>
-                </Text>
-            }
+            // backgrounds={[ '#e4d9ae', '#CBB967', '#BEA841', '#BA8E45' ]}
+            backgrounds={[ '#bee9cc', '#67CB87', '#41be69', '#4EA83A' ]}
+            characterName={characterName}
+            innerText={<MaterialCommunityIcons name="movie-star-outline" size={24} color="black" />}
         />
     )
 }

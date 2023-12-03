@@ -7,7 +7,7 @@ type NodeWrapperProps = {
     handleOnPress: (id: number, name: string) => void;
     nameOrTitle: string;
     id: number;
-    innerText: React.ReactNode;
+    innerIcon: React.ReactNode;
     /** 4 colors for the gradient */
     backgrounds: string[];
     characterName?: string;
@@ -20,24 +20,18 @@ type NodeWrapperProps = {
  */
 
 export function NodeWrapper(props: NodeWrapperProps) {
-    const { handleOnPress, nameOrTitle, id, innerText, backgrounds, characterName } = props;
-
-    // TODO: maybe more to make it look like an its going in... like pressing the things in duolingo
+    const { handleOnPress, nameOrTitle, id, innerIcon, backgrounds, characterName } = props;
 
     return (
-
         <Pressable
             onPress={() => handleOnPress(id, nameOrTitle)}
             id={nameOrTitle}
-            style={({ pressed }) => [
-                { opacity: pressed ? 0.5 : 1, transform: [ { scale: pressed ? 0.95 : 1 } ] }
-            ]}
+            style={({ pressed }) => [ { opacity: pressed ? 0.5 : 1, transform: [ { scale: pressed ? 0.95 : 1 } ] } ]}
             onPressIn={() => console.log('pressed in')}
         >
             <LinearGradient style={styles.pressable} colors={backgrounds} >
                 <Text>
-                    {innerText}
-                    {/* <MaterialCommunityIcons name="movie-open" size={24} color="black" /> */}
+                    {innerIcon}
                     <Text style={{ fontFamily: 'Bacon-Bold', fontSize: 20 }}> {nameOrTitle}</Text> {`\n`}
                     <Text style={{ textAlign: 'right', fontFamily: 'Bacon-Light', fontSize: 20 }}>{characterName || 'unknown'}</Text>
                 </Text>
@@ -53,6 +47,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 18,
         marginHorizontal: 10,
-        padding: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
     },
 });

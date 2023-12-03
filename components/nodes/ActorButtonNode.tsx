@@ -31,7 +31,7 @@ export function ActorButtonNode(props: ActorButtonNodeProps) {
             // backgrounds={[ '#e4d9ae', '#CBB967', '#BEA841', '#BA8E45' ]}
             backgrounds={[ '#bee9cc', '#67CB87', '#41be69', '#4EA83A' ]}
             characterName={characterName}
-            innerText={<MaterialCommunityIcons name="movie-star-outline" size={24} color="black" />}
+            innerIcon={<MaterialCommunityIcons name="movie-open-star" size={26} color="black" />}
         />
     )
 }

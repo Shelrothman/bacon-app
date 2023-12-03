@@ -22,7 +22,7 @@ export function MovieButtonNode(props: MovieButtonNodeProps) {
             nameOrTitle={title}
             backgrounds={[ '#e4d9ae', '#CBB967', '#BEA841', '#BA8E45' ]}
             characterName={characterName}
-            innerText={<MaterialCommunityIcons name="theater" size={24} color="black" />}
+            innerIcon={<MaterialCommunityIcons name="theater" size={26} color="black" />}
         />
     )
 }

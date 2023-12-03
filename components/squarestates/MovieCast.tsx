@@ -1,8 +1,9 @@
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 
 import { useAppContext } from '../../contexts/AppContext'
 import { BaconActorList } from '../../types'
 import { ActorButtonNode } from '../nodes/ActorButtonNode'
+import { SquareHeader } from '../SquareHeader'
 
 type MovieCastProps = BaconActorList & {
     title: string;
@@ -15,7 +16,7 @@ export function MovieCast(props: MovieCastProps) {
 
     const handleActorNodePress = (id: number, actorName: string) => {
         setIsLoading && setIsLoading(true);
-        console.log('actorPressed:', actorName)
+        // console.log('actorPressed:', actorName)
         getMovies && getMovies(id).then((result) => {
             if (result) {
                 setCurrentCardMovies && setCurrentCardMovies(result);
@@ -29,7 +30,8 @@ export function MovieCast(props: MovieCastProps) {
 
     return (
         <View>
-            <Text>Cast of {props.title} </Text>
+            {/* <Text>Cast of {props.title} </Text> */}
+            <SquareHeader title={`Cast of ${props.title}`} />
             <ScrollView showsVerticalScrollIndicator={true}>
                 {props.actors.map((actor) => {
                     return (

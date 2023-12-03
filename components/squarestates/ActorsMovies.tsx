@@ -1,8 +1,10 @@
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView,  View } from 'react-native'
 
 import { useAppContext } from '../../contexts/AppContext'
 import { BaconFeatureList } from '../../types'
 import { MovieButtonNode } from '../nodes/MovieButtonNode'
+import { SquareHeader } from '../SquareHeader'
+
 
 type ActorsMoviesProps = BaconFeatureList & {
     actorName: string;
@@ -27,7 +29,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
 
     return (
         <View >
-            <Text>Movies for {props.actorName}</Text>
+            <SquareHeader title={`${props.actorName} Movies`} />
             <ScrollView showsVerticalScrollIndicator={true}>
                 {props.features.map((feature) => {
                     return (

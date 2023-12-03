@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Button,StyleSheet, Text, TextInput } from 'react-native'
+import { Button, StyleSheet, Text, TextInput } from 'react-native'
 
 import { useAppContext } from '../../contexts/AppContext';
+// import { SquareHeader } from '../SquareHeader';
 
 // TODO: more user friendly for the submit, like maybe when keyboard is dismissed, or when the user presses the 'done' button on the keyboard...
 
@@ -24,7 +25,7 @@ export function MovieInput() {
 
     return (
         <>
-            <Text>Enter Movie Name: </Text>
+            <Text style={styles.text}>Enter Movie Name: </Text>
             <TextInput
                 style={styles.input}
                 placeholder="Movie Name"
@@ -49,5 +50,11 @@ const styles = StyleSheet.create({
         height: 40,
         color: '#fff',
         paddingLeft: 10,
+    },
+    text: {
+        fontFamily: 'Bacon-Limelight',
+        fontSize: 24,
+        textAlign: 'center',
+        textAlignVertical: 'center',
     }
 });

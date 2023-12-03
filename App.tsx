@@ -86,9 +86,11 @@ const styles = StyleSheet.create({
     },
     footerContainer: {
         flexDirection: 'row',
-        // alignItems: 'stretch',
+        width: '100%',
         justifyContent: 'space-between',
         position: 'absolute',
+        // marginHorizontal: 20,
+        paddingHorizontal: 30,
         bottom: 50,
     },
 });

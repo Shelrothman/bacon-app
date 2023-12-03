@@ -27,13 +27,13 @@ export function NodeWrapper(props: NodeWrapperProps) {
             onPress={() => handleOnPress(id, nameOrTitle)}
             id={nameOrTitle}
             style={({ pressed }) => [ { opacity: pressed ? 0.5 : 1, transform: [ { scale: pressed ? 0.95 : 1 } ] } ]}
-            onPressIn={() => console.log('pressed in')}
+            // onPressIn={() => console.log('pressed in')}
         >
             <LinearGradient style={styles.pressable} colors={backgrounds} >
                 <Text>
                     {innerIcon}
-                    <Text style={{ fontFamily: 'Bacon-Bold', fontSize: 20 }}> {nameOrTitle}</Text> {`\n`}
-                    <Text style={{ textAlign: 'right', fontFamily: 'Bacon-Light', fontSize: 20 }}>{characterName || 'unknown'}</Text>
+                    <Text style={{ fontFamily: 'Bacon-Limelight', fontSize: 20 }}> {nameOrTitle}</Text> {`\n`}
+                    <Text style={{ textAlign: 'right', fontFamily: 'Bacon-Inline', fontSize: 20 }}>{characterName || 'unknown'}</Text>
                 </Text>
             </LinearGradient>
         </Pressable>

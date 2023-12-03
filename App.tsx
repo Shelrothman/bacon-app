@@ -1,4 +1,5 @@
 import { useFonts } from 'expo-font';
+// import { LinearGradient } from 'expo-linear-gradient';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback } from 'react';
@@ -14,12 +15,16 @@ import { AppProvider } from './contexts/AppContext';
 export default function App() {
 
 
+    // TODO: got rhough asses and delete the ones that are not used from here and tehj actual files themselves
+
     const [ fontsLoaded ] = useFonts({
         'Bacon-Play': require('./assets/fonts/PlaypenSans-Regular.ttf'),
         'Bacon-Reg': require('./assets/fonts/BigShouldersDisplay-Regular.ttf'),
         'Bacon-Bold': require('./assets/fonts/BigShouldersDisplay-Bold.ttf'),
         'Bacon-Boldest': require('./assets/fonts/BigShouldersDisplay-Black.ttf'),
         'Bacon-Light': require('./assets/fonts/BigShouldersDisplay-Light.ttf'),
+        'Bacon-Inline': require('./assets/fonts/InlineBlackTitle.ttf'),
+        'Bacon-Limelight': require('./assets/fonts/Limelight-Regular.ttf'),
     });
 
     const onLayoutRootView = useCallback(async () => {
@@ -35,25 +40,29 @@ export default function App() {
     return (
         <AppProvider>
             <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-                {/* light so it shows on dark. */}
-                <StatusBar style="light" />
-                <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
-                    {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
-                    <ScrollView
-                        keyboardShouldPersistTaps='never'
-                        keyboardDismissMode='on-drag'
-                        showsVerticalScrollIndicator={false}
+                {/* <LinearGradient
+                    colors={[ '#fff', '#D4AF37', '#25292e', '#000' ]}
+                > */}
+                    {/* light so it shows on dark. */}
+                    <StatusBar style="light" />
+                    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
+                        {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
+                        <ScrollView
+                            keyboardShouldPersistTaps='never'
+                            keyboardDismissMode='on-drag'
+                            showsVerticalScrollIndicator={false}
                         //???: not sure about this..
                         // contentContainerStyle={{ maxHeight: '100%' }}
-                    >
-                        <View style={styles.squareContainer}>
-                            <MainSquare />
-                        </View>
-                    </ScrollView>
-                </KeyboardAvoidingView>
-                <View style={styles.footerContainer}>
-                    <Footer />
-                </View>
+                        >
+                            <View style={styles.squareContainer}>
+                                <MainSquare />
+                            </View>
+                        </ScrollView>
+                    </KeyboardAvoidingView>
+                    <View style={styles.footerContainer}>
+                        <Footer />
+                    </View>
+                {/* </LinearGradient> */}
             </SafeAreaView>
         </AppProvider>
     );

@@ -11,7 +11,7 @@ export default function Footer() {
     return (
         <>
             <Button title='reset' onPress={() => setSquareState && setSquareState('movieInput')} />
-            <Button title='Info' onPress={() => console.log('hi')} />
+            <Button title='Info' onPress={() => console.log('hi this to take option to get info for current actor/movie')} />
             <Button title='Back' onPress={() => console.log('go back to previous square state')} />
         </>
     )

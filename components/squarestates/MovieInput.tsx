@@ -1,6 +1,6 @@
 import { Fontisto } from '@expo/vector-icons';
 import { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { Keyboard,StyleSheet, Text, TextInput, View } from 'react-native'
 
 import { useAppContext } from '../../contexts/AppContext';
 // import { SquareHeader } from '../SquareHeader';
@@ -14,6 +14,8 @@ export function MovieInput() {
 
     const handleGetCast = () => {
         if (movieInputTitle.length < 1) return;
+        Keyboard.dismiss(); // fixme: i dont like how the coloring is seen as missing after hitting search...
+        // maybe need it to be a dropdown list of valid movie titles to be picked from dynamically as the user types?
         setIsLoading && setIsLoading(true);
         getCast && getCast(movieInputTitle).then((result) => {
             if (result) {

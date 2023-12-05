@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     text: {
-        fontFamily: 'Bacon-Stencil',
-        // fontFamily: 'Bacon-Script',
+        fontFamily: 'Bacon-Stencil-Bold',
         fontSize: 26,
-
+        color: '#2b3a7d',
+        textAlign: 'center',
     },
 
 

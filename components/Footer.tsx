@@ -25,7 +25,7 @@ export default function Footer() {
             />
             <FooterButton
                 icon={<Ionicons name="menu" size={24} color="white" />}
-                text='Info'
+                text='Menu'
                 handlePress={() => console.log('hi this to take option to get info for current actor/movie')}
             />
         </>

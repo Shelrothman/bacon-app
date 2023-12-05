@@ -26,9 +26,12 @@ export function FooterButton(props: FooterButtonProps) {
 const styles = StyleSheet.create({
     text: {
         color: 'white',
+        fontFamily: 'Bacon-Stencil',
+        fontSize: 18,
     },
     container: {
         textAlign: 'center',
         alignItems: 'center',
+        justifyContent: 'space-evenly',
     },
 })

@@ -27,7 +27,7 @@ export default function App() {
         'Bacon-Limelight': require('./assets/fonts/Limelight-Regular.ttf'),
         'Bacon-Stencil': require('./assets/fonts/StencilTitle.ttf'),
         'Bacon-Script': require('./assets/fonts/Script.ttf'),
-        
+        'Bacon-Stencil-Bold': require('./assets/fonts/Stencil-Bold.ttf'),
     });
 
     const onLayoutRootView = useCallback(async () => {

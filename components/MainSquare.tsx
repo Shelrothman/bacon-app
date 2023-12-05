@@ -48,8 +48,10 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         alignSelf: 'center',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         padding: 10,
+        flexDirection: 'column',
+
     },
     shadowProp: {
         shadowColor: '#171717',

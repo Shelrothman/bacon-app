@@ -1,5 +1,6 @@
+import { Fontisto } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput } from 'react-native'
+import { StyleSheet, Text, TextInput, View } from 'react-native'
 
 import { useAppContext } from '../../contexts/AppContext';
 // import { SquareHeader } from '../SquareHeader';
@@ -12,6 +13,7 @@ export function MovieInput() {
     const [ movieInputTitle, setMovieInputTitle ] = useState<string>('');
 
     const handleGetCast = () => {
+        if (movieInputTitle.length < 1) return;
         setIsLoading && setIsLoading(true);
         getCast && getCast(movieInputTitle).then((result) => {
             if (result) {
@@ -25,31 +27,48 @@ export function MovieInput() {
 
     return (
         <>
-            <Text style={styles.text}>Enter Movie Name: </Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Movie Name"
-                onChangeText={(text) => setMovieInputTitle(text)}
-                keyboardType='default'
-                placeholderTextColor={'#8e8e8e'}
-                returnKeyType="done"
-            />
-            <Button
+            <Text style={styles.text}>What Movie has you Curious?</Text>
+            <View style={styles.inputContainer}>
+            <Fontisto name="film" size={24} color="white" />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter a Movie Title..."
+                    onChangeText={(text) => text.length > 1 && setMovieInputTitle(text)}
+                    keyboardType='default'
+                    placeholderTextColor={'#8e8e8e'}
+                    returnKeyType="search"
+                    onBlur={() => handleGetCast()}
+                />
+            </View>
+            {/* a list here of options if it cant be found.. TODO: handle it not being found on first search */}
+            {/* <Button
                 title="Get Cast"
                 onPress={() => handleGetCast()}
-            />
+            /> */}
         </>
     )
 }
 
 const styles = StyleSheet.create({
     input: {
-        backgroundColor: '#25292e',
-        borderRadius: 18,
-        width: 300,
-        height: 40,
+        width: 219,
         color: '#fff',
         paddingLeft: 10,
+    },
+    inputContainer: {
+        backgroundColor: '#25292e',
+        flexDirection: 'row',
+        width: 300,
+        height: 60,
+        padding: 14,
+        borderBottomWidth: 2,
+        borderRadius: 18,
+        marginTop: 15,
+    },
+    inputIcon: {
+        alignSelf: 'center',
+        marginRight: 12,
+        width: 30,
     },
     text: {
         fontFamily: 'Bacon-Limelight',

@@ -43,29 +43,22 @@ export default function App() {
     return (
         <AppProvider>
             <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-                {/* <LinearGradient
-                    colors={[ '#fff', '#D4AF37', '#25292e', '#000' ]}
-                > */}
-                    {/* light so it shows on dark. */}
-                    <StatusBar style="light" />
-                    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
-                        {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
-                        <ScrollView
-                            keyboardShouldPersistTaps='never'
-                            keyboardDismissMode='on-drag'
-                            showsVerticalScrollIndicator={false}
-                        //???: not sure about this..
-                        // contentContainerStyle={{ maxHeight: '100%' }}
-                        >
-                            <View style={styles.squareContainer}>
-                                <MainSquare />
-                            </View>
-                        </ScrollView>
-                    </KeyboardAvoidingView>
-                    <View style={styles.footerContainer}>
-                        <Footer />
-                    </View>
-                {/* </LinearGradient> */}
+                <StatusBar style="light" />{/* light so it shows on dark. */}
+                <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
+                    {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
+                    <ScrollView
+                        keyboardShouldPersistTaps='never'
+                        keyboardDismissMode='on-drag'
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <View style={styles.squareContainer}>
+                            <MainSquare />
+                        </View>
+                    </ScrollView>
+                </KeyboardAvoidingView>
+                <View style={styles.footerContainer}>
+                    <Footer />
+                </View>
             </SafeAreaView>
         </AppProvider>
     );

@@ -4,6 +4,27 @@
 
 
 /**
+ * @type BaconMovie
+ * just a movie thats been looked up by title
+ */
+export type BaconMovie = {
+    /** unique defined from db */
+    id: number;
+    /** user friendly official title returned from db */
+    title: string;
+};
+
+/**
+ * @type BaconMovieOption
+ * type for list of optional titles to search for
+ */
+export type BaconMovieOption = BaconMovie & {
+    releaseYear: string;
+    overview: string;
+};
+
+
+/**
  * @type BaconActor
  * actor return type
  */
@@ -21,25 +42,12 @@ export type BaconActor = {
  * feature return type
  * a feature is any movie an actor has a credit in.
  */
-export type BaconFeature = {
-    /** unique defined from db */
-    id: number;
-    /** user friendly official title returned from db */
-    title: string;
+export type BaconFeature = BaconMovie & {
     /** character that the requested actor played */
     characterName?: string;
 };
 
-/**
- * @type BaconMovie
- * just a movie thats been looked up by title
- */
-export type BaconMovie = {
-    /** unique defined from db */
-    id: number;
-    /** user friendly official title returned from db */
-    title: string;
-};
+
 
 
 /**

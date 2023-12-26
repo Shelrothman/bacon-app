@@ -14,9 +14,10 @@
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
     "expo": "~49.0.15",
+    "expo-clear-input": "^0.1.94",
     "expo-font": "~11.4.0",
     "expo-linear-gradient": "~12.3.0",
-    "expo-splash-screen": "^0.22.0",
+    "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

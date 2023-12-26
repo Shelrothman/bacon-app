@@ -1,33 +1,45 @@
 import { Fontisto } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native'
 
 import { results } from '../../api/mocked/optionsExampleRes'
 import { useAppContext } from '../../contexts/AppContext';
 // import { SquareHeader } from '../SquareHeader';
-
+import { ResultList } from '../ResultList';
 // TODO: more user friendly for the submit, like maybe when keyboard is dismissed, or when the user presses the 'done' button on the keyboard...
 
-const ResultList = () => {
+// const ResultList = () => {
 
 
-    return (
-        <View>
-            {results.map((result) => {
-                return (
-                    <Text key={result.id+""}>{result.title}</Text>
-                )
-            })}
-        </View>
-    )
-};
+//     return (
+//         <View>
+//             {results.map((result) => {
+//                 return (
+//                     <Text key={result.id+""}>{result.title}</Text>
+//                 )
+//             })}
+//         </View>
+//     )
+// };
 
 export function MovieInput() {
 
     const { setSquareState, getCast, setIsLoading, setCurrentCardCast, } = useAppContext();
     const [ movieInputTitle, setMovieInputTitle ] = useState<string>('');
-    /**search mode is visible while the keyboard is open and user is finding their movie */
+    /**search mode is true while the keyboard is open and user is finding their movie */
     const [ searchMode, setSearchMode ] = useState<boolean>(false);
+    /** boolean if the suggestionList should be showing */
+    // const [ showSuggestions, setShowSuggestions ] = useState<boolean>(false);
+
+    // useEffect(() => {
+    // if (movieInputTitle.length < 1) {
+    //     setSearchMode(false);
+    //     setShowSuggestions(false);
+    // }
+    //     if (searchMode && movieInputTitle.length > 1) {
+    //         setShowSuggestions(true);
+    //     } 
+    // }, [ searchMode ]);
 
 
     const handleGetCast = () => {
@@ -56,6 +68,7 @@ export function MovieInput() {
                     onChangeText={(text) => text.length > 1 && setMovieInputTitle(text)}
                     keyboardType='default'
                     placeholderTextColor={'#8e8e8e'}
+                    clearButtonMode='while-editing'
                     returnKeyType="search"
                     onBlur={() => {
                         setSearchMode(false);
@@ -64,16 +77,11 @@ export function MovieInput() {
                     onFocus={() => setSearchMode(true)}
                 />
             </View>
-            {searchMode && <ResultList />}
-
-            {/* {searchMode && <FlatList
-                    data={results}
-                    renderItem={({ item }) => <Text>{item.title}--{item.release_date}</Text>}
-                    keyExtractor={(item) => item.id.toString()}
-                />} */}
-
+            {(searchMode && movieInputTitle.length >= 3) && <ResultList
+                movieList={results}
+            />}
+            {/* TODO: */}
             {/* a list here of options if it cant be found.. TODO: handle it not being found on first search */}
-
         </View>
     )
 }

@@ -14,6 +14,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
 
     const { getCast, setCurrentCardCast, setSquareState, setIsLoading, setCurrentMovieTitle } = useAppContext();
 
+    // TODO: get this in its own service file...
     const handleFeatureActorNodePress = (id: number, movieTitle: string) => {
         setIsLoading && setIsLoading(true);
         getCast && getCast(movieTitle).then((result) => {

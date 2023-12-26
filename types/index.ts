@@ -19,7 +19,7 @@ export type BaconMovie = {
  * type for list of optional titles to search for
  */
 export type BaconMovieOption = BaconMovie & {
-    releaseYear: string;
+    release_date: string;
     overview: string;
 };
 

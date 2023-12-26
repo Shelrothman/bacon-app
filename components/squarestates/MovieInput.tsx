@@ -32,7 +32,7 @@ export function MovieInput() {
 
     return (
         <View style={searchMode ? styles.containerWithSearch : styles.containerNoSearch}>
-            {!searchMode && <Text style={styles.text}>What Movie has you Curious?</Text>}
+            <Text style={searchMode ? styles.textWithSearch : styles.text}>What Movie has you Curious?</Text>
             <View style={styles.inputContainer}>
                 <Fontisto name="film" size={24} color="white" />
                 <TextInput
@@ -98,5 +98,11 @@ const styles = StyleSheet.create({
         fontSize: 24,
         textAlign: 'center',
         textAlignVertical: 'center',
-    }
+    },
+    textWithSearch: {
+        fontFamily: 'Bacon-Limelight',
+        fontSize: 18,
+        textAlign: 'center',
+        // lineHeight: 20,
+    },
 });

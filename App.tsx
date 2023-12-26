@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import { MainSquare } from './components/MainSquare';
 import { AppProvider } from './contexts/AppContext';
 
+// TODO: an info icon thing to show user the overview at any popint in the app.
 
 // TODO: a cool engagin splash screeen like ready to get that off your tongue yahoo thing
 
@@ -46,12 +47,7 @@ export default function App() {
                 <StatusBar style="light" />{/* light so it shows on dark. */}
                 <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
                     {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
-                    <ScrollView
-                        keyboardShouldPersistTaps='handled' // the keyboard will not dismiss automatically, and the scroll view will not catch taps, but children of the scroll view can catch taps.
-                        // keyboardDismissMode='interactive' // the keyboard will dismiss when the drag begins
-                        keyboardDismissMode='on-drag' // the keyboard will dismiss when a drag begins
-                        showsVerticalScrollIndicator={false}
-                    >
+                    <ScrollView keyboardDismissMode='on-drag' showsVerticalScrollIndicator={false} >
                         <View style={styles.squareContainer}>
                             <MainSquare />
                         </View>

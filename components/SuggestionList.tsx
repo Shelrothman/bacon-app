@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text } from 'react-native'
 
 import { useAppContext } from '../contexts/AppContext';
+import { pressable_style } from '../styles/PressableNode';
 import { BaconMovieOption } from '../types';
 import { SuggestionNode } from './nodes/SuggestionNode';
 
@@ -47,8 +48,21 @@ export function SuggestionList(props: SuggestionListProps) {
     }
 
     return (
-        <ScrollView style={styles.container}>
-            <Text style={styles.header}>Movie Suggestions: </Text>
+        <ScrollView style={styles.container}
+        // it just sucks that it doesnt work for areas outside of the scrollview... but i guess thats the point of the scrollview...
+            keyboardDismissMode='on-drag'
+            // keyboardDismissMode='interactive'
+            // showsVerticalScrollIndicator={false}
+        // keyboardShouldPersistTaps='handled' // the keyboard will not dismiss automatically, and the scroll view will not catch taps, but children of the scroll view can catch taps.
+        >
+            <Pressable
+                style={({ pressed }) => [ {
+                    opacity: pressed ? 0.5 : 1,
+                    transform: [ { scale: pressed ? 0.95 : 1 } ]
+                }, pressable_style.suggestionLst ]}
+            >
+                <Text style={styles.header}>Search for "{inputSearch}" </Text>
+            </Pressable>
             {suggestionList.map((result) => {
                 return (
                     <SuggestionNode
@@ -56,7 +70,7 @@ export function SuggestionList(props: SuggestionListProps) {
                         release_date={result.release_date}
                         title={result.title}
                         handleOnPress={() => console.log('pressed')}
-                        // handleOnPress={handlePress}
+                    // handleOnPress={handlePress}
                     />
                 )
             })}
@@ -70,8 +84,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         // fontWeight: 'bold',
         marginBottom: 5,
-        textAlign: 'center',
-        alignSelf: 'center',
+        // textAlign: 'center',
+        // alignSelf: 'center',
+        textAlign: 'right',
     },
     container: {
         // backgroundColor: '#25292e',

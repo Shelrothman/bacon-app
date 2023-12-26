@@ -2,7 +2,7 @@ import { Fontisto } from '@expo/vector-icons';
 import { /* useEffect, */ useState } from 'react';
 import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native'
 
-import { results } from '../../api/mocked/optionsExampleRes'
+// import { results } from '../../api/mocked/optionsExampleRes'
 import { useAppContext } from '../../contexts/AppContext';
 // import { SquareHeader } from '../SquareHeader';
 import { SuggestionList } from '../SuggestionList';
@@ -10,9 +10,10 @@ import { SuggestionList } from '../SuggestionList';
 
 export function MovieInput() {
 
-    const { setSquareState, getCast, setIsLoading, setCurrentCardCast, searchMode, setSearchMode } = useAppContext();
+    const { setSquareState, getCast, setIsLoading, setCurrentCardCast } = useAppContext();
+    // TODO: and then a useEffect to render the suggestions list if it has a value greater than 3 and is not the same as the last one?... or based on like a few seconds of no typing?......
     const [ movieInputTitle, setMovieInputTitle ] = useState<string>('');
-
+    const [ searchMode, setSearchMode ] = useState<boolean>(false);
 
     const handleGetCast = () => {
         if (movieInputTitle.length < 1) return;
@@ -44,15 +45,16 @@ export function MovieInput() {
                     returnKeyType="search"
                     onSubmitEditing={handleGetCast} // ok this solves that but now thereis like nothing when clicked out of input.
                     onBlur={() => {
-                        setSearchMode!(false); // Dont let it blur?
+                        setSearchMode(false); // Dont let it blur?
                         // ???: maybe consider turning this on OR just having a buttton for if they blur without srarching?/choosing a suggestion...
-                        // handleGetCast();
+                        // handleGetCast();PICKUP: turn this back on?
                     }}
-                    onFocus={() => setSearchMode!(true)}
+                    onFocus={() => setSearchMode(true)}
                 />
             </View>
-            {(searchMode && movieInputTitle.length >= 3) && <SuggestionList
-                movieList={results}
+            {movieInputTitle.length >= 3 && <SuggestionList
+                // movieList={results}
+                inputSearch={movieInputTitle}
             />}
             {/* TODO: */}
             {/* a list here of options if it cant be found.. TODO: handle it not being found on first search */}

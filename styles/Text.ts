@@ -11,7 +11,6 @@ export const text_style = StyleSheet.create({
     },
     suggestionReleaseDate: {
         color: '#2d3557',
-
     },
 });
 

@@ -1,16 +1,15 @@
 import { createContext, useContext, useState } from 'react';
 
-import * as mockedCast from '../api/mocked/mockedCast.json';
+// import * as mockedCast from '../api/mocked/mockedCast.json';
 import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
 import { BaconServiceFactory } from '../api/services/ServiceFactory';
-import { BaconActorList, BaconFeature, BaconFeatureList, BaconMovie } from '../types';
+import { BaconActorList, BaconFeature, BaconFeatureList, BaconMovie, BaconMovieOption } from '../types';
 
 
 type ContextProps = {
     /** can be one of 3: movieInput, movieCast, actorsMovies */
     squareState: string;
     setSquareState: (squareState: string) => void;
-
     isLoading: boolean;
     setIsLoading: (isLoading: boolean) => void;
     /** gets the cast of the user-entered movie */
@@ -29,9 +28,8 @@ type ContextProps = {
     /** current actor selected by user onPress */
     currentActorName: string;
     setCurrentActorName: (actorName: string) => void;
-    /**search mode is true while the keyboard is open and user is finding their movie */
-    searchMode: boolean;
-    setSearchMode: (searchMode: boolean) => void;
+    /** gets the suggestionList based on current value of searchInput */
+    getSuggestions: (prefix: string) => Promise<BaconMovieOption[]>;
 };
 
 const AppContext = createContext<Partial<ContextProps>>({});
@@ -41,6 +39,7 @@ interface Props { children: React.ReactNode; }
 export function useAppContext() {
     return useContext(AppContext);
 }
+
 
 /** Helpers */
 const handleCaughtError = (error: Error, method: string) => {
@@ -68,34 +67,35 @@ async function getMovieID(movieName: string): Promise<BaconMovie | void> {
 const AppProvider = (props: Props) => {
     const [ squareState, setSquareState ] = useState<string>('movieInput');
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
-
     const [ currentCardCast, setCurrentCardCast ] = useState<BaconActorList | null>(null);
     const [ currentCardMovies, setCurrentCardMovies ] = useState<BaconFeatureList | null>(null);
     const [ currentMovieTitle, setCurrentMovieTitle ] = useState<string>('');
     const [ currentActorName, setCurrentActorName ] = useState<string>('');
-    const [ searchMode, setSearchMode ] = useState<boolean>(false);
+
 
     async function getCast(movieName: string): Promise<BaconActorList | void> {
         try {
             // PICKUP: delete this before shipped.. 
             // just need it so don't use too much API calls while developing.
-            if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
-                console.log('MOCK MODE ON, returning fake data...');
-                console.log('---------------------------------');
+            // if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
+                // console.log('MOCK MODE ON, returning fake data...');
+                // console.log('---------------------------------');
                 // setTimeout(() => {
-                return {
-                    id: 12345,
-                    actors: mockedCast.cast,
-                }
+                // return {
+                    // id: 12345,
+                    // actors: mockedCast.cast,
+                // }
                 // }, 5000);
-
-            }
+            // }
             const feature_object = await getMovieID(movieName);
             const featureService = BaconServiceFactory.createFeatureService();
-            if (!feature_object) return; // the alert is handled in getMovieID
+            if (!feature_object) {
+                return alert('No Movie found with provided title, please try again.');
+            }
             const featureCast = await featureService.getFeatureCastByMovieId(feature_object?.id);
-            if (!featureCast) return alert('cannot find cast for the requested feature ID.');
-            // then set the movie title
+            if (!featureCast) {
+                return alert('cannot find cast for the requested feature ID.');
+            }
             setCurrentMovieTitle(feature_object.title);
             return {
                 id: feature_object.id,
@@ -134,6 +134,22 @@ const AppProvider = (props: Props) => {
         }
     }
 
+    async function getSuggestions(prefix: string): Promise<BaconMovieOption[]> {
+        try {
+            const featureService = BaconServiceFactory.createFeatureService();
+            const suggestions = await featureService.getListOfFeaturesByPrefix(prefix);
+            if (suggestions) {
+                return suggestions;
+            }
+            return [];
+        } catch (error) {
+            // handleCaughtError(error as Error, 'getSuggestions');
+            console.log('---------------------------------');
+            console.error(error);
+            return [];
+        }
+    }
+
 
     return (
         <AppContext.Provider value={{
@@ -151,8 +167,7 @@ const AppProvider = (props: Props) => {
             setCurrentMovieTitle,
             currentActorName,
             setCurrentActorName,
-            searchMode,
-            setSearchMode,
+            getSuggestions
         }}>
             {props.children}
         </AppContext.Provider>

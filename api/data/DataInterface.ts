@@ -7,6 +7,8 @@
  * @template F - the type of feature data
  */
 
+import { BaconMovieOption } from "../../types";
+
 export default interface IDataInterface<A,F> {
     // logger: winston.Logger;
     // TODO: FUTURE: this will require a param of a key or something
@@ -16,4 +18,5 @@ export default interface IDataInterface<A,F> {
     getMovieByTitle: (title: string) => Promise<F>;
     getCastByMovieId: (id: number) => Promise<A[]>;
     getMoviesByActorId: (id: number) => Promise<F[]>;
+    getTenMoviesByPrefix: (title: string) => Promise<BaconMovieOption[]>;
 }  

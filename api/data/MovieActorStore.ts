@@ -1,4 +1,4 @@
-import { BaconActor, BaconFeature } from '../../types';
+import { BaconActor, BaconFeature, BaconMovieOption } from '../../types';
 import { ActorTMDB, MovieActorTMDB, MovieTMDB } from '../../types/tmdb';
 import { config } from '../config';
 import IDataInterface from './DataInterface';
@@ -44,7 +44,26 @@ export class MovieActorStore implements IDataInterface<BaconActor, BaconFeature>
             };
             return movieObject;
         } else {
-            throw new Error('no movie found');
+            // throw new Error('no movie found');
+            return {} as BaconFeature;
+        }
+    }
+
+    async getTenMoviesByPrefix(prefix: string): Promise<BaconMovieOption[]> {
+        const url = `${this.api_base}/search/movie?query=${prefix}${this.url_suffix}`;
+        const response = await fetch(url);
+        const data = await response.json() as { results: MovieTMDB[] };
+        if (data && data.results && data.results.length > 0) {
+            const firstTenFeatures = data.results.slice(0, 10);
+            // const movieObjects: BaconFeature[] = firstFiveFeatures.map((feature) => ({
+            //     id: feature.id,
+            //     title: feature.original_title || feature.title
+            // }));
+            // return movieObjects;
+            return firstTenFeatures;
+        } else {
+            // throw new Error('no movie found');
+            return [];
         }
     }
 
@@ -63,6 +82,7 @@ export class MovieActorStore implements IDataInterface<BaconActor, BaconFeature>
             return actors;
         } else {
             throw new Error('invalid movie ID');
+            // return [];
         }
     }
 

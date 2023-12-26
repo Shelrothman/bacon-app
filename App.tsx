@@ -48,7 +48,8 @@ export default function App() {
                     {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
                     <ScrollView
                         keyboardShouldPersistTaps='handled' // the keyboard will not dismiss automatically, and the scroll view will not catch taps, but children of the scroll view can catch taps.
-                        keyboardDismissMode='interactive' // the keyboard will dismiss when the drag begins
+                        // keyboardDismissMode='interactive' // the keyboard will dismiss when the drag begins
+                        keyboardDismissMode='on-drag' // the keyboard will dismiss when a drag begins
                         showsVerticalScrollIndicator={false}
                     >
                         <View style={styles.squareContainer}>

@@ -20,6 +20,7 @@ export type BaconMovie = {
  */
 export type BaconMovieOption = BaconMovie & {
     release_date: string;
+    /** use overview for onHover events for the suggestionList for user to see */
     overview: string;
 };
 

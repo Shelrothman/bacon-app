@@ -1,5 +1,9 @@
 import { StyleSheet } from "react-native";
 
+
+/**
+ * styles for various Pressable Components
+ */
 export const pressable_style = StyleSheet.create({
     /** main wrapper of text in each Node */
     innerContainerWrapper: {
@@ -12,12 +16,9 @@ export const pressable_style = StyleSheet.create({
         paddingVertical: 5,
     },
     suggestionLst: {
-        // alignItems: 'center',
         width: '100%',
         marginBottom: 10,
-        // paddingVertical: 5,
         borderBottomWidth: .5,
-        
         borderBottomColor: '#6779cb',
     },
 

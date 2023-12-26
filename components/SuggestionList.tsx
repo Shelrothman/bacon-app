@@ -1,13 +1,14 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
-import { pressable_style } from '../styles/PressableNode';
 import { BaconMovieOption } from '../types';
+import { SuggestionNode } from './nodes/SuggestionNode';
 
 type ResultListProps = {
     /** prob only need ~5... */
     movieList: BaconMovieOption[];
-
 }
+
+// PICKUP: todo NEXT::: get this being REAL DATA from the api and all the logic for it
 
 /** 
  * @component - ResultList
@@ -26,20 +27,12 @@ export function SuggestionList(props: ResultListProps) {
             <Text style={styles.header}>Movie Suggestions: </Text>
             {movieList!.map((result) => {
                 return (
-                    // PICKUP: use similar to this node compoenernt but make a new component for the list item thats more custom that ussesd the same icon but like looks more clean like on reddit mobile search..
-                    <Pressable key={result.id + ""}
-                        // style={styles.pressable}
-                        onPress={() => {
-                            console.log('suggestion pressed');
-                        }}
-                        style={({ pressed }) => [ { opacity: pressed ? 0.5 : 1, transform: [ { scale: pressed ? 0.95 : 1 } ] }, pressable_style.suggestionLst ]}
-
-                    >
-                        <Text>
-                            <Text style={styles.text}>{result.title} {`\n`}</Text>
-                            <Text style={styles.releaseYear}>{`\t\t`}{result.release_date}</Text>
-                        </Text>
-                    </Pressable>
+                    <SuggestionNode 
+                        key={result.id}
+                        release_date={result.release_date}
+                        title={result.title}
+                        handleOnPress={() => console.log('pressed')}
+                    />
                 )
             })}
         </View>
@@ -62,12 +55,5 @@ const styles = StyleSheet.create({
         borderBottomStartRadius: 18,
         alignItems: 'flex-start',
         width: 300,
-    },
-    text: {
-        color: '#25292e',
-        fontWeight: 'bold',
-    },
-    releaseYear: {
-        color: '#2d3557',
-    },
+    }
 })

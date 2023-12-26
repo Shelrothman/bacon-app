@@ -47,10 +47,8 @@ export default function App() {
                 <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
                     {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
                     <ScrollView
-                        keyboardShouldPersistTaps='never'
-                        // Todo: put as handled while in that swra
-                        // keyboardShouldPersistTaps='handled' // 'handled', the keyboard will not dismiss automatically when the tap was handled by a children, (or captured by an ancestor).
-                        keyboardDismissMode='on-drag'
+                        keyboardShouldPersistTaps='handled' // the keyboard will not dismiss automatically, and the scroll view will not catch taps, but children of the scroll view can catch taps.
+                        keyboardDismissMode='interactive' // the keyboard will dismiss when the drag begins
                         showsVerticalScrollIndicator={false}
                     >
                         <View style={styles.squareContainer}>

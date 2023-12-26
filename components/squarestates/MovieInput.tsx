@@ -1,45 +1,17 @@
 import { Fontisto } from '@expo/vector-icons';
-import { useEffect, useState } from 'react';
+import { /* useEffect, */ useState } from 'react';
 import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native'
 
 import { results } from '../../api/mocked/optionsExampleRes'
 import { useAppContext } from '../../contexts/AppContext';
 // import { SquareHeader } from '../SquareHeader';
-import { ResultList } from '../ResultList';
-// TODO: more user friendly for the submit, like maybe when keyboard is dismissed, or when the user presses the 'done' button on the keyboard...
+import { SuggestionList } from '../SuggestionList';
 
-// const ResultList = () => {
-
-
-//     return (
-//         <View>
-//             {results.map((result) => {
-//                 return (
-//                     <Text key={result.id+""}>{result.title}</Text>
-//                 )
-//             })}
-//         </View>
-//     )
-// };
 
 export function MovieInput() {
 
-    const { setSquareState, getCast, setIsLoading, setCurrentCardCast, } = useAppContext();
+    const { setSquareState, getCast, setIsLoading, setCurrentCardCast, searchMode, setSearchMode } = useAppContext();
     const [ movieInputTitle, setMovieInputTitle ] = useState<string>('');
-    /**search mode is true while the keyboard is open and user is finding their movie */
-    const [ searchMode, setSearchMode ] = useState<boolean>(false);
-    /** boolean if the suggestionList should be showing */
-    // const [ showSuggestions, setShowSuggestions ] = useState<boolean>(false);
-
-    // useEffect(() => {
-    // if (movieInputTitle.length < 1) {
-    //     setSearchMode(false);
-    //     setShowSuggestions(false);
-    // }
-    //     if (searchMode && movieInputTitle.length > 1) {
-    //         setShowSuggestions(true);
-    //     } 
-    // }, [ searchMode ]);
 
 
     const handleGetCast = () => {
@@ -70,14 +42,16 @@ export function MovieInput() {
                     placeholderTextColor={'#8e8e8e'}
                     clearButtonMode='while-editing'
                     returnKeyType="search"
+                    onSubmitEditing={handleGetCast} // ok this solves that but now thereis like nothing when clicked out of input.
                     onBlur={() => {
-                        setSearchMode(false);
-                        handleGetCast();
+                        setSearchMode!(false); // Dont let it blur?
+                        // ???: maybe consider turning this on OR just having a buttton for if they blur without srarching?/choosing a suggestion...
+                        // handleGetCast();
                     }}
-                    onFocus={() => setSearchMode(true)}
+                    onFocus={() => setSearchMode!(true)}
                 />
             </View>
-            {(searchMode && movieInputTitle.length >= 3) && <ResultList
+            {(searchMode && movieInputTitle.length >= 3) && <SuggestionList
                 movieList={results}
             />}
             {/* TODO: */}

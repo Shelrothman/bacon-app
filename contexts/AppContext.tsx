@@ -29,6 +29,9 @@ type ContextProps = {
     /** current actor selected by user onPress */
     currentActorName: string;
     setCurrentActorName: (actorName: string) => void;
+    /**search mode is true while the keyboard is open and user is finding their movie */
+    searchMode: boolean;
+    setSearchMode: (searchMode: boolean) => void;
 };
 
 const AppContext = createContext<Partial<ContextProps>>({});
@@ -70,6 +73,7 @@ const AppProvider = (props: Props) => {
     const [ currentCardMovies, setCurrentCardMovies ] = useState<BaconFeatureList | null>(null);
     const [ currentMovieTitle, setCurrentMovieTitle ] = useState<string>('');
     const [ currentActorName, setCurrentActorName ] = useState<string>('');
+    const [ searchMode, setSearchMode ] = useState<boolean>(false);
 
     async function getCast(movieName: string): Promise<BaconActorList | void> {
         try {
@@ -147,6 +151,8 @@ const AppProvider = (props: Props) => {
             setCurrentMovieTitle,
             currentActorName,
             setCurrentActorName,
+            searchMode,
+            setSearchMode,
         }}>
             {props.children}
         </AppContext.Provider>

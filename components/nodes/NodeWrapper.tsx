@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
 
+import { pressable_style } from '../../styles/PressableNode';
 
 type NodeWrapperProps = {
     /** name of movie or actor at hand */
@@ -27,9 +28,8 @@ export function NodeWrapper(props: NodeWrapperProps) {
             onPress={() => handleOnPress(id, nameOrTitle)}
             id={nameOrTitle}
             style={({ pressed }) => [ { opacity: pressed ? 0.5 : 1, transform: [ { scale: pressed ? 0.95 : 1 } ] } ]}
-            // onPressIn={() => console.log('pressed in')}
         >
-            <LinearGradient style={styles.pressable} colors={backgrounds} >
+            <LinearGradient style={pressable_style.innerContainerWrapper} colors={backgrounds} >
                 <Text>
                     {innerIcon}
                     <Text style={{ fontFamily: 'Bacon-Limelight', fontSize: 20 }}> {nameOrTitle}</Text> {`\n`}
@@ -40,14 +40,3 @@ export function NodeWrapper(props: NodeWrapperProps) {
     )
 }
 
-const styles = StyleSheet.create({
-    pressable: {
-        flexDirection: 'row',
-        marginBottom: 10,
-        borderWidth: 1,
-        borderRadius: 18,
-        marginHorizontal: 10,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-    },
-});

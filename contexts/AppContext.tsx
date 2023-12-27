@@ -41,19 +41,6 @@ export function useAppContext() {
 }
 
 
-/** Helpers */
-const handleCaughtError = (error: Error, method: string) => {
-    console.error(`Error in ${method} call`);
-    console.log('---------------------------------');
-    console.error(error);
-    // TODO: a maybe more user-friendly error message.
-    if (error.message) {
-        return alert(error.message);
-    }
-    return alert('Internal Server Error, please try again later.');
-};
-
-
 const AppProvider = (props: Props) => {
     const [ squareState, setSquareState ] = useState<string>('movieInput');
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
@@ -112,22 +99,18 @@ const AppProvider = (props: Props) => {
             if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
                 console.log('MOCK MODE ON, returning fake data...');
                 console.log('---------------------------------');
-                return {
-                    id: 12345,
-                    features: mockedFeatures.features,
-                }
+                return { id: 12345, features: mockedFeatures.features, }
             }
             const actorService = BaconServiceFactory.createActorService({ actor_id: actorID });
             const featureListResult = await actorService.getFeaturesForActor();
             if (!featureListResult) {
-                return alert('cannot find any features for the requested actor ID.');
+                return alert('cannot find any features for the requested actor. Please try again.');
             }
-            return {
-                id: actorID,
-                features: featureListResult,
-            };
+            return { id: actorID, features: featureListResult, };
         } catch (error) {
-            handleCaughtError(error as Error, 'getMovies');
+            return alert(
+                `An unknown error occurred while attempting to get the movies, please try again. If this issue persists, please contact support, shel.programmer@gmail.com.`
+            );
         }
     }
 

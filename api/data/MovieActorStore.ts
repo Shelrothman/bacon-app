@@ -1,4 +1,4 @@
-import { BaconActor, BaconFeature, BaconMovieOption/* , GetCastResponse  */ } from '../../types';
+import { BaconActor, BaconFeature, BaconMovieOption } from '../../types';
 import { ActorTMDB, MovieActorTMDB, MovieTMDB } from '../../types/tmdb';
 import { config } from '../config';
 
@@ -33,7 +33,7 @@ export class MovieActorStore {
         const response = await fetch(url);
         const data = await response.json() as { results: MovieTMDB[] };
         if (data && data.results && data.results.length > 0) {
-            // info: likely it is the top one
+            // info: we force the top one, user can always search again or use a suggestion.
             const firstFeature = data.results[ 0 ];
             const movieObject: BaconFeature = {
                 id: firstFeature.id,
@@ -53,7 +53,7 @@ export class MovieActorStore {
             const firstTenFeatures = data.results.slice(0, 10);
             return firstTenFeatures;
         } else {
-            return []; 
+            return [];
         }
     }
 
@@ -93,7 +93,6 @@ export class MovieActorStore {
         }
     }
 
-
     /** converts response to @type {BaconFeature} */
     private convertToBaconFeature(data: MovieActorTMDB): BaconFeature {
         const movieObject: BaconFeature = {
@@ -113,7 +112,6 @@ export class MovieActorStore {
         };
         return actorObject;
     }
-
 
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native'
 
 import { useAppContext } from '../contexts/AppContext';
+import useGetData from '../hooks/useGetData';
 import { container_style } from '../styles';
 import { BaconMovieOption } from '../types';
 import { SearchInputNode } from './nodes/SearchInputNode';
@@ -25,8 +26,9 @@ type SuggestionListProps = {
 export function SuggestionList(props: SuggestionListProps) {
 
     const { inputSearch } = props;
-    const { getSuggestions, setIsLoading, getCast, setCurrentCardCast, setSquareState } = useAppContext();
+    const { getSuggestions } = useAppContext();
     const [ suggestionList, setSuggestionList ] = useState<BaconMovieOption[]>([]);
+    const { handleGetCast } = useGetData();
 
     useEffect(() => {
         if (inputSearch.length < 3) setSuggestionList([]);
@@ -44,35 +46,23 @@ export function SuggestionList(props: SuggestionListProps) {
         });
     }
 
-    // TODO: MUSt move this function that gets used in other places, to its own servicey file
-    const handleSearchPress = (searchTitle: string) => {
-        setIsLoading && setIsLoading(true);
-        getCast && getCast(searchTitle).then((result) => {
-            if (result) {
-                setCurrentCardCast && setCurrentCardCast(result);
-                setSquareState && setSquareState('movieCast');
-                // setCurrentMovieTitle && setCurrentMovieTitle(searchTitle);
-            }
-        }).finally(() => {
-            setIsLoading && setIsLoading(false);
-        });
-    }
-
     return (
         <ScrollView style={container_style.suggestionListScrollView} keyboardDismissMode='on-drag'>
-            <SearchInputNode pressHandler={handleSearchPress} inputSearch={inputSearch} />
+            <SearchInputNode
+                pressHandler={() => handleGetCast(inputSearch, false)}
+                inputSearch={inputSearch} />
             {suggestionList.map((result) => {
                 return (
                     <SuggestionNode
                         key={result.id}
                         release_date={result.release_date}
                         title={result.title}
-                        handleOnPress={() => handleSearchPress(result.title)}
+                        handleOnPress={() => handleGetCast(result.title, true)}
                     />
                 )
             })}
             {(suggestionList && suggestionList.length >= 3) && <SearchInputNode
-                inputSearch={inputSearch} pressHandler={handleSearchPress}
+                inputSearch={inputSearch} pressHandler={() => handleGetCast(inputSearch, false)} 
             />}
         </ScrollView>
     )

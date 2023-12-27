@@ -6,12 +6,13 @@ import useGetData from "./useGetData";
  * and sets the states of the appContext accordingly
  */
 const useGoBack = () => {
-    const { 
+    const {
         // setSquareState, setCurrentCardCast, setCurrentCardMovies, setCurrentMovieTitle, setCurrentActorName, 
-        squareState, 
+        squareState,
         // currentCardCast, currentCardMovies,
         currentMovieTitle, currentActorID,
-        currentActorName
+        currentActorName,
+        // setCurrentMovieTitle,
     } = useAppContext();
 
     const { handleGetCast, handleGetMovies } = useGetData();
@@ -23,14 +24,14 @@ const useGoBack = () => {
     const handleGoBack = () => {
         switch (squareState) {
             case 'movieCast':
-                if (currentActorID && currentActorName) {
-                    handleGetMovies && handleGetMovies(currentActorID, currentActorName);
-                }
+                // if (currentActorID && currentActorName) {
+                handleGetMovies && handleGetMovies(currentActorID!, currentActorName!);
+                // }
                 break;
             case 'actorsMovies':
-                if (currentMovieTitle) {
-                    handleGetCast && handleGetCast(currentMovieTitle, true);
-                }
+                // if (currentMovieTitle) {
+                handleGetCast && handleGetCast(currentMovieTitle!, true);
+                // }
                 break;
             default:
                 // do nothing if on the movieInput screen.. todo: maybe inactivate the button?

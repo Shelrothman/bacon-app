@@ -18,8 +18,6 @@ export default function Footer() {
             <FooterButton
                 icon={<FontAwesome name="fast-backward" size={24} color="white" />}
                 text='Back'
-                // PICKUP: this works for only one level back.. 
-                // TODO: make it work for more levels
                 handlePress={() => handleGoBack()}
             />
             <FooterButton

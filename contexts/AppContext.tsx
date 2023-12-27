@@ -121,6 +121,7 @@ const AppProvider = (props: Props) => {
         }
     }
 
+    // todo: maybe this function should live in useGetData.tsx?
     async function getSuggestions(prefix: string): Promise<BaconMovieOption[]> {
         try {
             const featureService = BaconServiceFactory.createFeatureService();

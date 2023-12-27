@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text } from 'react-native'
+import { Pressable, ScrollView, StyleSheet } from 'react-native'
 
 import { useAppContext } from '../contexts/AppContext';
 import { pressable_style } from '../styles/PressableNode';
 import { BaconMovieOption } from '../types';
+import { SearchInputNode } from './nodes/SearchInputNode';
 import { SuggestionNode } from './nodes/SuggestionNode';
 
 type SuggestionListProps = {
@@ -59,16 +60,8 @@ export function SuggestionList(props: SuggestionListProps) {
 
     return (
         <ScrollView style={styles.container} keyboardDismissMode='on-drag'>
-            <Pressable
-                onPress={() => handleSearchPress(inputSearch)}
-                style={({ pressed }) => [ {
-                    opacity: pressed ? 0.5 : 1,
-                    transform: [ { scale: pressed ? 0.95 : 1 } ]
-                }, pressable_style.suggestionLst ]}
-            >
-                {/* TODO: apply styling below to make this look more CLICKABLE */}
-                <Text style={styles.header}>Search for "{inputSearch}" </Text>
-            </Pressable>
+            {/* <Text style={styles.header}>Search for "{inputSearch}" </Text> */}
+            <SearchInputNode pressHandler={handleSearchPress} inputSearch={inputSearch} />
             {suggestionList.map((result) => {
                 return (
                     <SuggestionNode
@@ -79,20 +72,14 @@ export function SuggestionList(props: SuggestionListProps) {
                     />
                 )
             })}
+            {(suggestionList && suggestionList.length >= 3) && <SearchInputNode
+                inputSearch={inputSearch} pressHandler={handleSearchPress}
+            />}
         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    header: {
-        color: '#25292e',
-        fontSize: 16,
-        // fontWeight: 'bold',
-        marginBottom: 5,
-        // textAlign: 'center',
-        // alignSelf: 'center',
-        textAlign: 'right',
-    },
     container: {
         // backgroundColor: '#25292e',
         backgroundColor: 'transparent',

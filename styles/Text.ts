@@ -7,10 +7,22 @@ import { StyleSheet } from "react-native";
 export const text_style = StyleSheet.create({
     suggestionTitle: {
         color: '#25292e',
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
+        // fontFamily: 'Bacon-Stencil-Bold'
+        fontFamily: 'Bacon-Bold'
     },
     suggestionReleaseDate: {
-        color: '#2d3557',
+        color: '#25292e',
+        fontFamily: 'Bacon-Inline'
+    },
+    suggestionHeader: {
+        color: '#25292e',
+        fontSize: 16,
+        marginVertical: 5,
+        textAlign: 'right',
+        fontFamily: 'Bacon-Bold',
+        textDecorationLine: 'underline',
+        textDecorationStyle: 'double',
     },
 });
 

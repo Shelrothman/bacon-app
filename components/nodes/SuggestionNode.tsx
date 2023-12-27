@@ -4,7 +4,7 @@ import { Pressable, Text } from 'react-native';
 import { pressable_style } from '../../styles/PressableNode';
 import { text_style } from '../../styles/Text';
 
-
+// TODO: put on the same line at the bottom too.
 
 type SuggestionNodeProps = {
     handleOnPress: (name: string) => void;
@@ -23,7 +23,6 @@ export function SuggestionNode(props: SuggestionNodeProps) {
 
     return (
         <Pressable
-            // id={props.id + ""}
             onPress={() => props.handleOnPress(props.title)}
             style={({ pressed }) => [ {
                 opacity: pressed ? 0.5 : 1,

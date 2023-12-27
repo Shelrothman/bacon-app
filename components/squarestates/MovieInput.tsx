@@ -2,13 +2,10 @@ import { Fontisto } from '@expo/vector-icons';
 import { /* useEffect, */ useState } from 'react';
 import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native'
 
-// import { results } from '../../api/mocked/optionsExampleRes'
 import { useAppContext } from '../../contexts/AppContext';
-// import { SquareHeader } from '../SquareHeader';
 import { SuggestionList } from '../SuggestionList';
 
-// TODO: [BUG] its not disappearing the list when input is less than 3...
-// But only sometimes, so figure out the situation its happening in and fix it.
+
 
 export function MovieInput() {
 
@@ -47,20 +44,15 @@ export function MovieInput() {
                     placeholderTextColor={'#8e8e8e'}
                     clearButtonMode='while-editing'
                     returnKeyType="search"
-                    onSubmitEditing={handleGetCast} // ok this solves that but now thereis like nothing when clicked out of input.
-                    onBlur={() => {
-                        setSearchMode(false); 
-                        // info: the user can click if they dont hit the search on the keyboard. this leave itup to them
-                    }}
+                    onSubmitEditing={handleGetCast}
+                    // info: the user can click if they dont hit the search on the keyboard. this leave itup to them
+                    onBlur={() => setSearchMode(false)}
                     onFocus={() => setSearchMode(true)}
                 />
             </View>
             {movieInputTitle.length >= 3 && <SuggestionList
-                // movieList={results}
                 inputSearch={movieInputTitle}
             />}
-            {/* TODO: */}
-            {/* a list here of options if it cant be found.. TODO: handle it not being found on first search */}
         </View>
     )
 }

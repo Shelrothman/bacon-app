@@ -18,11 +18,8 @@ export default function App() {
     // TODO: got rhough asses and delete the ones that are not used from here and tehj actual files themselves
 
     const [ fontsLoaded ] = useFonts({
-        'Bacon-Play': require('./assets/fonts/PlaypenSans-Regular.ttf'),
         'Bacon-Reg': require('./assets/fonts/BigShouldersDisplay-Regular.ttf'),
-        'Bacon-Bold': require('./assets/fonts/BigShouldersDisplay-Bold.ttf'),
-        'Bacon-Boldest': require('./assets/fonts/BigShouldersDisplay-Black.ttf'),
-        'Bacon-Light': require('./assets/fonts/BigShouldersDisplay-Light.ttf'),
+        'Bacon-Bold': require('./assets/fonts/BigShouldersDisplay-Black.ttf'),
         'Bacon-Inline': require('./assets/fonts/InlineBlackTitle.ttf'),
         'Bacon-Limelight': require('./assets/fonts/Limelight-Regular.ttf'),
         'Bacon-Stencil': require('./assets/fonts/StencilTitle.ttf'),

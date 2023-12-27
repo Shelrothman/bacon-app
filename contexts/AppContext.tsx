@@ -1,9 +1,9 @@
 import { createContext, useContext, useState } from 'react';
 
-import * as mockedCast from '../api/mocked/mockedCast.json';
+// import * as mockedCast from '../api/mocked/mockedCast.json';
 import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
 import { BaconServiceFactory } from '../api/services/ServiceFactory';
-import { BaconActorList, BaconFeature, BaconFeatureList, BaconMovie, BaconMovieOption } from '../types';
+import { BaconActorList, BaconFeatureList, BaconMovie, BaconMovieOption } from '../types';
 
 
 type ContextProps = {
@@ -63,7 +63,7 @@ const AppProvider = (props: Props) => {
     const [ currentActorName, setCurrentActorName ] = useState<string>('');
 
     /** helper function to get the movie ID and set the currentTitle with official title */
-    async function getMovieID(movieName: string): Promise<BaconMovie | null> {
+    async function getMovieIDAndSetTitle(movieName: string): Promise<BaconMovie | null> {
         try {
             const featureService = BaconServiceFactory.createFeatureService();
             const featureResult = await featureService.getFeatureByTitle(movieName);
@@ -87,7 +87,7 @@ const AppProvider = (props: Props) => {
             //     console.log('---------------------------------');
             //     return { id: 12345, actors: mockedCast.cast, }
             // }
-            const feature_object = await getMovieID(movieName);
+            const feature_object = await getMovieIDAndSetTitle(movieName);
             if (!feature_object) {
                 return alert('No Movie found with provided title, please try again.');
             }
@@ -104,7 +104,7 @@ const AppProvider = (props: Props) => {
             );
         }
     }
-
+    /** the movie title will always exist for this since it comes from an existing actor entity */
     async function getMovies(actorID: number): Promise<BaconFeatureList | void> {
         try {
             // PICKUP: delete this before shipped.. 
@@ -137,12 +137,9 @@ const AppProvider = (props: Props) => {
         try {
             const featureService = BaconServiceFactory.createFeatureService();
             const suggestions = await featureService.getListOfFeaturesByPrefix(prefix);
-            if (suggestions) {
-                return suggestions;
-            }
+            if (suggestions) return suggestions;
             return [];
         } catch (error) {
-            // handleCaughtError(error as Error, 'getSuggestions');
             console.log('---------------------------------');
             console.error(error);
             return [];

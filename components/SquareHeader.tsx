@@ -2,6 +2,9 @@ import { Text, View } from 'react-native';
 
 import { container_style, text_style } from '../styles';
 
+// TODO: perhaps a little subheader for the release date..
+// and/or that info icon somewhere
+
 type SquareHeaderProps = {
     title: string;
 }

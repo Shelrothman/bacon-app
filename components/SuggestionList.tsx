@@ -25,7 +25,7 @@ type SuggestionListProps = {
 export function SuggestionList(props: SuggestionListProps) {
 
     const { inputSearch } = props;
-    const { getSuggestions, setIsLoading, getCast, setCurrentCardCast, setSquareState, setCurrentMovieTitle } = useAppContext();
+    const { getSuggestions, setIsLoading, getCast, setCurrentCardCast, setSquareState } = useAppContext();
     const [ suggestionList, setSuggestionList ] = useState<BaconMovieOption[]>([]);
 
     useEffect(() => {
@@ -51,7 +51,7 @@ export function SuggestionList(props: SuggestionListProps) {
             if (result) {
                 setCurrentCardCast && setCurrentCardCast(result);
                 setSquareState && setSquareState('movieCast');
-                setCurrentMovieTitle && setCurrentMovieTitle(searchTitle);
+                // setCurrentMovieTitle && setCurrentMovieTitle(searchTitle);
             }
         }).finally(() => {
             setIsLoading && setIsLoading(false);

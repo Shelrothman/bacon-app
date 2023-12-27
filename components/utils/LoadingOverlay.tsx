@@ -1,6 +1,6 @@
 import { ActivityIndicator,View } from "react-native";
 
-// TODO: a custom cool looking spinner
+// TODO: a custom cool looking spinner.. like a movie reel spinning
 
 // PICKUP: a loading scree with the squares right over it wold be perfect like looking like waves rolling kind of always being the color of the upcoming nodes to bring in/
 //https://reactnative.dev/docs/animated

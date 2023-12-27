@@ -13,6 +13,9 @@ import { container_style } from './styles';
 
 // TODO: a cool engagin splash screeen like ready to get that off your tongue yahoo thing
 
+
+
+
 export default function App() {
 
     const [ fontsLoaded ] = useFonts({

@@ -2,8 +2,6 @@ import { BaconActor, BaconFeature, BaconMovieOption/* , GetCastResponse  */ } fr
 import { ActorTMDB, MovieActorTMDB, MovieTMDB } from '../../types/tmdb';
 import { config } from '../config';
 
-// FUTURE: an abstracted repository layer if the complexity grows
-
 const apiKey = config.TMDB_API_KEY.v3;
 const urlSuffix = `&page=1&api_key=${apiKey}`;
 
@@ -53,19 +51,11 @@ export class MovieActorStore {
         const data = await response.json() as { results: MovieTMDB[] };
         if (data && data.results && data.results.length > 0) {
             const firstTenFeatures = data.results.slice(0, 10);
-            // const movieObjects: BaconFeature[] = firstFiveFeatures.map((feature) => ({
-            //     id: feature.id,
-            //     title: feature.original_title || feature.title
-            // }));
-            // return movieObjects;
             return firstTenFeatures;
         } else {
-            // throw new Error('no movie found');
-            return []; // ???: may need be null?
+            return []; 
         }
     }
-
-
 
     /**
      * @method getCastByMovieId

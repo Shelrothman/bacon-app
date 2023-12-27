@@ -8,7 +8,6 @@ type SuggestionNodeProps = {
     handleOnPress: (name: string) => void;
     title: string;
     release_date: string;
-    // id: number;
 };
 
 

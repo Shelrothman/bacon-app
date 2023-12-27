@@ -1,9 +1,8 @@
-import { BaconActor, BaconFeature } from "../../types";
-import IDataInterface from "../data/DataInterface";
+import { MovieActorStore } from "../data/MovieActorStore";
 
 type FeatureServiceParams = {
     // feature_title: string;
-    dataStore: IDataInterface<BaconActor, BaconFeature>;
+    dataStore: MovieActorStore;
 }
 
 
@@ -16,7 +15,7 @@ type FeatureServiceParams = {
 
 export class FeatureService {
     // feature_title: string;
-    dataStore: IDataInterface<BaconActor, BaconFeature>;
+    dataStore: MovieActorStore;
 
 
     constructor(featureServiceParams: FeatureServiceParams) {

@@ -15,8 +15,8 @@ export default interface IDataInterface<A,F> {
     api_key: string;
     api_base: string;
     // these could change the data but the actual methods will be needed and staty bc that s this app..
-    getMovieByTitle: (title: string) => Promise<F>;
-    getCastByMovieId: (id: number) => Promise<A[]>;
-    getMoviesByActorId: (id: number) => Promise<F[]>;
-    getTenMoviesByPrefix: (title: string) => Promise<BaconMovieOption[]>;
+    getMovieByTitle: (title: string) => Promise<F|null>;
+    getCastByMovieId: (id: number) => Promise<A[]|null>;
+    getMoviesByActorId: (id: number) => Promise<F[]|null>;
+    getTenMoviesByPrefix: (title: string) => Promise<BaconMovieOption[]|null>;
 }  

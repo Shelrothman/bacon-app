@@ -1,4 +1,4 @@
-import { BaconActor, BaconFeature, BaconMovieOption } from '../../types';
+import { BaconActor, BaconFeature, BaconMovieOption/* , GetCastResponse  */ } from '../../types';
 import { ActorTMDB, MovieActorTMDB, MovieTMDB } from '../../types/tmdb';
 import { config } from '../config';
 import IDataInterface from './DataInterface';
@@ -31,7 +31,7 @@ export class MovieActorStore implements IDataInterface<BaconActor, BaconFeature>
      * @param title - the title of the movie to search for
      * @returns {Promise<BaconFeature>} movie data
      */
-    async getMovieByTitle(title: string): Promise<BaconFeature> {
+    async getMovieByTitle(title: string): Promise<BaconFeature | null> {
         const url = `${this.api_base}/search/movie?query=${title}${this.url_suffix}`;
         const response = await fetch(url);
         const data = await response.json() as { results: MovieTMDB[] };
@@ -44,12 +44,11 @@ export class MovieActorStore implements IDataInterface<BaconActor, BaconFeature>
             };
             return movieObject;
         } else {
-            // throw new Error('no movie found');
-            return {} as BaconFeature;
+            return null;
         }
     }
 
-    async getTenMoviesByPrefix(prefix: string): Promise<BaconMovieOption[]> {
+    async getTenMoviesByPrefix(prefix: string): Promise<BaconMovieOption[] | null> {
         const url = `${this.api_base}/search/movie?query=${prefix}${this.url_suffix}`;
         const response = await fetch(url);
         const data = await response.json() as { results: MovieTMDB[] };
@@ -63,16 +62,18 @@ export class MovieActorStore implements IDataInterface<BaconActor, BaconFeature>
             return firstTenFeatures;
         } else {
             // throw new Error('no movie found');
-            return [];
+            return []; // ???: may need be null?
         }
     }
+
+
 
     /**
      * @method getCastByMovieId
      * @param id - the TMDB defined id of the movie to get the cast for
      * @returns {BaconActor[]} list of actors
      */
-    async getCastByMovieId(id: number): Promise<BaconActor[]> {
+    async getCastByMovieId(id: number): Promise<BaconActor[] | null> {
         // only try catch in the route/controller bc that is what makes sense dug
         const url = `${this.api_base}/movie/${id}/credits?api_key=${this.api_key}`;
         const response = await fetch(url);
@@ -81,8 +82,7 @@ export class MovieActorStore implements IDataInterface<BaconActor, BaconFeature>
             const actors = data.cast.map((actor) => this.convertToBaconActor(actor));
             return actors;
         } else {
-            throw new Error('invalid movie ID');
-            // return [];
+            return null;
         }
     }
 
@@ -91,7 +91,7 @@ export class MovieActorStore implements IDataInterface<BaconActor, BaconFeature>
      * gets a list of every movie feature an actor has been in
      * @returns 
      */
-    async getMoviesByActorId(id: number): Promise<BaconFeature[]> {
+    async getMoviesByActorId(id: number): Promise<BaconFeature[] | null> {
         const url = `${this.api_base}/person/${id}/movie_credits?api_key=${this.api_key}`;
         const response = await fetch(url);
         const data = await response.json() as { cast: MovieActorTMDB[] };
@@ -100,7 +100,7 @@ export class MovieActorStore implements IDataInterface<BaconActor, BaconFeature>
             // console.log(movies)
             return movies;
         } else {
-            throw new Error('invalid actor ID');
+            return null;
         }
     }
 

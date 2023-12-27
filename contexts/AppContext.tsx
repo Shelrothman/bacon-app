@@ -52,16 +52,6 @@ const handleCaughtError = (error: Error, method: string) => {
     }
     return alert('Internal Server Error, please try again later.');
 };
-async function getMovieID(movieName: string): Promise<BaconMovie | void> {
-    try {
-        const featureService = BaconServiceFactory.createFeatureService();
-        const featureResult: BaconFeature = await featureService.getFeatureByTitle(movieName);
-        if (!featureResult) return alert('Movie not found with provided title, please try again.');
-        return featureResult;
-    } catch (error) {
-        handleCaughtError(error as Error, 'getMovieID');
-    }
-}
 
 
 const AppProvider = (props: Props) => {
@@ -72,37 +62,46 @@ const AppProvider = (props: Props) => {
     const [ currentMovieTitle, setCurrentMovieTitle ] = useState<string>('');
     const [ currentActorName, setCurrentActorName ] = useState<string>('');
 
+    /** helper function to get the movie ID and set the currentTitle with official title */
+    async function getMovieID(movieName: string): Promise<BaconMovie | null> {
+        try {
+            const featureService = BaconServiceFactory.createFeatureService();
+            const featureResult = await featureService.getFeatureByTitle(movieName);
+            if (!featureResult) return null;
+            setCurrentMovieTitle(featureResult.title);
+            return featureResult;
+        } catch (error) {
+            console.error('Error fetching movieID');
+            console.log('---------------------------------');
+            console.error(error);
+            return null;
+        }
+    }
 
     async function getCast(movieName: string): Promise<BaconActorList | void> {
         try {
             // PICKUP: delete this before shipped.. 
             // just need it so don't use too much API calls while developing.
-            if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
-                console.log('MOCK MODE ON, returning fake data...');
-                console.log('---------------------------------');
-                // setTimeout(() => {
-                    return {
-                        id: 12345,
-                        actors: mockedCast.cast,
-                    }
-                // }, 5000);
-            }
+            // if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
+            //     console.log('MOCK MODE ON, returning fake data...');
+            //     console.log('---------------------------------');
+            //     return { id: 12345, actors: mockedCast.cast, }
+            // }
             const feature_object = await getMovieID(movieName);
-            const featureService = BaconServiceFactory.createFeatureService();
             if (!feature_object) {
                 return alert('No Movie found with provided title, please try again.');
             }
+            const featureService = BaconServiceFactory.createFeatureService();
             const featureCast = await featureService.getFeatureCastByMovieId(feature_object?.id);
             if (!featureCast) {
-                return alert('cannot find cast for the requested feature ID.');
+                return alert(`No cast found for ${movieName}. Please try again.`);
             }
             setCurrentMovieTitle(feature_object.title);
-            return {
-                id: feature_object.id,
-                actors: featureCast,
-            };
+            return { id: feature_object.id, actors: featureCast };
         } catch (error) {
-            handleCaughtError(error as Error, 'getCast');
+            return alert(
+                `An unknown error occurred while attempting to get the cast, please try again. If this issue persists, please contact support, shel.programmer@gmail.com.`
+            );
         }
     }
 

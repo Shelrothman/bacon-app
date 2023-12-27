@@ -1,6 +1,6 @@
 import { ScrollView, View } from 'react-native'
 
-import useGetData from '../../hooks/useGetCast'
+import useGetData from '../../hooks/useGetData'
 import { BaconFeatureList } from '../../types'
 import { MovieButtonNode } from '../nodes/MovieButtonNode'
 import { SquareHeader } from '../SquareHeader'

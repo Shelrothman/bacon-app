@@ -6,7 +6,10 @@ import { useAppContext } from "../contexts/AppContext";
  * @hook useGetData - get cast of movie and/or actors movies for the UI
  */
 const useGetData = () => {
-    const { setSquareState, getCast, setIsLoading, setCurrentCardCast, setCurrentMovieTitle } = useAppContext();
+    const { 
+        setSquareState, getCast, setIsLoading, setCurrentCardCast, 
+        setCurrentMovieTitle, getMovies, setCurrentCardMovies, setCurrentActorName
+    } = useAppContext();
 
     /** 
      * gets the cast of the movie
@@ -30,9 +33,25 @@ const useGetData = () => {
         });
     };
 
-    return {
-        handleGetCast
+    /**
+     * gets all the movies an actor has been in
+     * @param {number} id - the id of the actor to get the movies for
+     * @param {string} actorName - the name of the actor to get the movies for
+     */
+    const handleGetMovies = (id: number, actorName: string) => {
+        setIsLoading && setIsLoading(true);
+        getMovies && getMovies(id).then((result) => {
+            if (result) {
+                setCurrentCardMovies && setCurrentCardMovies(result);
+                setSquareState && setSquareState('actorsMovies');
+                setCurrentActorName && setCurrentActorName(actorName);
+            }
+        }).finally(() => {
+            setIsLoading && setIsLoading(false);
+        });
     };
+
+    return { handleGetCast, handleGetMovies };
 
 };
 

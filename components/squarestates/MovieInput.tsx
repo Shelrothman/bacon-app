@@ -2,7 +2,7 @@ import { Fontisto } from '@expo/vector-icons';
 import { /* useEffect, */ useState } from 'react';
 import { Text, TextInput, View } from 'react-native'
 
-import useGetData from '../../hooks/useGetCast';
+import useGetData from '../../hooks/useGetData';
 import { container_style, text_style } from '../../styles';
 import { SuggestionList } from '../SuggestionList';
 

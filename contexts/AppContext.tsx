@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-// import * as mockedCast from '../api/mocked/mockedCast.json';
+import * as mockedCast from '../api/mocked/mockedCast.json';
 import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
 import { BaconServiceFactory } from '../api/services/ServiceFactory';
 import { BaconActorList, BaconFeatureList, BaconMovie, BaconMovieOption } from '../types';
@@ -82,11 +82,11 @@ const AppProvider = (props: Props) => {
         try {
             // PICKUP: delete this before shipped.. 
             // just need it so don't use too much API calls while developing.
-            // if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
-            //     console.log('MOCK MODE ON, returning fake data...');
-            //     console.log('---------------------------------');
-            //     return { id: 12345, actors: mockedCast.cast, }
-            // }
+            if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
+                console.log('MOCK MODE ON, returning fake data...');
+                console.log('---------------------------------');
+                return { id: 12345, actors: mockedCast.cast, }
+            }
             const feature_object = await getMovieIDAndSetTitle(movieName);
             if (!feature_object) {
                 return alert('No Movie found with provided title, please try again.');
@@ -112,12 +112,10 @@ const AppProvider = (props: Props) => {
             if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
                 console.log('MOCK MODE ON, returning fake data...');
                 console.log('---------------------------------');
-                // setTimeout(() => {
                 return {
                     id: 12345,
                     features: mockedFeatures.features,
                 }
-                // }, 5000);
             }
             const actorService = BaconServiceFactory.createActorService({ actor_id: actorID });
             const featureListResult = await actorService.getFeaturesForActor();

@@ -4,8 +4,6 @@ import { Pressable, Text } from 'react-native';
 import { pressable_style } from '../../styles/PressableNode';
 import { text_style } from '../../styles/Text';
 
-// TODO: put on the same line at the bottom too.
-
 type SuggestionNodeProps = {
     handleOnPress: (name: string) => void;
     title: string;
@@ -19,7 +17,6 @@ type SuggestionNodeProps = {
  * a clickable option for the user to select from in the suggestion list
  */
 export function SuggestionNode(props: SuggestionNodeProps) {
-
 
     return (
         <Pressable

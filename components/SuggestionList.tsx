@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet } from 'react-native'
+import { ScrollView } from 'react-native'
 
 import { useAppContext } from '../contexts/AppContext';
-import { pressable_style } from '../styles/PressableNode';
+import { container_style } from '../styles';
 import { BaconMovieOption } from '../types';
 import { SearchInputNode } from './nodes/SearchInputNode';
 import { SuggestionNode } from './nodes/SuggestionNode';
@@ -59,8 +59,7 @@ export function SuggestionList(props: SuggestionListProps) {
     }
 
     return (
-        <ScrollView style={styles.container} keyboardDismissMode='on-drag'>
-            {/* <Text style={styles.header}>Search for "{inputSearch}" </Text> */}
+        <ScrollView style={container_style.suggestionListScrollView} keyboardDismissMode='on-drag'>
             <SearchInputNode pressHandler={handleSearchPress} inputSearch={inputSearch} />
             {suggestionList.map((result) => {
                 return (
@@ -78,14 +77,3 @@ export function SuggestionList(props: SuggestionListProps) {
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        // backgroundColor: '#25292e',
-        backgroundColor: 'transparent',
-        borderBottomEndRadius: 18,
-        borderBottomStartRadius: 18,
-        // alignItems: 'flex-start',
-        width: 300,
-    }
-})

@@ -1,7 +1,6 @@
 import { BaconActor, BaconFeature, BaconMovieOption/* , GetCastResponse  */ } from '../../types';
 import { ActorTMDB, MovieActorTMDB, MovieTMDB } from '../../types/tmdb';
 import { config } from '../config';
-import IDataInterface from './DataInterface';
 
 // FUTURE: an abstracted repository layer if the complexity grows
 
@@ -13,7 +12,7 @@ const urlSuffix = `&page=1&api_key=${apiKey}`;
  * @class MovieActorDataStore
  * fetches data from the TMDB API
  */
-export class MovieActorStore implements IDataInterface<BaconActor, BaconFeature> {
+export class MovieActorStore {
     api_key: string;
     api_base: string;
     url_suffix: string;

@@ -1,10 +1,10 @@
 import { Fontisto } from '@expo/vector-icons';
 import { /* useEffect, */ useState } from 'react';
-import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Keyboard, Text, TextInput, View } from 'react-native'
 
 import { useAppContext } from '../../contexts/AppContext';
+import { container_style, text_style } from '../../styles';
 import { SuggestionList } from '../SuggestionList';
-
 
 
 export function MovieInput() {
@@ -18,6 +18,7 @@ export function MovieInput() {
         if (movieInputTitle.length < 1) return;
         Keyboard.dismiss(); // fixme: i dont like how the coloring is seen as missing after hitting search...
         // maybe need it to be a dropdown list of valid movie titles to be picked from dynamically as the user types?
+        // info: maybe look in App.tsx usage of KeyboardAvoidingView
         setIsLoading && setIsLoading(true);
         getCast && getCast(movieInputTitle).then((result) => {
             if (result) {
@@ -30,12 +31,12 @@ export function MovieInput() {
     }
 
     return (
-        <View style={searchMode ? styles.containerWithSearch : styles.containerNoSearch}>
-            <Text style={styles.text}>What Movie has you Curious?</Text>
-            <View style={styles.inputContainer}>
+        <View style={searchMode ? container_style.containerWithSearch : container_style.containerNoSearch}>
+            <Text style={text_style.movieInputHeader}>What Movie has you Curious?</Text>
+            <View style={container_style.inputContainer}>
                 <Fontisto name="film" size={24} color="white" />
                 <TextInput
-                    style={styles.input}
+                    style={text_style.textInput}
                     placeholder="Enter Movie Title..."
                     autoCorrect={false}
                     autoCapitalize='none'
@@ -56,41 +57,3 @@ export function MovieInput() {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    containerNoSearch: {
-        justifyContent: 'space-evenly',
-        flex: 1,
-    },
-    containerWithSearch: {
-        flex: 1,
-        justifyContent: 'flex-start'
-    },
-    input: {
-        width: 219,
-        color: '#fff',
-        paddingLeft: 10,
-        fontFamily: 'Bacon-Script',
-    },
-    inputContainer: {
-        backgroundColor: '#25292e',
-        flexDirection: 'row',
-        width: 300,
-        height: 60,
-        padding: 14,
-        borderBottomWidth: 2,
-        borderRadius: 18,
-        marginTop: 15,
-    },
-    inputIcon: {
-        alignSelf: 'center',
-        marginRight: 12,
-        width: 30,
-    },
-    text: {
-        fontFamily: 'Bacon-Limelight',
-        fontSize: 24,
-        textAlign: 'center',
-        textAlignVertical: 'center',
-    },
-});

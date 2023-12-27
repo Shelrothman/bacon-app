@@ -1,9 +1,8 @@
 import { LinearGradient } from 'expo-linear-gradient';
-// import { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-// import { useState } from 'react';
 import { useAppContext } from '../contexts/AppContext';
+import { container_style } from '../styles';
 import { ActorsMovies } from './squarestates/ActorsMovies';
 import { MovieCast } from './squarestates/MovieCast';
 import { MovieInput } from './squarestates/MovieInput';
@@ -18,10 +17,10 @@ export function MainSquare() {
     const { squareState, isLoading, currentCardCast, currentCardMovies, currentMovieTitle, currentActorName } = useAppContext();
 
     return (
-        <View style={styles.shadowProp}>
+        <View style={container_style.shadowProp}>
             <LinearGradient
                 colors={[ '#6779cb', '#4157be', '#4158BE' ]}
-                style={styles.square}
+                style={container_style.mainSquare}
             >
                 {isLoading ? <LoadingOverlay /> : (
                     squareState === 'actorsMovies' ? <ActorsMovies
@@ -38,33 +37,3 @@ export function MainSquare() {
         </View>
     );
 }
-
-
-const styles = StyleSheet.create({
-    square: {
-        // width: "95%",
-        width: 350,
-        height: 540,
-        borderRadius: 18,
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        padding: 10,
-        flexDirection: 'column',
-
-    },
-    shadowProp: {
-        shadowColor: '#171717',
-        shadowOffset: { width: 2, height: 7 },
-        shadowOpacity: 0.7,
-        shadowRadius: 3,
-    },
-    input: {
-        backgroundColor: '#25292e',
-        borderRadius: 18,
-        width: 300,
-        height: 40,
-        color: 'white',
-        paddingLeft: 10,
-    }
-});

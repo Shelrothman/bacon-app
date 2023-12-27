@@ -1,6 +1,6 @@
-// import { FontAwesome } from '@expo/vector-icons';
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Pressable, Text } from 'react-native'
 
+import { pressable_style, text_style } from '../styles';
 // import { useAppContext } from '../contexts/AppContext'
 
 type FooterButtonProps = {
@@ -12,26 +12,12 @@ type FooterButtonProps = {
 export function FooterButton(props: FooterButtonProps) {
     const { icon, text, handlePress } = props;
     // const { setSquareState } = useAppContext();
-    // TODO: the settings thing into pull up menu
-
+    // may need this for when the user clicks the button to go back to the movie input screen
 
     return (
-            <Pressable onPress={handlePress} style={styles.container}>
-                {icon}
-                <Text style={styles.text}>{text}</Text>
-            </Pressable>
+        <Pressable onPress={handlePress} style={pressable_style.footer}>
+            {icon}
+            <Text style={text_style.footerText}>{text}</Text>
+        </Pressable>
     )
 }
-
-const styles = StyleSheet.create({
-    text: {
-        color: 'white',
-        fontFamily: 'Bacon-Stencil',
-        fontSize: 18,
-    },
-    container: {
-        textAlign: 'center',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-    },
-})

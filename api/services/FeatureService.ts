@@ -19,8 +19,6 @@ export class FeatureService {
     dataStore: IDataInterface<BaconActor, BaconFeature>;
 
 
-
-
     constructor(featureServiceParams: FeatureServiceParams) {
         // this.feature_title = featureServiceParams.feature_title;
         this.dataStore = featureServiceParams.dataStore;
@@ -44,9 +42,5 @@ export class FeatureService {
         const features = await this.dataStore.getTenMoviesByPrefix(feature_title);
         return features;
     }
-
-    // TODO: handle it not being the first one. in service layer
-    
-
 
 }    

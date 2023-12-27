@@ -2,20 +2,18 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback } from 'react';
-import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, View } from 'react-native';
 
 import Footer from './components/Footer';
 import { MainSquare } from './components/MainSquare';
 import { AppProvider } from './contexts/AppContext';
+import { container_style } from './styles';
 
 // TODO: an info icon thing to show user the overview at any popint in the app.
 
 // TODO: a cool engagin splash screeen like ready to get that off your tongue yahoo thing
 
 export default function App() {
-
-
-    // TODO: got rhough asses and delete the ones that are not used from here and tehj actual files themselves
 
     const [ fontsLoaded ] = useFonts({
         'Bacon-Reg': require('./assets/fonts/BigShouldersDisplay-Regular.ttf'),
@@ -39,17 +37,17 @@ export default function App() {
 
     return (
         <AppProvider>
-            <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
+            <SafeAreaView style={container_style.appRootContainer} onLayout={onLayoutRootView}>
                 <StatusBar style="light" />{/* light so it shows on dark. */}
                 <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
                     {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
                     <ScrollView keyboardDismissMode='on-drag' showsVerticalScrollIndicator={false} >
-                        <View style={styles.squareContainer}>
+                        <View style={container_style.mainSquareWrapper}>
                             <MainSquare />
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>
-                <View style={styles.footerContainer}>
+                <View style={container_style.footerOuterWrapper}>
                     <Footer />
                 </View>
             </SafeAreaView>
@@ -57,26 +55,3 @@ export default function App() {
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#25292e',
-        alignItems: 'center',
-        position: 'relative',
-        justifyContent: 'center',
-        // paddingTop: 40,
-    },
-    squareContainer: {
-        flex: 1,
-        paddingTop: 50,
-    },
-    footerContainer: {
-        flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'space-between',
-        position: 'absolute',
-        // marginHorizontal: 20,
-        paddingHorizontal: 30,
-        bottom: 50,
-    },
-});

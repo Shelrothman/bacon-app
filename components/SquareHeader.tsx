@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native';
 
+import { container_style, text_style } from '../styles';
 
 type SquareHeaderProps = {
     title: string;
@@ -8,25 +9,8 @@ type SquareHeaderProps = {
 
 export function SquareHeader(props: SquareHeaderProps) {
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>{props.title}</Text>
+        <View style={container_style.squareHeaderContainer}>
+            <Text style={text_style.squareHeader}>{props.title}</Text>
         </View>
     )
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-        alignSelf: 'center',
-        flexDirection: 'row',
-        margin: 10,
-    },
-    text: {
-        fontFamily: 'Bacon-Stencil-Bold',
-        fontSize: 26,
-        color: '#2b3a7d',
-        textAlign: 'center',
-    },
-
-
-})

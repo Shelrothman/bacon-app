@@ -7,8 +7,6 @@ import { StyleSheet } from "react-native";
 export const text_style = StyleSheet.create({
     suggestionTitle: {
         color: '#25292e',
-        // fontWeight: 'bold',
-        // fontFamily: 'Bacon-Stencil-Bold'
         fontFamily: 'Bacon-Bold'
     },
     suggestionReleaseDate: {
@@ -24,6 +22,28 @@ export const text_style = StyleSheet.create({
         textDecorationLine: 'underline',
         textDecorationStyle: 'double',
     },
+    /** one and only input in MovieInput state */
+    textInput: {
+        width: 219,
+        color: '#fff',
+        paddingLeft: 10,
+        fontFamily: 'Bacon-Script',
+    },
+    movieInputHeader: {
+        fontFamily: 'Bacon-Limelight',
+        fontSize: 24,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+    },
+    footerText: {
+        color: 'white',
+        fontFamily: 'Bacon-Stencil',
+        fontSize: 18,
+    },
+    squareHeader: {
+        fontFamily: 'Bacon-Stencil-Bold',
+        fontSize: 26,
+        color: '#2b3a7d',
+        textAlign: 'center',
+    }
 });
-
-// TODO: on export, add font family to all text components

@@ -21,5 +21,10 @@ export const pressable_style = StyleSheet.create({
         borderBottomWidth: .5,
         borderBottomColor: '#6779cb',
     },
+    footer: {
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+    },
 
 });

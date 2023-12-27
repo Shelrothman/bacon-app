@@ -1,5 +1,4 @@
 import { useFonts } from 'expo-font';
-// import { LinearGradient } from 'expo-linear-gradient';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback } from 'react';

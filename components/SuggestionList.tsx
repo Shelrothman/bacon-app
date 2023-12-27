@@ -7,14 +7,11 @@ import { BaconMovieOption } from '../types';
 import { SuggestionNode } from './nodes/SuggestionNode';
 
 type SuggestionListProps = {
-    /** prob only need ~5... */
     // movieList: BaconMovieOption[];
     inputSearch: string;
 }
 
 // TODO: remove all web dependencies from this whole project/
-
-// PICKUP: todo NEXT::: get this being REAL DATA from the api and all the logic for it
 
 /** 
  * @component - SuggestionList
@@ -27,40 +24,49 @@ type SuggestionListProps = {
 export function SuggestionList(props: SuggestionListProps) {
 
     const { inputSearch } = props;
-    const { getSuggestions /* , setIsLoading  */ } = useAppContext();
+    const { getSuggestions, setIsLoading, getCast, setCurrentCardCast, setSquareState, setCurrentMovieTitle } = useAppContext();
     const [ suggestionList, setSuggestionList ] = useState<BaconMovieOption[]>([]);
 
     useEffect(() => {
-        onLoad();
+        if (inputSearch.length < 3) setSuggestionList([]);
+        else onLoad();
     }, [ inputSearch ]);
 
     const onLoad = () => {
-        // setIsLoading && setIsLoading(true); ???:
-        // if (inputSearch.length < 3) return; this is handed already in parent.
-        // console.log('pressed');
+        if (inputSearch.length < 3) setSuggestionList([]);
         getSuggestions && getSuggestions(inputSearch).then((results) => {
-            // console.log(results);
             setSuggestionList(results);
-
         }).finally(() => {
+            // TODO: figure out if this is needed or not
             // setIsLoading && setIsLoading(false);
+            return;
+        });
+    }
+
+    // TODO: MUSt move this function that gets used in other places, to its own servicey file
+    const handleSearchPress = (searchTitle: string) => {
+        setIsLoading && setIsLoading(true);
+        getCast && getCast(searchTitle).then((result) => {
+            if (result) {
+                setCurrentCardCast && setCurrentCardCast(result);
+                setSquareState && setSquareState('movieCast');
+                setCurrentMovieTitle && setCurrentMovieTitle(searchTitle);
+            }
+        }).finally(() => {
+            setIsLoading && setIsLoading(false);
         });
     }
 
     return (
-        <ScrollView style={styles.container}
-        // it just sucks that it doesnt work for areas outside of the scrollview... but i guess thats the point of the scrollview...
-            keyboardDismissMode='on-drag'
-            // keyboardDismissMode='interactive'
-            // showsVerticalScrollIndicator={false}
-        // keyboardShouldPersistTaps='handled' // the keyboard will not dismiss automatically, and the scroll view will not catch taps, but children of the scroll view can catch taps.
-        >
+        <ScrollView style={styles.container} keyboardDismissMode='on-drag'>
             <Pressable
+                onPress={() => handleSearchPress(inputSearch)}
                 style={({ pressed }) => [ {
                     opacity: pressed ? 0.5 : 1,
                     transform: [ { scale: pressed ? 0.95 : 1 } ]
                 }, pressable_style.suggestionLst ]}
             >
+                {/* TODO: apply styling below to make this look more CLICKABLE */}
                 <Text style={styles.header}>Search for "{inputSearch}" </Text>
             </Pressable>
             {suggestionList.map((result) => {
@@ -69,8 +75,7 @@ export function SuggestionList(props: SuggestionListProps) {
                         key={result.id}
                         release_date={result.release_date}
                         title={result.title}
-                        handleOnPress={() => console.log('pressed')}
-                    // handleOnPress={handlePress}
+                        handleOnPress={() => handleSearchPress(result.title)}
                     />
                 )
             })}

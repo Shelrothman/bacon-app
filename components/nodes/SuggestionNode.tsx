@@ -7,7 +7,7 @@ import { text_style } from '../../styles/Text';
 
 
 type SuggestionNodeProps = {
-    handleOnPress: (id: number, name: string) => void;
+    handleOnPress: (name: string) => void;
     title: string;
     release_date: string;
     // id: number;
@@ -20,12 +20,11 @@ type SuggestionNodeProps = {
  */
 export function SuggestionNode(props: SuggestionNodeProps) {
 
+
     return (
         <Pressable
             // id={props.id + ""}
-            onPress={() => {
-                console.log('suggestion pressed');
-            }}
+            onPress={() => props.handleOnPress(props.title)}
             style={({ pressed }) => [ {
                 opacity: pressed ? 0.5 : 1,
                 transform: [ { scale: pressed ? 0.95 : 1 } ]

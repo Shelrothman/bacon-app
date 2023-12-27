@@ -1,4 +1,4 @@
-import { ScrollView,  View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 
 import { useAppContext } from '../../contexts/AppContext'
 import { BaconFeatureList } from '../../types'

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-// import * as mockedCast from '../api/mocked/mockedCast.json';
+import * as mockedCast from '../api/mocked/mockedCast.json';
 import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
 import { BaconServiceFactory } from '../api/services/ServiceFactory';
 import { BaconActorList, BaconFeature, BaconFeatureList, BaconMovie, BaconMovieOption } from '../types';
@@ -77,16 +77,16 @@ const AppProvider = (props: Props) => {
         try {
             // PICKUP: delete this before shipped.. 
             // just need it so don't use too much API calls while developing.
-            // if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
-                // console.log('MOCK MODE ON, returning fake data...');
-                // console.log('---------------------------------');
+            if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
+                console.log('MOCK MODE ON, returning fake data...');
+                console.log('---------------------------------');
                 // setTimeout(() => {
-                // return {
-                    // id: 12345,
-                    // actors: mockedCast.cast,
-                // }
+                    return {
+                        id: 12345,
+                        actors: mockedCast.cast,
+                    }
                 // }, 5000);
-            // }
+            }
             const feature_object = await getMovieID(movieName);
             const featureService = BaconServiceFactory.createFeatureService();
             if (!feature_object) {

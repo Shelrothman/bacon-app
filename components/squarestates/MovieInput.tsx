@@ -7,6 +7,8 @@ import { useAppContext } from '../../contexts/AppContext';
 // import { SquareHeader } from '../SquareHeader';
 import { SuggestionList } from '../SuggestionList';
 
+// TODO: [BUG] its not disappearing the list when input is less than 3...
+// But only sometimes, so figure out the situation its happening in and fix it.
 
 export function MovieInput() {
 
@@ -37,17 +39,18 @@ export function MovieInput() {
                 <Fontisto name="film" size={24} color="white" />
                 <TextInput
                     style={styles.input}
-                    placeholder="Enter a Movie Title..."
-                    onChangeText={(text) => text.length > 1 && setMovieInputTitle(text)}
+                    placeholder="Enter Movie Title..."
+                    autoCorrect={false}
+                    autoCapitalize='none'
+                    onChangeText={(text) => setMovieInputTitle(text)}
                     keyboardType='default'
                     placeholderTextColor={'#8e8e8e'}
                     clearButtonMode='while-editing'
                     returnKeyType="search"
                     onSubmitEditing={handleGetCast} // ok this solves that but now thereis like nothing when clicked out of input.
                     onBlur={() => {
-                        setSearchMode(false); // Dont let it blur?
-                        // ???: maybe consider turning this on OR just having a buttton for if they blur without srarching?/choosing a suggestion...
-                        // handleGetCast();PICKUP: turn this back on?
+                        setSearchMode(false); 
+                        // info: the user can click if they dont hit the search on the keyboard. this leave itup to them
                     }}
                     onFocus={() => setSearchMode(true)}
                 />
@@ -77,6 +80,7 @@ const styles = StyleSheet.create({
         width: 219,
         color: '#fff',
         paddingLeft: 10,
+        fontFamily: 'Bacon-Script',
     },
     inputContainer: {
         backgroundColor: '#25292e',

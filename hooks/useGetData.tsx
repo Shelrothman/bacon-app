@@ -6,9 +6,9 @@ import { useAppContext } from "../contexts/AppContext";
  * @hook useGetData - get cast of movie and/or actors movies for the UI
  */
 const useGetData = () => {
-    const { 
-        setSquareState, getCast, setIsLoading, setCurrentCardCast, 
-        setCurrentMovieTitle, getMovies, setCurrentCardMovies, setCurrentActorName
+    const {
+        setSquareState, getCast, setIsLoading, setCurrentCardCast,
+        setCurrentMovieTitle, getMovies, setCurrentCardMovies, setCurrentActorName, setCurrentActorID
     } = useAppContext();
 
     /** 
@@ -27,6 +27,7 @@ const useGetData = () => {
                 setSquareState && setSquareState('movieCast');
                 // only set the global title if it came from the actor node since that holds the official title from the db
                 if (isActorNodePress) setCurrentMovieTitle && setCurrentMovieTitle(movieTitle);
+                //info: done worry if blank or wrong when in mock mode
             }
         }).finally(() => {
             setIsLoading && setIsLoading(false);
@@ -45,6 +46,7 @@ const useGetData = () => {
                 setCurrentCardMovies && setCurrentCardMovies(result);
                 setSquareState && setSquareState('actorsMovies');
                 setCurrentActorName && setCurrentActorName(actorName);
+                setCurrentActorID && setCurrentActorID(id);
             }
         }).finally(() => {
             setIsLoading && setIsLoading(false);

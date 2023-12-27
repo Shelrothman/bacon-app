@@ -5,11 +5,12 @@ import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
 import { BaconServiceFactory } from '../api/services/ServiceFactory';
 import { BaconActorList, BaconFeatureList, BaconMovie, BaconMovieOption } from '../types';
 
+type BaconSquareState = 'movieInput' | 'movieCast' | 'actorsMovies';
 
 type ContextProps = {
     /** can be one of 3: movieInput, movieCast, actorsMovies */
-    squareState: string;
-    setSquareState: (squareState: string) => void;
+    squareState: BaconSquareState;
+    setSquareState: (squareState: BaconSquareState) => void;
     isLoading: boolean;
     setIsLoading: (isLoading: boolean) => void;
     /** gets the cast of the user-entered movie */
@@ -28,6 +29,9 @@ type ContextProps = {
     /** current actor selected by user onPress */
     currentActorName: string;
     setCurrentActorName: (actorName: string) => void;
+    /** id of the currentActor */
+    currentActorID: number;
+    setCurrentActorID: (actorID: number) => void;
     /** gets the suggestionList based on current value of searchInput */
     getSuggestions: (prefix: string) => Promise<BaconMovieOption[]>;
 };
@@ -40,14 +44,20 @@ export function useAppContext() {
     return useContext(AppContext);
 }
 
+// PICKUP: delete this and everything using it before shipped.. 
+// just need it so don't use too much API calls while developing.
+// const isMocked = process.env.EXPO_PUBLIC_MOCK_MODE === 'true';
+const isMocked = false;
+
 
 const AppProvider = (props: Props) => {
-    const [ squareState, setSquareState ] = useState<string>('movieInput');
+    const [ squareState, setSquareState ] = useState<BaconSquareState>('movieInput');
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [ currentCardCast, setCurrentCardCast ] = useState<BaconActorList | null>(null);
     const [ currentCardMovies, setCurrentCardMovies ] = useState<BaconFeatureList | null>(null);
     const [ currentMovieTitle, setCurrentMovieTitle ] = useState<string>('');
     const [ currentActorName, setCurrentActorName ] = useState<string>('');
+    const [ currentActorID, setCurrentActorID ] = useState<number>(0);
 
     /** helper function to get the movie ID and set the currentTitle with official title */
     async function getMovieIDAndSetTitle(movieName: string): Promise<BaconMovie | null> {
@@ -67,9 +77,8 @@ const AppProvider = (props: Props) => {
 
     async function getCast(movieName: string): Promise<BaconActorList | void> {
         try {
-            // PICKUP: delete this before shipped.. 
-            // just need it so don't use too much API calls while developing.
-            if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
+
+            if (isMocked) {
                 console.log('MOCK MODE ON, returning fake data...');
                 console.log('---------------------------------');
                 return { id: 12345, actors: mockedCast.cast, }
@@ -94,9 +103,7 @@ const AppProvider = (props: Props) => {
     /** the movie title will always exist for this since it comes from an existing actor entity */
     async function getMovies(actorID: number): Promise<BaconFeatureList | void> {
         try {
-            // PICKUP: delete this before shipped.. 
-            // just need it so don't use too much API calls while developing.
-            if (process.env.EXPO_PUBLIC_MOCK_MODE === 'true') {
+            if (isMocked) {
                 console.log('MOCK MODE ON, returning fake data...');
                 console.log('---------------------------------');
                 return { id: 12345, features: mockedFeatures.features, }
@@ -144,6 +151,8 @@ const AppProvider = (props: Props) => {
             setCurrentMovieTitle,
             currentActorName,
             setCurrentActorName,
+            currentActorID,
+            setCurrentActorID,
             getSuggestions
         }}>
             {props.children}

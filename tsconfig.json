@@ -15,17 +15,10 @@
             "ESNext"
         ]
     },
-    // FUTURE: todo may need to include ./app/**/* for typescript to work
-    // "include": [
-    //     "./src/**/*",
-    //     "./app/**/*"
-    // ],
     "exclude": [
         "node_modules",
         "babel.config.js",
         "metro.config.js",
         "jest.config.js"
-        // ,
-        // "tsconfig.json"
     ]
 }

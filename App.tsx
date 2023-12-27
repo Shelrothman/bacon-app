@@ -13,7 +13,7 @@ import { container_style } from './styles';
 
 // TODO: a cool engagin splash screeen like ready to get that off your tongue yahoo thing
 
-
+// TODO: must do proper accreditation for the tmdb api
 
 
 export default function App() {

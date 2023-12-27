@@ -17,12 +17,10 @@ export class FeatureService {
     // feature_title: string;
     dataStore: MovieActorStore;
 
-
     constructor(featureServiceParams: FeatureServiceParams) {
         // this.feature_title = featureServiceParams.feature_title;
         this.dataStore = featureServiceParams.dataStore;
     }
-
 
     getFeatureByTitle = async (feature_title: string) => {
         const feature = await this.dataStore.getMovieByTitle(feature_title);

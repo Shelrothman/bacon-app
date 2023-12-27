@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { useAppContext } from '../contexts/AppContext'
+import useGoBack from '../hooks/useGoBack';
 import { FooterButton } from './FooterButton';
 
 export default function Footer() {
@@ -10,13 +11,16 @@ export default function Footer() {
     const { setSquareState } = useAppContext();
     // TODO: the settings thing into pull up menu
 
+    const { handleGoBack } = useGoBack();
 
     return (
         <>
             <FooterButton
                 icon={<FontAwesome name="fast-backward" size={24} color="white" />}
                 text='Back'
-                handlePress={() => console.log('go back to previous square state')}
+                // PICKUP: this works for only one level back.. 
+                // TODO: make it work for more levels
+                handlePress={() => handleGoBack()}
             />
             <FooterButton
                 icon={<MaterialCommunityIcons name="restart" size={24} color="white" />}

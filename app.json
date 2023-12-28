@@ -17,6 +17,9 @@
         "ios": {
             "supportsTablet": true
         },
+        "web": {
+            "bundler": "metro"
+        },
         "android": {
             "adaptiveIcon": {
                 "foregroundImage": "./assets/adaptive-icon.png",

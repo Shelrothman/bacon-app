@@ -20,7 +20,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
                 {props.features.map((feature) => {
                     return (
                         <MovieButtonNode
-                            key={feature.id}
+                            key={feature.id+feature.title+feature.characterName}
                             id={feature.id}
                             title={feature.title}
                             characterName={feature.characterName}

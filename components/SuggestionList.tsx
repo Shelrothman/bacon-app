@@ -54,7 +54,7 @@ export function SuggestionList(props: SuggestionListProps) {
             {suggestionList.map((result) => {
                 return (
                     <SuggestionNode
-                        key={result.id}
+                        key={result.id+result.title+result.release_date}
                         release_date={result.release_date}
                         title={result.title}
                         handleOnPress={() => handleGetCast(result.title, true)}

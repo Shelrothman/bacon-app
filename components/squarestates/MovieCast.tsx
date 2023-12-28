@@ -21,7 +21,7 @@ export function MovieCast(props: MovieCastProps) {
                 {props.actors.map((actor) => {
                     return (
                         <ActorButtonNode
-                            key={actor.id}
+                            key={actor.id+actor.name+actor.characterName}
                             id={actor.id}
                             name={actor.name}
                             characterName={actor.characterName}

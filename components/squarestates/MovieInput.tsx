@@ -1,5 +1,4 @@
-import { Fontisto } from '@expo/vector-icons';
-import { Octicons } from '@expo/vector-icons';
+import { Fontisto, Octicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native'
 

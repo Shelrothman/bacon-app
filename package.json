@@ -12,7 +12,6 @@
     "start:clearcache": "npx expo start -c"
   },
   "dependencies": {
-    "@expo/webpack-config": "^19.0.0",
     "expo": "~49.0.15",
     "expo-clear-input": "^0.1.94",
     "expo-font": "~11.4.0",

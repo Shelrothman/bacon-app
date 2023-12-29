@@ -2,18 +2,16 @@ import { BaconServiceFactory } from "../api/services/ServiceFactory";
 import { useAppContext } from "../contexts/AppContext";
 import useGetData from "./useGetData";
 
-// TODO: THIS NEEDS TESTING ALL OVER for cases.
 
 /**
  * @hook useGoBack - handles the back button press that brings the user back to the previous screen
  * and sets the states of the appContext accordingly
  */
 const useGoBack = () => {
-    const { setSquareState, squareState, sessionMap, setSessionMap } = useAppContext();
+    const { setIsLoading, setSquareState, squareState, sessionMap, setSessionMap } = useAppContext();
 
     const { handleGetCast, handleGetMovies } = useGetData();
     
-
     // TODO: break apart into smaller functions
 
     /**
@@ -21,13 +19,13 @@ const useGoBack = () => {
      * and sets the states of the appContext accordingly
      */
     const handleGoBack = async () => {
-        // TODO: make the button inactive on the input screen
         if (!sessionMap) return;
         if (sessionMap.length === 1) {
             setSquareState && setSquareState('movieInput');
             setSessionMap && setSessionMap([]);
             return;
         }
+        setIsLoading && setIsLoading(true);
         if (squareState === 'movieCast') {
             // setSquareState && setSquareState('movieInput');
             const secondToLastId = sessionMap[ sessionMap.length - 2 ];

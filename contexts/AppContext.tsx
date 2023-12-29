@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 // import * as mockedCast from '../api/mocked/mockedCast.json';
 // import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
@@ -61,7 +61,7 @@ export function useAppContext() {
 
 // TODO: but if the app has been idle for a while, then the tree should be cleared. TODO: define a while.
 // Also gets cleaared if user presses the reset button.
-
+// ???: or maybe just dont touch it and let the app itself decide to clear it when it needs to?...
 
 const AppProvider = (props: Props) => {
     const [ squareState, setSquareState ] = useState<BaconSquareState>('movieInput');
@@ -74,7 +74,6 @@ const AppProvider = (props: Props) => {
     const [ sessionMap, setSessionMap ] = useState<number[]>([]);
     const [ movieInputTitle, setMovieInputTitle ] = useState<string>('');
 
-
     const featureService = BaconServiceFactory.createFeatureService();
 
     /** appends new session step to tree */
@@ -82,13 +81,6 @@ const AppProvider = (props: Props) => {
         const newSessionMap = [ ...sessionMap, id ];
         setSessionMap(newSessionMap);
     };
-
-    // TODO: delete this after dev
-    useEffect(() => {
-        console.log('---------------------------------');
-        console.log('sessionMap: ', sessionMap);
-        console.log('---------------------------------');
-    }, [ sessionMap ]);
 
     /** gets the cast and sets the currentMovieTitle with official title */
     async function getCastAndSetTitle(movieName: string, changeMap: boolean): Promise<BaconActorList | void> {

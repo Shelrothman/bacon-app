@@ -8,7 +8,7 @@ import { FooterButton } from './FooterButton';
 
 export default function Footer() {
 
-    const { setSquareState, setSessionMap, sessionMap, setMovieInputTitle } = useAppContext();
+    const { setSquareState, setSessionMap, sessionMap, setMovieInputTitle, isLoading } = useAppContext();
     // TODO: the settings thing into pull up menu
 
     const { handleGoBack } = useGoBack();
@@ -17,10 +17,10 @@ export default function Footer() {
         <>
             <FooterButton
                 icon={<FontAwesome name="fast-backward" size={24}
-                    color={(sessionMap && sessionMap.length > 0) ? "white" : "#8e8e8e"}
+                    color={(sessionMap && sessionMap.length > 0) || isLoading ? "white" : "#8e8e8e"}
                 />}
                 text='Back'
-                disabled={(sessionMap && sessionMap.length > 0) ? false : true}
+                disabled={(sessionMap && sessionMap.length > 0) || isLoading ? false : true}
                 handlePress={() => handleGoBack()}
             />
             <FooterButton

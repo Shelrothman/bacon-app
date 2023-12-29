@@ -14,7 +14,7 @@ type ContextProps = {
     /** gets the cast of the user-entered movie */
     getCastAndSetTitle: (movieName: string, changeMap: boolean) => Promise<BaconActorList | void>;
     /** gets the movies of the user-selected actor */
-    getMovies: (actorID: number,  changeMap: boolean) => Promise<BaconFeatureList | void>;
+    getMovies: (actorID: number, changeMap: boolean) => Promise<BaconFeatureList | void>;
     /** cast of actors for the current movie */
     currentCardCast: BaconActorList | null;
     setCurrentCardCast: (baconActorList: BaconActorList) => void;

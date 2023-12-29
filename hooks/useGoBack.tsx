@@ -14,7 +14,7 @@ const useGoBack = () => {
     const { handleGetCast, handleGetMovies } = useGetData();
 
     /** takes user back to the movieInput screen when they are on their first step */
-    const handleLastGoBack = async () => {
+    const handleLastGoBack = () => {
         setSquareState && setSquareState('movieInput');
         setSessionMap && setSessionMap([]);
     };
@@ -47,7 +47,7 @@ const useGoBack = () => {
     const handleGoBack = async () => {
         try {
             if (!sessionMap) return;
-            if (sessionMap.length === 1) return handleLastGoBack;
+            if (sessionMap.length === 1) return handleLastGoBack();
             setIsLoading && setIsLoading(true);
             if (squareState === 'movieCast') return handleGoBackFromMovieCast(sessionMap);
             else return handleGoBackFromActorsMovies(sessionMap);

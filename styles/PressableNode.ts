@@ -26,5 +26,8 @@ export const pressable_style = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly',
     },
-
+    clearButtonParent: {
+        borderRadius: 50,
+        justifyContent: 'center',
+    },
 });

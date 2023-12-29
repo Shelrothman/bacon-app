@@ -1,10 +1,11 @@
 import { Fontisto } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Text, TextInput, View } from 'react-native'
+import { Pressable, Text, TextInput, View } from 'react-native'
 
 import { useAppContext } from '../../contexts/AppContext';
 import useGetData from '../../hooks/useGetData';
-import { container_style, text_style } from '../../styles';
+import { container_style, pressable_style, text_style } from '../../styles';
 import { SuggestionList } from '../SuggestionList';
 
 export function MovieInput() {
@@ -24,16 +25,21 @@ export function MovieInput() {
                     autoCorrect={false}
                     autoCapitalize="none"
                     onChangeText={(text) => setMovieInputTitle!(text)}
+                    value={movieInputTitle}
                     placeholderTextColor={'#8e8e8e'}
-                    // clearButtonMode="while-editing"
-                    clearButtonMode="always" // todo: platform agnostic make this.
                     returnKeyType="search"
-                    // TODO fixme: the extra tap the user has top do if clicking on one of the suggestions
+                    // TODO fixme: the extra tap the user has top do if clicking on one of the suggestions or clicking on the x.
                     onSubmitEditing={() => handleGetCast(movieInputTitle!, false, true)}
                     // info: the user can click if they dont hit the search on the keyboard. this leave itup to them
                     onBlur={() => setSearchMode(false)}
                     onFocus={() => setSearchMode(true)}
                 />
+                {movieInputTitle!.length >= 1 && <Pressable
+                    onPress={() => setMovieInputTitle!('')}
+                    style={pressable_style.clearButtonParent}
+                >
+                    <Octicons name="x-circle-fill" size={20} color={"#8e8e8e"} />
+                </Pressable>}
             </View>
             {/* todo future: perhaps also will need a list for the user if their movie isnt found, will wait on feedback for if this way just with swuggestions is intuitive enough */}
             {movieInputTitle!.length >= 3 && <SuggestionList

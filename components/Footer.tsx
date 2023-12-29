@@ -8,10 +8,8 @@ import { FooterButton } from './FooterButton';
 
 export default function Footer() {
 
-    const { setSquareState, setSessionMap, sessionMap } = useAppContext();
+    const { setSquareState, setSessionMap, sessionMap, setMovieInputTitle } = useAppContext();
     // TODO: the settings thing into pull up menu
-
-    // const isEmpty: boolean = sessionMap && sessionMap.length === 0;
 
     const { handleGoBack } = useGoBack();
 
@@ -29,6 +27,7 @@ export default function Footer() {
                 icon={<MaterialCommunityIcons name="restart" size={24} color="white" />}
                 text='Reset'
                 handlePress={() => {
+                    setMovieInputTitle && setMovieInputTitle('');
                     setSessionMap && setSessionMap([]);
                     setSquareState && setSquareState('movieInput');
                     return;

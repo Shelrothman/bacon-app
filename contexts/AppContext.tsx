@@ -40,6 +40,9 @@ type ContextProps = {
      */
     sessionMap: number[];
     setSessionMap: (sessionMap: number[]) => void;
+    /** active text in inputSearch */
+    movieInputTitle: string;
+    setMovieInputTitle: (movieInputTitle: string) => void;
 };
 
 const AppContext = createContext<Partial<ContextProps>>({});
@@ -69,6 +72,8 @@ const AppProvider = (props: Props) => {
     const [ currentActorName, setCurrentActorName ] = useState<string>('');
     const [ currentActorID, setCurrentActorID ] = useState<number>(0);
     const [ sessionMap, setSessionMap ] = useState<number[]>([]);
+    const [ movieInputTitle, setMovieInputTitle ] = useState<string>('');
+
 
     const featureService = BaconServiceFactory.createFeatureService();
 
@@ -167,7 +172,9 @@ const AppProvider = (props: Props) => {
             setCurrentActorName,
             currentActorID,
             setCurrentActorID,
-            getSuggestions
+            getSuggestions,
+            movieInputTitle,
+            setMovieInputTitle,
         }}>
             {props.children}
         </AppContext.Provider>

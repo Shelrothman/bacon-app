@@ -24,7 +24,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
                             id={feature.id}
                             title={feature.title}
                             characterName={feature.characterName}
-                            handleMovieNodePress={() => handleGetCast(feature.title, true)}
+                            handleMovieNodePress={() => handleGetCast(feature.title, true, true)}
                         />
                     )
                 })}

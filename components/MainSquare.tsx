@@ -31,7 +31,7 @@ export function MainSquare() {
                         id={currentCardCast?.id || 0}
                         actors={currentCardCast?.actors || []}
                         title={currentMovieTitle || ''}
-                    /> : <MovieInput />
+                    /> : squareState === 'movieInput' ? <MovieInput /> : null
                 )}
             </LinearGradient>
         </View>

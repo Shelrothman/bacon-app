@@ -70,3 +70,5 @@ export type BaconActorList = {
     id: number;
     actors: BaconActor[];
 };
+
+export type BaconSquareState = 'movieInput' | 'movieCast' | 'actorsMovies';

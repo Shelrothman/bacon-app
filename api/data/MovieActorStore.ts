@@ -85,9 +85,38 @@ export class MovieActorStore {
         const response = await fetch(url);
         const data = await response.json() as { cast: MovieActorTMDB[] };
         if (data && data.cast && data.cast.length > 0) {
-            const movies = data.cast.map((movie) => this.convertToBaconFeature(movie));
-            // console.log(movies)
-            return movies;
+            return data.cast.map((movie) => this.convertToBaconFeature(movie));
+        } else {
+            return null;
+        }
+    }
+
+
+    /**
+     * @method getActorNameById
+     * gets the actor name by id
+     */
+    async getActorNameById(id: number): Promise<string | null> {
+        const url = `${this.api_base}/person/${id}?api_key=${this.api_key}`;
+        const response = await fetch(url);
+        const data = await response.json() as { name: string };
+        if (data && data.name) {
+            return data.name;
+        } else {
+            return null;
+        }
+    }
+    
+    /** 
+     * @method getMovieTitleById
+     * gets the movie title by id
+     */
+    async getMovieTitleById(id: number): Promise<string | null> {
+        const url = `${this.api_base}/movie/${id}?api_key=${this.api_key}`;
+        const response = await fetch(url);
+        const data = await response.json() as { title: string, original_title: string };
+        if (data && (data.title || data.original_title)) {
+            return data.title || data.original_title;
         } else {
             return null;
         }

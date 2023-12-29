@@ -49,7 +49,7 @@ export function SuggestionList(props: SuggestionListProps) {
     return (
         <ScrollView style={container_style.suggestionListScrollView} keyboardDismissMode='on-drag'>
             <SearchInputNode
-                pressHandler={() => handleGetCast(inputSearch, false)}
+                pressHandler={() => handleGetCast(inputSearch, false, true)}
                 inputSearch={inputSearch} />
             {suggestionList.map((result) => {
                 return (
@@ -57,12 +57,12 @@ export function SuggestionList(props: SuggestionListProps) {
                         key={result.id+result.title+result.release_date}
                         release_date={result.release_date}
                         title={result.title}
-                        handleOnPress={() => handleGetCast(result.title, true)}
+                        handleOnPress={() => handleGetCast(result.title, true, true)}
                     />
                 )
             })}
             {(suggestionList && suggestionList.length >= 3) && <SearchInputNode
-                inputSearch={inputSearch} pressHandler={() => handleGetCast(inputSearch, false)} 
+                inputSearch={inputSearch} pressHandler={() => handleGetCast(inputSearch, false, true)} 
             />}
         </ScrollView>
     )

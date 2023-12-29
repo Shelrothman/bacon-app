@@ -8,7 +8,7 @@ import { FooterButton } from './FooterButton';
 
 export default function Footer() {
 
-    const { setSquareState } = useAppContext();
+    const { setSquareState, setSessionMap } = useAppContext();
     // TODO: the settings thing into pull up menu
 
     const { handleGoBack } = useGoBack();
@@ -23,7 +23,10 @@ export default function Footer() {
             <FooterButton
                 icon={<MaterialCommunityIcons name="restart" size={24} color="white" />}
                 text='Reset'
-                handlePress={() => setSquareState && setSquareState('movieInput')}
+                handlePress={() => {
+                    setSessionMap && setSessionMap([]);
+                    setSquareState && setSquareState('movieInput')
+                }}
             />
             <FooterButton
                 icon={<Ionicons name="menu" size={24} color="white" />}

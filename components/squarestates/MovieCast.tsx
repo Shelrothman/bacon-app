@@ -25,7 +25,7 @@ export function MovieCast(props: MovieCastProps) {
                             id={actor.id}
                             name={actor.name}
                             characterName={actor.characterName}
-                            handleActorNodePress={() => handleGetMovies(actor.id, actor.name)}
+                            handleActorNodePress={() => handleGetMovies(actor.id, actor.name, true)}
                         />
                     )
                 })}

@@ -18,7 +18,6 @@ export class BaconServiceFactory {
         const dataStore = MovieActorStore.init();
         return new ActorService({
             actor_id: actorServiceParams.actor_id,
-            // movie_id: actorServiceParams.movie_id,
             dataStore: dataStore
         });
     }

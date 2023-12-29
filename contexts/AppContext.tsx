@@ -1,11 +1,9 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
-import * as mockedCast from '../api/mocked/mockedCast.json';
-import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
+// import * as mockedCast from '../api/mocked/mockedCast.json';
+// import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
 import { BaconServiceFactory } from '../api/services/ServiceFactory';
-import { BaconActorList, BaconFeatureList, BaconMovie, BaconMovieOption } from '../types';
-
-type BaconSquareState = 'movieInput' | 'movieCast' | 'actorsMovies';
+import { BaconActorList, BaconFeatureList, BaconMovieOption, BaconSquareState } from '../types';
 
 type ContextProps = {
     /** can be one of 3: movieInput, movieCast, actorsMovies */
@@ -14,9 +12,9 @@ type ContextProps = {
     isLoading: boolean;
     setIsLoading: (isLoading: boolean) => void;
     /** gets the cast of the user-entered movie */
-    getCast: (movieName: string) => Promise<BaconActorList | void>;
+    getCastAndSetTitle: (movieName: string, changeMap: boolean) => Promise<BaconActorList | void>;
     /** gets the movies of the user-selected actor */
-    getMovies: (actorID: number) => Promise<BaconFeatureList | void>;
+    getMovies: (actorID: number,  changeMap: boolean) => Promise<BaconFeatureList | void>;
     /** cast of actors for the current movie */
     currentCardCast: BaconActorList | null;
     setCurrentCardCast: (baconActorList: BaconActorList) => void;
@@ -34,6 +32,14 @@ type ContextProps = {
     setCurrentActorID: (actorID: number) => void;
     /** gets the suggestionList based on current value of searchInput */
     getSuggestions: (prefix: string) => Promise<BaconMovieOption[]>;
+    /** 
+     * array of entities for the user session in consecutive order FOR navigation 
+     * the [0] will always be the cast of the movie the user entered in input
+     * so all even indexes will be the cast of the movie with the movie id
+     * and all odd indexes will be the movies of the actor with the actor id
+     */
+    sessionMap: number[];
+    setSessionMap: (sessionMap: number[]) => void;
 };
 
 const AppContext = createContext<Partial<ContextProps>>({});
@@ -47,7 +53,11 @@ export function useAppContext() {
 // PICKUP: delete this and everything using it before shipped.. 
 // just need it so don't use too much API calls while developing.
 // const isMocked = process.env.EXPO_PUBLIC_MOCK_MODE === 'true';
-const isMocked = false;
+// const isMocked = false;
+
+
+// TODO: but if the app has been idle for a while, then the tree should be cleared. TODO: define a while.
+// Also gets cleaared if user presses the reset button.
 
 
 const AppProvider = (props: Props) => {
@@ -58,41 +68,41 @@ const AppProvider = (props: Props) => {
     const [ currentMovieTitle, setCurrentMovieTitle ] = useState<string>('');
     const [ currentActorName, setCurrentActorName ] = useState<string>('');
     const [ currentActorID, setCurrentActorID ] = useState<number>(0);
+    const [ sessionMap, setSessionMap ] = useState<number[]>([]);
 
-    /** helper function to get the movie ID and set the currentTitle with official title */
-    async function getMovieIDAndSetTitle(movieName: string): Promise<BaconMovie | null> {
+    const featureService = BaconServiceFactory.createFeatureService();
+
+    /** appends new session step to tree */
+    const handleChangeMap = (id: number) => {
+        const newSessionMap = [ ...sessionMap, id ];
+        setSessionMap(newSessionMap);
+    };
+
+    // TODO: delete this after dev
+    useEffect(() => {
+        console.log('---------------------------------');
+        console.log('sessionMap: ', sessionMap);
+        console.log('---------------------------------');
+    }, [ sessionMap ]);
+
+    /** gets the cast and sets the currentMovieTitle with official title */
+    async function getCastAndSetTitle(movieName: string, changeMap: boolean): Promise<BaconActorList | void> {
         try {
-            const featureService = BaconServiceFactory.createFeatureService();
-            const featureResult = await featureService.getFeatureByTitle(movieName);
-            if (!featureResult) return null;
-            setCurrentMovieTitle(featureResult.title);
-            return featureResult;
-        } catch (error) {
-            console.error('Error fetching movieID');
-            console.log('---------------------------------');
-            console.error(error);
-            return null;
-        }
-    }
-
-    async function getCast(movieName: string): Promise<BaconActorList | void> {
-        try {
-
-            if (isMocked) {
-                console.log('MOCK MODE ON, returning fake data...');
-                console.log('---------------------------------');
-                return { id: 12345, actors: mockedCast.cast, }
-            }
-            const feature_object = await getMovieIDAndSetTitle(movieName);
+            // if (isMocked) {
+            //     console.log('MOCK MODE ON, returning fake data...');
+            //     console.log('---------------------------------');
+            //     return { id: 12345, actors: mockedCast.cast, }
+            // }
+            const feature_object = await featureService.getFeatureByTitle(movieName);
             if (!feature_object) {
                 return alert('No Movie found with provided title, please try again.');
             }
-            const featureService = BaconServiceFactory.createFeatureService();
-            const featureCast = await featureService.getFeatureCastByMovieId(feature_object?.id);
+            setCurrentMovieTitle(feature_object.title);
+            const featureCast = await featureService.getFeatureCastByMovieId(feature_object.id);
             if (!featureCast) {
                 return alert(`No cast found for ${movieName}. Please try again.`);
             }
-            setCurrentMovieTitle(feature_object.title);
+            if (changeMap) handleChangeMap(feature_object.id)
             return { id: feature_object.id, actors: featureCast };
         } catch (error) {
             return alert(
@@ -101,19 +111,20 @@ const AppProvider = (props: Props) => {
         }
     }
     /** the movie title will always exist for this since it comes from an existing actor entity */
-    async function getMovies(actorID: number): Promise<BaconFeatureList | void> {
+    async function getMovies(actorID: number, changeMap: boolean): Promise<BaconFeatureList | void> {
         try {
-            if (isMocked) {
-                console.log('MOCK MODE ON, returning fake data...');
-                console.log('---------------------------------');
-                return { id: 12345, features: mockedFeatures.features, }
-            }
+            // if (isMocked) {
+            //     console.log('MOCK MODE ON, returning fake data...');
+            //     console.log('---------------------------------');
+            //     return { id: 12345, features: mockedFeatures.features, }
+            // }
             const actorService = BaconServiceFactory.createActorService({ actor_id: actorID });
             const featureListResult = await actorService.getFeaturesForActor();
             if (!featureListResult) {
                 return alert('cannot find any features for the requested actor. Please try again.');
             }
-            return { id: actorID, features: featureListResult, };
+            if (changeMap) handleChangeMap(actorID);
+            return { id: actorID, features: featureListResult };
         } catch (error) {
             return alert(
                 `An unknown error occurred while attempting to get the movies, please try again. If this issue persists, please contact support, shel.programmer@gmail.com.`
@@ -140,7 +151,9 @@ const AppProvider = (props: Props) => {
         <AppContext.Provider value={{
             squareState,
             setSquareState,
-            getCast,
+            sessionMap,
+            setSessionMap,
+            getCastAndSetTitle,
             getMovies,
             isLoading,
             setIsLoading,

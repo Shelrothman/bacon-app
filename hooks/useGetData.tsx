@@ -7,8 +7,8 @@ import { useAppContext } from "../contexts/AppContext";
  */
 const useGetData = () => {
     const {
-        setSquareState, getCast, setIsLoading, setCurrentCardCast,
-        setCurrentMovieTitle, getMovies, setCurrentCardMovies, setCurrentActorName, setCurrentActorID
+        setSquareState, getCastAndSetTitle, setIsLoading, setCurrentCardCast,
+        getMovies, setCurrentCardMovies, setCurrentActorName, setCurrentActorID
     } = useAppContext();
 
     /** 
@@ -16,17 +16,16 @@ const useGetData = () => {
      * either from search or from an actorNode press
      * @param {string} movieTitle - the movie title to get the cast for
      * @param {boolean} isActorNodePress - if the call is from an actorNode press
+     * @param {boolean} changeMap - if the call should change the sessionMap
      */
-    const handleGetCast = (movieTitle: string, isActorNodePress: boolean) => {
+    const handleGetCast = (movieTitle: string, isActorNodePress: boolean, changeMap: boolean) => {
         if (movieTitle.length < 1) return;
         if (!isActorNodePress) Keyboard.dismiss(); // pickup: is this redundant?
         setIsLoading && setIsLoading(true);
-        getCast && getCast(movieTitle).then((result) => {
+        getCastAndSetTitle && getCastAndSetTitle(movieTitle, changeMap).then((result) => {
             if (result) {
                 setCurrentCardCast && setCurrentCardCast(result);
                 setSquareState && setSquareState('movieCast');
-                // only set the global title if it came from the actor node since that holds the official title from the db
-                if (isActorNodePress) setCurrentMovieTitle && setCurrentMovieTitle(movieTitle);
                 //info: done worry if blank or wrong when in mock mode
             }
         }).finally(() => {
@@ -38,10 +37,11 @@ const useGetData = () => {
      * gets all the movies an actor has been in
      * @param {number} id - the id of the actor to get the movies for
      * @param {string} actorName - the name of the actor to get the movies for
+     * @param {boolean} changeMap - if the call should change the sessionMap
      */
-    const handleGetMovies = (id: number, actorName: string) => {
+    const handleGetMovies = (id: number, actorName: string, changeMap: boolean) => {
         setIsLoading && setIsLoading(true);
-        getMovies && getMovies(id).then((result) => {
+        getMovies && getMovies(id, changeMap).then((result) => {
             if (result) {
                 setCurrentCardMovies && setCurrentCardMovies(result);
                 setSquareState && setSquareState('actorsMovies');

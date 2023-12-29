@@ -33,11 +33,13 @@ export class FeatureService {
     }
 
     getListOfFeaturesByPrefix = async (feature_title: string) => {
-        // console.log('in getListOfFeaturesByPrefix');
-        // PICKUP: some kind of algorithm or logic that based on the letters provided...
-        // some way of combining them into making the search more specific... ???:
         const features = await this.dataStore.getTenMoviesByPrefix(feature_title);
         return features;
+    }
+
+    getFeatureName = async (feature_id: number) => {
+        const featureName = await this.dataStore.getMovieTitleById(feature_id);
+        return featureName;
     }
 
 }    

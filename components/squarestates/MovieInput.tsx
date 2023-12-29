@@ -34,7 +34,7 @@ export function MovieInput() {
                     placeholderTextColor={'#8e8e8e'}
                     clearButtonMode='while-editing'
                     returnKeyType="search"
-                    onSubmitEditing={() => handleGetCast(movieInputTitle, false)}
+                    onSubmitEditing={() => handleGetCast(movieInputTitle, false, true)}
                     // info: the user can click if they dont hit the search on the keyboard. this leave itup to them
                     onBlur={() => setSearchMode(false)}
                     onFocus={() => setSearchMode(true)}

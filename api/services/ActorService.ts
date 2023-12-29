@@ -24,4 +24,9 @@ export class ActorService {
         return features;
     }
 
+    async getActorName() {
+        const actorName = await this.dataStore.getActorNameById(this.actor_id);
+        return actorName;
+    }
+
 }    

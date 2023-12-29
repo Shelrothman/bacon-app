@@ -5,9 +5,7 @@ import { BaconFeatureList } from '../../types'
 import { MovieButtonNode } from '../nodes/MovieButtonNode'
 import { SquareHeader } from '../SquareHeader'
 
-type ActorsMoviesProps = BaconFeatureList & {
-    actorName: string;
-}
+type ActorsMoviesProps = BaconFeatureList & { actorName: string; };
 
 export function ActorsMovies(props: ActorsMoviesProps) {
 

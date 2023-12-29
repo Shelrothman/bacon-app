@@ -5,11 +5,7 @@ import { BaconActorList } from '../../types'
 import { ActorButtonNode } from '../nodes/ActorButtonNode'
 import { SquareHeader } from '../SquareHeader'
 
-type MovieCastProps = BaconActorList & {
-    title: string;
-}
-
-// TODO: option at bottom or somewhere for user to say this is not the movie they meant. ???: maybe future thing if requested by my testers.. aka my mom.. lol
+type MovieCastProps = BaconActorList & { title: string; };
 
 export function MovieCast(props: MovieCastProps) {
     const { handleGetMovies } = useGetData();
@@ -21,7 +17,7 @@ export function MovieCast(props: MovieCastProps) {
                 {props.actors.map((actor) => {
                     return (
                         <ActorButtonNode
-                            key={actor.id+actor.name+actor.characterName}
+                            key={actor.id + actor.name + actor.characterName}
                             id={actor.id}
                             name={actor.name}
                             characterName={actor.characterName}

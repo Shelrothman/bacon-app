@@ -8,12 +8,9 @@ import { BaconMovieOption } from '../types';
 import { SearchInputNode } from './nodes/SearchInputNode';
 import { SuggestionNode } from './nodes/SuggestionNode';
 
-type SuggestionListProps = {
-    // movieList: BaconMovieOption[];
-    inputSearch: string;
-}
+type SuggestionListProps = { inputSearch: string; }
 
-// TODO: remove all web dependencies from this whole project/
+// TODO: remove all web dependencies from this whole project/???:
 
 /** 
  * @component - SuggestionList
@@ -40,8 +37,6 @@ export function SuggestionList(props: SuggestionListProps) {
         getSuggestions && getSuggestions(inputSearch).then((results) => {
             setSuggestionList(results);
         }).finally(() => {
-            // TODO: figure out if this is needed or not
-            // setIsLoading && setIsLoading(false);
             return;
         });
     }

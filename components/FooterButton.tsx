@@ -1,7 +1,6 @@
 import { Pressable, Text } from 'react-native'
 
 import { pressable_style, text_style } from '../styles';
-// import { useAppContext } from '../contexts/AppContext'
 
 type FooterButtonProps = {
     icon: JSX.Element;

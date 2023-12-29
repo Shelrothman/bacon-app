@@ -27,7 +27,6 @@ export function MovieInput() {
                     value={movieInputTitle}
                     placeholderTextColor={'#8e8e8e'}
                     returnKeyType="search"
-                    // TODO fixme: the extra tap the user has top do if clicking on one of the suggestions or clicking on the x.
                     onSubmitEditing={() => handleGetCast(movieInputTitle!, false, true)}
                     // info: the user can click if they dont hit the search on the keyboard. this leave itup to them
                     onBlur={() => setSearchMode(false)}
@@ -40,10 +39,7 @@ export function MovieInput() {
                     <Octicons name="x-circle-fill" size={20} color={"#8e8e8e"} />
                 </Pressable>}
             </View>
-            {/* todo future: perhaps also will need a list for the user if their movie isnt found, will wait on feedback for if this way just with swuggestions is intuitive enough */}
-            {movieInputTitle!.length >= 3 && <SuggestionList
-                inputSearch={movieInputTitle!}
-            />}
+            {movieInputTitle!.length >= 3 && <SuggestionList inputSearch={movieInputTitle!} />}
         </View>
     )
 }

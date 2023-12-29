@@ -44,11 +44,7 @@ export default function App() {
                 <StatusBar style="light" />{/* light so it shows on dark. */}
                 <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
                     {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
-                    <ScrollView
-                        keyboardDismissMode='on-drag'
-                        showsVerticalScrollIndicator={false}
-                        keyboardShouldPersistTaps='handled'
-                    >
+                    <ScrollView keyboardShouldPersistTaps='handled' keyboardDismissMode='on-drag' showsVerticalScrollIndicator={false}>
                         <View style={container_style.mainSquareWrapper}>
                             <MainSquare />
                         </View>

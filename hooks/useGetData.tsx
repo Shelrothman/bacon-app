@@ -26,7 +26,6 @@ const useGetData = () => {
             if (result) {
                 setCurrentCardCast && setCurrentCardCast(result);
                 setSquareState && setSquareState('movieCast');
-                //info: done worry if blank or wrong when in mock mode
             }
         }).finally(() => {
             setIsLoading && setIsLoading(false);

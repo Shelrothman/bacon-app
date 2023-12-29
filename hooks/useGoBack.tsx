@@ -9,12 +9,7 @@ import useGetData from "./useGetData";
  * and sets the states of the appContext accordingly
  */
 const useGoBack = () => {
-    const {
-        setSquareState,
-        squareState,
-        sessionMap,
-        setSessionMap
-    } = useAppContext();
+    const { setSquareState, squareState, sessionMap, setSessionMap } = useAppContext();
 
     const { handleGetCast, handleGetMovies } = useGetData();
     
@@ -30,6 +25,7 @@ const useGoBack = () => {
         if (!sessionMap) return;
         if (sessionMap.length === 1) {
             setSquareState && setSquareState('movieInput');
+            setSessionMap && setSessionMap([]);
             return;
         }
         if (squareState === 'movieCast') {

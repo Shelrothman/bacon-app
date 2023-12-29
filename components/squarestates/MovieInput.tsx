@@ -1,11 +1,10 @@
 import { Fontisto } from '@expo/vector-icons';
-import { /* useEffect, */ useState } from 'react';
+import { useState } from 'react';
 import { Text, TextInput, View } from 'react-native'
 
 import useGetData from '../../hooks/useGetData';
 import { container_style, text_style } from '../../styles';
 import { SuggestionList } from '../SuggestionList';
-
 
 // fixme: i dont like how the coloring is seen as missing after hitting search...
 // maybe need it to be a dropdown list of valid movie titles to be picked from dynamically as the user types?
@@ -13,7 +12,6 @@ import { SuggestionList } from '../SuggestionList';
 
 export function MovieInput() {
 
-    // const { setSquareState, getCast, setIsLoading, setCurrentCardCast, setCurrentMovieTitle } = useAppContext();
     const [ movieInputTitle, setMovieInputTitle ] = useState<string>('');
     const [ searchMode, setSearchMode ] = useState<boolean>(false);
 
@@ -30,7 +28,6 @@ export function MovieInput() {
                     autoCorrect={false}
                     autoCapitalize='none'
                     onChangeText={(text) => setMovieInputTitle(text)}
-                    // keyboardType='default'
                     placeholderTextColor={'#8e8e8e'}
                     clearButtonMode='while-editing'
                     returnKeyType="search"

@@ -8,16 +8,21 @@ import { FooterButton } from './FooterButton';
 
 export default function Footer() {
 
-    const { setSquareState, setSessionMap } = useAppContext();
+    const { setSquareState, setSessionMap, sessionMap } = useAppContext();
     // TODO: the settings thing into pull up menu
+
+    // const isEmpty: boolean = sessionMap && sessionMap.length === 0;
 
     const { handleGoBack } = useGoBack();
 
     return (
         <>
             <FooterButton
-                icon={<FontAwesome name="fast-backward" size={24} color="white" />}
+                icon={<FontAwesome name="fast-backward" size={24}
+                    color={(sessionMap && sessionMap.length > 0) ? "white" : "#8e8e8e"}
+                />}
                 text='Back'
+                disabled={(sessionMap && sessionMap.length > 0) ? false : true}
                 handlePress={() => handleGoBack()}
             />
             <FooterButton
@@ -25,7 +30,8 @@ export default function Footer() {
                 text='Reset'
                 handlePress={() => {
                     setSessionMap && setSessionMap([]);
-                    setSquareState && setSquareState('movieInput')
+                    setSquareState && setSquareState('movieInput');
+                    return;
                 }}
             />
             <FooterButton

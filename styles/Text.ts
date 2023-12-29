@@ -36,7 +36,6 @@ export const text_style = StyleSheet.create({
         textAlignVertical: 'center',
     },
     footerText: {
-        color: 'white',
         fontFamily: 'Bacon-Stencil',
         fontSize: 18,
     },

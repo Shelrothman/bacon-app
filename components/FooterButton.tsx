@@ -7,17 +7,19 @@ type FooterButtonProps = {
     icon: JSX.Element;
     text: string;
     handlePress: () => void;
+    /** default is false */
+    disabled?: boolean;
 }
 
 export function FooterButton(props: FooterButtonProps) {
-    const { icon, text, handlePress } = props;
-    // const { setSquareState } = useAppContext();
-    // may need this for when the user clicks the button to go back to the movie input screen
+    const { icon, text, handlePress, disabled } = props;
 
     return (
-        <Pressable onPress={handlePress} style={pressable_style.footer}>
+        <Pressable onPress={handlePress} style={pressable_style.footer} disabled={disabled}>
             {icon}
-            <Text style={text_style.footerText}>{text}</Text>
+            <Text style={[ text_style.footerText, { color: !disabled ? 'white' : '#8e8e8e' } ]}>
+                {text}
+            </Text>
         </Pressable>
     )
 }

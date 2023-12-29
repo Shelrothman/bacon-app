@@ -17,10 +17,10 @@ export default function Footer() {
         <>
             <FooterButton
                 icon={<FontAwesome name="fast-backward" size={24}
-                    color={(sessionMap && sessionMap.length > 0) || isLoading ? "white" : "#8e8e8e"}
+                    color={(sessionMap && sessionMap.length > 0) && !isLoading ? "white" : "#8e8e8e"}
                 />}
                 text='Back'
-                disabled={(sessionMap && sessionMap.length > 0) || isLoading ? false : true}
+                disabled={(sessionMap && sessionMap.length > 0) && !isLoading ? false : true}
                 handlePress={() => handleGoBack()}
             />
             <FooterButton

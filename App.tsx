@@ -3,13 +3,15 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback } from 'react';
 import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, View } from 'react-native';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 import Footer from './components/Footer';
-import { MainSquare } from './components/MainSquare';
+import { MainSquare } from './components/squarestates/MainSquare';
 import { AppProvider } from './contexts/AppContext';
 import { container_style } from './styles';
 
 // TODO: an info icon thing to show user the overview at any popint in the app.
+// it would be for the currentActor or currentMovie
 
 // TODO: a cool engagin splash screeen like ready to get that off your tongue yahoo thing
 
@@ -39,22 +41,24 @@ export default function App() {
     }
 
     return (
-        <AppProvider>
-            <SafeAreaView style={container_style.appRootContainer} onLayout={onLayoutRootView}>
-                <StatusBar style="light" />{/* light so it shows on dark. */}
-                <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
-                    {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
-                    <ScrollView keyboardShouldPersistTaps='handled' keyboardDismissMode='on-drag' showsVerticalScrollIndicator={false}>
-                        <View style={container_style.mainSquareWrapper}>
-                            <MainSquare />
-                        </View>
-                    </ScrollView>
-                </KeyboardAvoidingView>
-                <View style={container_style.footerOuterWrapper}>
-                    <Footer />
-                </View>
-            </SafeAreaView>
-        </AppProvider>
+        <RootSiblingParent>
+            <AppProvider>
+                <SafeAreaView style={container_style.appRootContainer} onLayout={onLayoutRootView}>
+                    <StatusBar style="light" />{/* light so it shows on dark. */}
+                    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
+                        {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
+                        <ScrollView keyboardShouldPersistTaps='handled' keyboardDismissMode='on-drag' showsVerticalScrollIndicator={false}>
+                            <View style={container_style.mainSquareWrapper}>
+                                <MainSquare />
+                            </View>
+                        </ScrollView>
+                    </KeyboardAvoidingView>
+                    <View style={container_style.footerOuterWrapper}>
+                        <Footer />
+                    </View>
+                </SafeAreaView>
+            </AppProvider>
+        </RootSiblingParent>
     );
 }
 

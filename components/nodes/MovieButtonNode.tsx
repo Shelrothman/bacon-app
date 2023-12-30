@@ -7,9 +7,6 @@ type MovieButtonNodeProps = BaconFeature & {
     handleMovieNodePress: (id: number, movieName: string) => void;
 }
 
-// TODO: in here a link for opetion to open the movie in tmdb.com and in actor one too
-// maybe u hold it down and it gives u the option to open it in a browser
-
 export function MovieButtonNode(props: MovieButtonNodeProps) {
 
     const { handleMovieNodePress, id, title, characterName } = props;

@@ -71,4 +71,4 @@ export type BaconActorList = {
     actors: BaconActor[];
 };
 
-export type BaconSquareState = 'movieInput' | 'movieCast' | 'actorsMovies' | 'start';
+export type BaconSquareState = 'movieInput' | 'movieCast' | 'actorsMovies';

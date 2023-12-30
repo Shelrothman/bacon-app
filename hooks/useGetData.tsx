@@ -1,6 +1,8 @@
 import { Keyboard } from "react-native";
 
+import { BaconServiceFactory } from "../api/services/ServiceFactory";
 import { useAppContext } from "../contexts/AppContext";
+import { BaconMovieOption } from "../types";
 
 /**
  * @hook useGetData - get cast of movie and/or actors movies for the UI
@@ -52,7 +54,22 @@ const useGetData = () => {
         });
     };
 
-    return { handleGetCast, handleGetMovies };
+
+    /** gets the suggestionList based on current value of searchInput */
+    async function getSuggestions(prefix: string): Promise<BaconMovieOption[]> {
+        try {
+            const featureService = BaconServiceFactory.createFeatureService();
+            const suggestions = await featureService.getListOfFeaturesByPrefix(prefix);
+            if (suggestions) return suggestions;
+            return [];
+        } catch (error) {
+            console.log('---------------------------------');
+            console.error(error);
+            return [];
+        }
+    }
+
+    return { handleGetCast, handleGetMovies, getSuggestions };
 
 };
 

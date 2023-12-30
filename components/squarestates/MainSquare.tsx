@@ -1,12 +1,12 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { View } from 'react-native';
 
-import { useAppContext } from '../contexts/AppContext';
-import { container_style } from '../styles';
-import { ActorsMovies } from './squarestates/ActorsMovies';
-import { MovieCast } from './squarestates/MovieCast';
-import { MovieInput } from './squarestates/MovieInput';
-import LoadingOverlay from './utils/LoadingOverlay';
+import { useAppContext } from '../../contexts/AppContext';
+import { container_style } from '../../styles';
+import LoadingOverlay from '../utils/LoadingOverlay';
+import { ActorsMovies } from './ActorsMovies';
+import { MovieCast } from './MovieCast';
+import { MovieInput } from './MovieInput';
 
 /**
  * @component - MainSquare

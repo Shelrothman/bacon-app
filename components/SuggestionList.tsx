@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native'
 
-import { useAppContext } from '../contexts/AppContext';
 import useGetData from '../hooks/useGetData';
 import { container_style } from '../styles';
 import { BaconMovieOption } from '../types';
 import { SearchInputNode } from './nodes/SearchInputNode';
 import { SuggestionNode } from './nodes/SuggestionNode';
 
-type SuggestionListProps = { inputSearch: string; }
-
-// TODO: remove all web dependencies from this whole project/???:
+type SuggestionListProps = { inputSearch: string; };
 
 /** 
  * @component - SuggestionList
@@ -23,9 +20,8 @@ type SuggestionListProps = { inputSearch: string; }
 export function SuggestionList(props: SuggestionListProps) {
 
     const { inputSearch } = props;
-    const { getSuggestions } = useAppContext();
     const [ suggestionList, setSuggestionList ] = useState<BaconMovieOption[]>([]);
-    const { handleGetCast } = useGetData();
+    const { handleGetCast, getSuggestions } = useGetData();
 
     useEffect(() => {
         if (inputSearch.length < 3) setSuggestionList([]);

@@ -65,5 +65,5 @@ export const container_style = StyleSheet.create({
         position: 'absolute',
         paddingHorizontal: 30,
         bottom: 50,
-    },
+    }
 });

@@ -5,6 +5,8 @@ import { container_style, text_style } from '../styles';
 // TODO: perhaps a little subheader for the release date..
 // and/or that info icon somewhere
 
+// THE header itself can be the clickable thing for info! or pressable
+
 type SquareHeaderProps = {
     title: string;
 }

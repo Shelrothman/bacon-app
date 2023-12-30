@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 // import * as mockedCast from '../api/mocked/mockedCast.json';
 // import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
 import { BaconServiceFactory } from '../api/services/ServiceFactory';
-import { BaconActorList, BaconFeatureList, BaconMovieOption, BaconSquareState } from '../types';
+import { BaconActorList, BaconFeatureList, BaconSquareState } from '../types';
 
 type ContextProps = {
     /** can be one of 3: movieInput, movieCast, actorsMovies */
@@ -30,8 +30,6 @@ type ContextProps = {
     /** id of the currentActor */
     currentActorID: number;
     setCurrentActorID: (actorID: number) => void;
-    /** gets the suggestionList based on current value of searchInput */
-    getSuggestions: (prefix: string) => Promise<BaconMovieOption[]>;
     /** 
      * array of entities for the user session in consecutive order FOR navigation 
      * the [0] will always be the cast of the movie the user entered in input
@@ -57,11 +55,6 @@ export function useAppContext() {
 // just need it so don't use too much API calls while developing.
 // const isMocked = process.env.EXPO_PUBLIC_MOCK_MODE === 'true';
 // const isMocked = false;
-
-
-// TODO: but if the app has been idle for a while, then the tree should be cleared. TODO: define a while.
-// Also gets cleaared if user presses the reset button.
-// ???: or maybe just dont touch it and let the app itself decide to clear it when it needs to?...
 
 const AppProvider = (props: Props) => {
     const [ squareState, setSquareState ] = useState<BaconSquareState>('movieInput');
@@ -129,20 +122,6 @@ const AppProvider = (props: Props) => {
         }
     }
 
-    // todo: maybe this function should live in useGetData.tsx?
-    async function getSuggestions(prefix: string): Promise<BaconMovieOption[]> {
-        try {
-            const featureService = BaconServiceFactory.createFeatureService();
-            const suggestions = await featureService.getListOfFeaturesByPrefix(prefix);
-            if (suggestions) return suggestions;
-            return [];
-        } catch (error) {
-            console.log('---------------------------------');
-            console.error(error);
-            return [];
-        }
-    }
-
 
     return (
         <AppContext.Provider value={{
@@ -164,7 +143,6 @@ const AppProvider = (props: Props) => {
             setCurrentActorName,
             currentActorID,
             setCurrentActorID,
-            getSuggestions,
             movieInputTitle,
             setMovieInputTitle,
         }}>

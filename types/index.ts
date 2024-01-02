@@ -46,6 +46,7 @@ export type BaconFeature = BaconMovie & {
     /** character that the requested actor played */
     characterName?: string;
     overview: string;
+    releaseDate: string;
 };
 
 /**

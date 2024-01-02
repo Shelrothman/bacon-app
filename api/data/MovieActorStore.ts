@@ -39,6 +39,7 @@ export class MovieActorStore {
                 id: firstFeature.id,
                 title: firstFeature.original_title || firstFeature.title,
                 overview: firstFeature.overview || 'unknown',
+                releaseDate: firstFeature.release_date || 'unknown',
             };
             return movieObject;
         } else {
@@ -130,6 +131,7 @@ export class MovieActorStore {
             title: data.original_title || data.title,
             characterName: data.character || 'unknown',
             overview: data.overview || 'unknown',
+            releaseDate: data.release_date || 'unknown',
         };
         return movieObject;
     }

@@ -4,10 +4,6 @@ import Toast from 'react-native-root-toast';
 
 import { useAppContext } from '../contexts/AppContext';
 
-// PICKUP:: right here!! get this looking aligned and good with rest of the app 
-// make it be intuittive.
-// then get thej logic for it working.. will have to grab from the resposne bback in api call :) addd it on in to context 
-
 type InfoModalProps = {
     modalVisible: boolean;
     setModalVisible: (arg: boolean) => void;
@@ -16,18 +12,12 @@ type InfoModalProps = {
 export function InfoModal(props: InfoModalProps) {
     const { modalVisible, setModalVisible } = props;
 
-    const { currentMovieTitle, currentMovieOverview } = useAppContext();
-    // const [ modalVisible, setModalVisible ] = useState(false);
-
-    // setTimeout(() => {
-    // setModalVisible(false);
-    // }, 5000); // maybe 3500
+    const { currentMovieTitle, currentMovieOverview, currentMovieReleaseDate } = useAppContext();
 
 
     return (
         <Toast
             opacity={0.9}
-            // opacity={1}
             visible={modalVisible}
             position={Toast.positions.TOP}
             onHide={() => setModalVisible(false)}
@@ -36,12 +26,9 @@ export function InfoModal(props: InfoModalProps) {
             hideOnPress={false}
         >
             <View>
-                <Text style={modal_styles.movieTitle}>
-                    {currentMovieTitle} 
-                </Text>
-                <Text style={modal_styles.movieOverview}>
-                    {currentMovieOverview}
-                </Text>
+                <Text style={modal_styles.movieTitle}>{currentMovieTitle}</Text>
+                <Text style={modal_styles.releaseDate}>{currentMovieReleaseDate}</Text>
+                <Text style={modal_styles.movieOverview}>{currentMovieOverview}</Text>
                 <Pressable
                     style={({ pressed }) => [ {
                         opacity: pressed ? 0.5 : 1,
@@ -74,13 +61,16 @@ const modal_styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'Bacon-Inline',
     },
+    releaseDate: {
+        textAlign: 'right',
+        fontStyle: 'italic',
+    },
     movieOverview: {
         fontFamily: 'Bacon-Bold',
         fontSize: 16,
         overflow: 'scroll',
     },
     movieTitle: {
-        marginBottom: 15,
         textAlign: 'center',
         fontFamily: 'Bacon-Limelight',
         textDecorationLine: 'underline',

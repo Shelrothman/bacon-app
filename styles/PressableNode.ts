@@ -36,7 +36,8 @@ export const pressable_style = StyleSheet.create({
         borderWidth: 1.3,
         borderColor: '#000',
         backgroundColor: '#7f95fa',
-        padding: 5,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
         marginTop: -5,
     },
 });

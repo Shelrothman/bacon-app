@@ -33,6 +33,9 @@ type ContextProps = {
     /** the overview for the current movie */
     currentMovieOverview: string;
     setCurrentMovieOverview: (movieOverview: string) => void;
+    /** release date of current movie */
+    currentMovieReleaseDate: string;
+    setCurrentMovieReleaseDate: (movieReleaseDate: string) => void;
     /** 
      * array of entities for the user session in consecutive order FOR navigation 
      * the [0] will always be the cast of the first movie the user entered in input
@@ -65,6 +68,7 @@ const AppProvider = (props: Props) => {
     const [ currentMovieTitle, setCurrentMovieTitle ] = useState<string>('');
     const [ currentActorName, setCurrentActorName ] = useState<string>('');
     const [ currentMovieOverview, setCurrentMovieOverview ] = useState<string>('');
+    const [ currentMovieReleaseDate, setCurrentMovieReleaseDate ] = useState<string>('');
     const [ currentActorID, setCurrentActorID ] = useState<number>(0);
     const [ sessionMap, setSessionMap ] = useState<number[]>([]);
     const [ movieInputTitle, setMovieInputTitle ] = useState<string>('');
@@ -86,13 +90,10 @@ const AppProvider = (props: Props) => {
             //     return { id: 12345, actors: mockedCast.cast, }
             // }
             const feature_object = await featureService.getFeatureByTitle(movieName);
-            if (!feature_object) {
-                return alert('No Movie found with provided title, please try again.');
-            }
-            // in here from the object, we set get the overview 
-            // console.log('feature_object: ', feature_object);
+            if (!feature_object) return alert('No Movie found with provided title, please try again.');
             setCurrentMovieOverview(feature_object.overview);
             setCurrentMovieTitle(feature_object.title);
+            setCurrentMovieReleaseDate(feature_object.releaseDate);
             const featureCast = await featureService.getFeatureCastByMovieId(feature_object.id);
             if (!featureCast) {
                 return alert(`No cast found for ${movieName}. Please try again.`);
@@ -150,6 +151,8 @@ const AppProvider = (props: Props) => {
             setCurrentActorID,
             currentMovieOverview,
             setCurrentMovieOverview,
+            currentMovieReleaseDate,
+            setCurrentMovieReleaseDate,
             movieInputTitle,
             setMovieInputTitle,
         }}>

@@ -9,7 +9,7 @@ import { BaconMovieOption } from "../types";
  */
 const useGetData = () => {
     const {
-        setSquareState, getCastAndSetTitle, setIsLoading, setCurrentCardCast,
+        setSquareState, getCastAndSetMovieInfo: getCastAndSetTitle, setIsLoading, setCurrentCardCast,
         getMovies, setCurrentCardMovies, setCurrentActorName, setCurrentActorID
     } = useAppContext();
 

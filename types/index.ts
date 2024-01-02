@@ -24,7 +24,6 @@ export type BaconMovieOption = BaconMovie & {
     overview: string;
 };
 
-
 /**
  * @type BaconActor
  * actor return type
@@ -46,10 +45,8 @@ export type BaconActor = {
 export type BaconFeature = BaconMovie & {
     /** character that the requested actor played */
     characterName?: string;
+    overview: string;
 };
-
-
-
 
 /**
  * @type BaconFeatureList

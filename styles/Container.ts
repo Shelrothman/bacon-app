@@ -39,7 +39,7 @@ export const container_style = StyleSheet.create({
     },
     mainSquare: {
         width: 350,
-        height: 540,
+        height: 575,
         borderRadius: 18,
         alignSelf: 'center',
         alignItems: 'center',

@@ -30,4 +30,13 @@ export const pressable_style = StyleSheet.create({
         borderRadius: 50,
         justifyContent: 'center',
     },
+    titleInfoPressable: {
+        flexDirection: 'row',
+        borderRadius: 20,
+        borderWidth: 1.3,
+        borderColor: '#000',
+        backgroundColor: '#7f95fa',
+        padding: 5,
+        marginTop: -5,
+    },
 });

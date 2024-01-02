@@ -37,7 +37,8 @@ export class MovieActorStore {
             const firstFeature = data.results[ 0 ];
             const movieObject: BaconFeature = {
                 id: firstFeature.id,
-                title: firstFeature.original_title || firstFeature.title
+                title: firstFeature.original_title || firstFeature.title,
+                overview: firstFeature.overview || 'unknown',
             };
             return movieObject;
         } else {
@@ -62,7 +63,7 @@ export class MovieActorStore {
      * @param id - the TMDB defined id of the movie to get the cast for
      * @returns {BaconActor[]} list of actors
      */
-    async getCastByMovieId(id: number): Promise<BaconActor[] | null> {
+    async getBaconActorListByMovieId(id: number): Promise<BaconActor[] | null> {
         // only try catch in the route/controller bc that is what makes sense dug
         const url = `${this.api_base}/movie/${id}/credits?api_key=${this.api_key}`;
         const response = await fetch(url);
@@ -106,7 +107,7 @@ export class MovieActorStore {
             return null;
         }
     }
-    
+
     /** 
      * @method getMovieTitleById
      * gets the movie title by id
@@ -128,6 +129,7 @@ export class MovieActorStore {
             id: data.id,
             title: data.original_title || data.title,
             characterName: data.character || 'unknown',
+            overview: data.overview || 'unknown',
         };
         return movieObject;
     }

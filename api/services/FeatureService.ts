@@ -9,7 +9,7 @@ type FeatureServiceParams = {
 
 /**
  * @class featureService
- * this class contains the logic for working with the feature data
+ * this class contains the logic     for working with the feature data
  * regardless of the source of that data 
  */
 
@@ -28,7 +28,7 @@ export class FeatureService {
     }
 
     getFeatureCastByMovieId = async (feature_id: number) => {
-        const cast = await this.dataStore.getCastByMovieId(feature_id);
+        const cast = await this.dataStore.getBaconActorListByMovieId(feature_id);
         return cast;
     }
 

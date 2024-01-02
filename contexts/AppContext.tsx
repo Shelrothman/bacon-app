@@ -12,7 +12,7 @@ type ContextProps = {
     isLoading: boolean;
     setIsLoading: (isLoading: boolean) => void;
     /** gets the cast of the user-entered movie */
-    getCastAndSetTitle: (movieName: string, changeMap: boolean) => Promise<BaconActorList | void>;
+    getCastAndSetMovieInfo: (movieName: string, changeMap: boolean) => Promise<BaconActorList | void>;
     /** gets the movies of the user-selected actor */
     getMovies: (actorID: number, changeMap: boolean) => Promise<BaconFeatureList | void>;
     /** cast of actors for the current movie */
@@ -30,11 +30,12 @@ type ContextProps = {
     /** id of the currentActor */
     currentActorID: number;
     setCurrentActorID: (actorID: number) => void;
+    /** the overview for the current movie */
+    currentMovieOverview: string;
+    setCurrentMovieOverview: (movieOverview: string) => void;
     /** 
      * array of entities for the user session in consecutive order FOR navigation 
-     * the [0] will always be the cast of the movie the user entered in input
-     * so all even indexes will be the cast of the movie with the movie id
-     * and all odd indexes will be the movies of the actor with the actor id
+     * the [0] will always be the cast of the first movie the user entered in input
      */
     sessionMap: number[];
     setSessionMap: (sessionMap: number[]) => void;
@@ -63,6 +64,7 @@ const AppProvider = (props: Props) => {
     const [ currentCardMovies, setCurrentCardMovies ] = useState<BaconFeatureList | null>(null);
     const [ currentMovieTitle, setCurrentMovieTitle ] = useState<string>('');
     const [ currentActorName, setCurrentActorName ] = useState<string>('');
+    const [ currentMovieOverview, setCurrentMovieOverview ] = useState<string>('');
     const [ currentActorID, setCurrentActorID ] = useState<number>(0);
     const [ sessionMap, setSessionMap ] = useState<number[]>([]);
     const [ movieInputTitle, setMovieInputTitle ] = useState<string>('');
@@ -76,7 +78,7 @@ const AppProvider = (props: Props) => {
     };
 
     /** gets the cast and sets the currentMovieTitle with official title */
-    async function getCastAndSetTitle(movieName: string, changeMap: boolean): Promise<BaconActorList | void> {
+    async function getCastAndSetMovieInfo(movieName: string, changeMap: boolean): Promise<BaconActorList | void> {
         try {
             // if (isMocked) {
             //     console.log('MOCK MODE ON, returning fake data...');
@@ -87,6 +89,9 @@ const AppProvider = (props: Props) => {
             if (!feature_object) {
                 return alert('No Movie found with provided title, please try again.');
             }
+            // in here from the object, we set get the overview 
+            // console.log('feature_object: ', feature_object);
+            setCurrentMovieOverview(feature_object.overview);
             setCurrentMovieTitle(feature_object.title);
             const featureCast = await featureService.getFeatureCastByMovieId(feature_object.id);
             if (!featureCast) {
@@ -129,7 +134,7 @@ const AppProvider = (props: Props) => {
             setSquareState,
             sessionMap,
             setSessionMap,
-            getCastAndSetTitle,
+            getCastAndSetMovieInfo: getCastAndSetMovieInfo,
             getMovies,
             isLoading,
             setIsLoading,
@@ -143,6 +148,8 @@ const AppProvider = (props: Props) => {
             setCurrentActorName,
             currentActorID,
             setCurrentActorID,
+            currentMovieOverview,
+            setCurrentMovieOverview,
             movieInputTitle,
             setMovieInputTitle,
         }}>

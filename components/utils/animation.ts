@@ -16,8 +16,6 @@ export const startAnimation = () => {
     ).start();
 };
 
-// to make this appear slower i could add a delay to the loop
-
 export const spinForward = spinValue.interpolate({
     inputRange: [ 0, 1 ],
     outputRange: [ '0deg', '360deg' ],

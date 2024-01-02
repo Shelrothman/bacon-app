@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Toast from 'react-native-root-toast';
 
@@ -11,7 +10,6 @@ type InfoModalProps = {
 
 export function InfoModal(props: InfoModalProps) {
     const { modalVisible, setModalVisible } = props;
-
     const { currentMovieTitle, currentMovieOverview, currentMovieReleaseDate } = useAppContext();
 
 

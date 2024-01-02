@@ -10,8 +10,6 @@ import { MainSquare } from './components/squarestates/MainSquare';
 import { AppProvider } from './contexts/AppContext';
 import { container_style } from './styles';
 
-// TODO: an info icon thing to show user the overview at any popint in the app.
-// it would be for the currentActor or currentMovie
 
 // TODO: a cool engagin splash screeen like ready to get that off your tongue yahoo thing
 

@@ -37,7 +37,7 @@ export function InfoModal(props: InfoModalProps) {
         >
             <View>
                 <Text style={modal_styles.movieTitle}>
-                    {currentMovieTitle}
+                    {currentMovieTitle} 
                 </Text>
                 <Text style={modal_styles.movieOverview}>
                     {currentMovieOverview}

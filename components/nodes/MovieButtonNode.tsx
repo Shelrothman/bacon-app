@@ -1,9 +1,10 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { BaconFeature } from '../../types'
+import { BaconMovie } from '../../types'
 import { NodeWrapper } from './NodeWrapper';
 
-type MovieButtonNodeProps = BaconFeature & {
+type MovieButtonNodeProps = BaconMovie & {
+    characterName: string | undefined;
     handleMovieNodePress: (id: number, movieName: string) => void;
 }
 
@@ -18,7 +19,7 @@ export function MovieButtonNode(props: MovieButtonNodeProps) {
             id={id}
             nameOrTitle={title}
             backgrounds={[ '#e4d9ae', '#CBB967', '#BEA841', '#BA8E45' ]}
-            characterName={characterName}
+            characterName={characterName ? characterName : ''}
             innerIcon={<MaterialCommunityIcons name="theater" size={26} color="black" />}
         />
     )

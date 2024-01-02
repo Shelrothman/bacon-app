@@ -11,7 +11,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
 
     const { handleGetCast } = useGetData();
 
-    return (
+    return (      
         <View >
             <SquareHeader title={`${props.actorName} Movies`} />
             <ScrollView showsVerticalScrollIndicator={true}>

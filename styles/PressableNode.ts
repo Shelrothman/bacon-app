@@ -31,7 +31,7 @@ export const pressable_style = StyleSheet.create({
         justifyContent: 'center',
     },
     titleInfoPressable: {
-        flexDirection: 'row',
+        // flexDirection: 'row',
         borderRadius: 20,
         borderWidth: 1.3,
         borderColor: '#000',

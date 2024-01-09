@@ -1,4 +1,4 @@
-import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 type CustomActionSheetProps = {
     visible: boolean;
@@ -6,16 +6,12 @@ type CustomActionSheetProps = {
     // options: string[];
 };
 
-// PICKUP: HERE:  get this looking nice
+
+
 
 const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
-    // const options = [ 'Menu', 'What is this', 'Special Thanks', 'Developer Info', 'Support the App', 'App Info' ];
-    // const options = [ 'What is this', 'Special Thanks', 'Developer Info', 'Support the App', 'App Info' ];
-    const options = [
-        {
-            title: 'What is this',
-            body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
-        },
+    /** just using these as i develop, will delete */
+    const fake_options = [
         {
             title: 'Special Thanks',
             body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
@@ -34,74 +30,134 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
         },
     ];
 
+    const helpData = [
+        { item: '1', text: 'Enter a movie title', },
+        { item: '2', text: 'Select or enter your search', },
+        { item: '3', text: 'Select an actor from the list to view their movies.', },
+        { item: '4', text: 'Then select a movie from that list, to view the cast.', },
+        { item: '5', text: 'Keep going till your hearts content. 🤗', },
+    ];
+
     return (
         <Modal visible={visible} transparent animationType="slide">
             <View style={styles.container}>
-                <TouchableOpacity style={styles.titleRow} onPress={() => onClose()}>
+                <Pressable style={styles.stickyHeaderRow} onPress={() => onClose()}>
                     <View style={{ flex: 1, alignItems: 'center' }}>
-                        <Text style={[ styles.text, styles.menuTitle ]}>Menu</Text>
+                        <Text style={styles.menuTitle}>Menu</Text>
                     </View>
-                    <Text style={styles.exitButton}>v</Text>
-                </TouchableOpacity>
-                {/* <ScrollView */}
+                    <Text style={styles.exitButton}>
+                        &#8964;
+                    </Text>
+                </Pressable>
                 <ScrollView
-                    style={{ maxHeight: '50%' }}
-                    contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}>
-                {options.map((option, index) => (
-                    <View key={index} style={styles.sheetRow}>
-                        <Text style={styles.text}>{option.title}</Text>
-                        <View style={styles.bodyContainer}>
-                            <Text>{option.body}</Text>
+                    style={{ maxHeight: '60%', backgroundColor: '#25292e' }}
+                    contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end', }}
+                    refreshControl={<RefreshControl
+                        refreshing={false}
+                        onRefresh={() => onClose()}
+                        colors={[ 'transparent' ]} // make the spinner invisible on android
+                        tintColor={'transparent'} // make the spinner invisible on iOS
+                        progressBackgroundColor={'transparent'} // make the background invisible on Android
+                    />}
+                >
+                    <View style={styles.sheetRow}>
+                        <Text style={styles.sectionTitleText}>How do I do this?</Text>
+                        <View style={styles.sectionContainer}>
+                            {/* <View style={styles.sectionRow}>
+                                <Text style={styles.numberText}>1. </Text>
+                                <Text style={styles.bodyText}>Enter a movie title</Text>
+                            </View>
+                            <View style={styles.sectionRow}>
+                                <Text style={styles.numberText}>2. </Text>
+                                <Text style={styles.bodyText}>Select or enter your search </Text>
+                            </View>
+                            <View style={styles.sectionRow}>
+                                <Text style={styles.numberText}>3. </Text>
+                                <Text style={styles.bodyText}>Select an actor from the list to view their movies.</Text>
+                            </View>
+                            <View style={styles.sectionRow}>
+                                <Text style={styles.numberText}>4. </Text>
+                                <Text style={styles.bodyText}>Then select a movie from that list, to view the cast.</Text>
+                            </View>
+                            <View style={styles.sectionRow}>
+                                <Text style={styles.numberText}>5. </Text>
+                                <Text style={styles.bodyText}>Keep going till your hearts content. 🤗</Text>
+                            </View> */}
+                            {helpData.map((item) => (
+                                <View key={item.item} style={styles.sectionRow}>
+                                    <Text style={styles.numberText}>{item.item}. </Text>
+                                    <Text style={styles.bodyText}>{item.text}</Text>
+                                </View>
+                            )
+                            )}
                         </View>
                     </View>
-                ))}
-                </ScrollView> 
-                {/* <TouchableOpacity style={styles.sheetRow} onPress={() => onClose()}>
-                    <Text style={styles.text}>Cancel</Text>
-                </TouchableOpacity> */}
+                    {fake_options.map((option, index) => (
+                        <View key={index} style={styles.sheetRow}>
+                            <Text style={styles.sectionTitleText}>{option.title}</Text>
+                            <View style={styles.sectionContainer}>
+                                <Text>{option.body}</Text>
+                            </View>
+                        </View>
+                    ))}
+                </ScrollView>
             </View>
         </Modal>
     );
 };
 
 const styles = StyleSheet.create({
-    bodyContainer: {
-        backgroundColor: '#25292e',
-        // padding: 20,
+    sectionContainer: {
+        backgroundColor: '#202540',
         borderRadius: 10,
-        color: '#fff'
+        color: '#fff',
+        padding: 10,
     },
     container: {
         flex: 1,
         justifyContent: 'flex-end',
-        // maxHeight: '50%',
-        // backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        // backgroundColor: 'transparent'
     },
     sheetRow: {
         padding: 10,
-        backgroundColor: '#4157be',
-        borderTopWidth: 1,
-        borderTopColor: '#ccc',
+        backgroundColor: '#25292e',
     },
-    titleRow: {
+    stickyHeaderRow: {
         flexDirection: 'row',
         padding: 10,
         justifyContent: 'flex-end',
-        backgroundColor: '#4158BE',
+        // backgroundColor: '#25292e',
+        backgroundColor: '#202540'
     },
-    text: {
-        fontSize: 22,
-        fontFamily: 'Bacon-Reg',
+    sectionTitleText: {
+        fontSize: 20,
+        fontFamily: 'Bacon-Limelight',
+        color: '#ccc',
+        paddingLeft: 10,
+        paddingBottom: 5,
     },
     exitButton: {
         fontSize: 18,
+        color: '#ccc',
     },
     menuTitle: {
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // flexDirection: 'row',
-        // alignSelf: 'flex-start',
+        color: '#ccc',
+        fontSize: 24,
+        fontFamily: 'Bacon-Stencil',
+    },
+    bodyText: {
+        color: '#ccc',
+        fontSize: 14,
+        flexShrink: 1,
+    },
+    sectionRow: {
+        flexDirection: 'row',
+        paddingVertical: 5,
+        justifyContent: 'flex-start',
+    },
+    numberText: {
+        color: '#ccc',
+        fontSize: 14,
+        textAlign: 'left',
     },
 });
 

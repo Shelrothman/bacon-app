@@ -1,20 +1,32 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useState } from 'react';
 
 import { useAppContext } from '../contexts/AppContext'
 import useGoBack from '../hooks/useGoBack';
+import CustomActionSheet from './CustomActionSheet';
 import { FooterButton } from './FooterButton';
 
+
+
+
 export default function Footer() {
-
-    const { setSquareState, setSessionMap, sessionMap, setMovieInputTitle, isLoading } = useAppContext();
-    // TODO: the settings thing into pull up menu
-
+    const [ actionSheetVisible, setActionSheetVisible ] = useState(false);
+    const {
+        setSquareState, setSessionMap, sessionMap, setMovieInputTitle, isLoading
+    } = useAppContext()
     const { handleGoBack } = useGoBack();
+
+
 
     return (
         <>
+            <CustomActionSheet
+                visible={actionSheetVisible}
+                onClose={() => setActionSheetVisible(false)}
+            // options={[ 'Menu', 'What is this', 'Special Thanks', 'Developer Info', 'Support the App', 'App Info' ]}
+            />
             <FooterButton
                 icon={<FontAwesome name="fast-backward" size={24}
                     color={(sessionMap && sessionMap.length > 0) && !isLoading ? "white" : "#8e8e8e"}
@@ -36,7 +48,7 @@ export default function Footer() {
             <FooterButton
                 icon={<Ionicons name="menu" size={24} color="white" />}
                 text='Menu'
-                handlePress={() => console.log('hi this to take option to get info for current actor/movie')}
+                handlePress={() => setActionSheetVisible(true)}
             />
         </>
     )

@@ -10,7 +10,6 @@ import { MainSquare } from './components/squarestates/MainSquare';
 import { AppProvider } from './contexts/AppContext';
 import { container_style } from './styles';
 
-
 // TODO: a cool engagin splash screeen like ready to get that off your tongue yahoo thing
 
 // TODO: must do proper accreditation for the tmdb api
@@ -37,7 +36,7 @@ export default function App() {
     if (!fontsLoaded) {
         return null;
     }
-
+    // we are using the RootSiblingParent to allow for the use of the Toasts
     return (
         <RootSiblingParent>
             <AppProvider>

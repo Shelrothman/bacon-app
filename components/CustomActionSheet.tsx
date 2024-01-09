@@ -1,5 +1,7 @@
+// import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Modal, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import TMDB_LOGO from "../assets/tmdb_logo.svg";
 type CustomActionSheetProps = {
     visible: boolean;
     onClose: () => void;
@@ -12,10 +14,10 @@ type CustomActionSheetProps = {
 const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
     /** just using these as i develop, will delete */
     const fake_options = [
-        {
-            title: 'Special Thanks',
-            body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
-        },
+        // {
+        //     title: 'Special Thanks',
+        //     body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
+        // },
         {
             title: 'Developer Info',
             body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
@@ -30,6 +32,7 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
         },
     ];
 
+
     const helpData = [
         { item: '1', text: 'Enter a movie title', },
         { item: '2', text: 'Select or enter your search', },
@@ -37,6 +40,30 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
         { item: '4', text: 'Then select a movie from that list, to view the cast.', },
         { item: '5', text: 'Keep going till your hearts content. 🤗', },
     ];
+    // const developerData = [
+    //     {
+    //         icon: <MaterialCommunityIcons name="github" size={24} color="black" />,
+    //         text: 'Github',
+    //         url: '',
+    //     },
+    //     {
+    //         icon: 'linkedin',
+    //         text: 'LinkedIn',
+    //         url: '',
+    //     },
+    //     {
+    //         icon: 'email',
+    //         text: 'Email',
+    //         url: '',
+    //     },
+    //     {
+    //         icon: 'web',
+    //         text: 'Website',
+    //         url: '',
+    //     },
+    // ];
+
+
     // PICKUP: here. keep doing what done here with all the other sections. slowly replacing the fake options.
 
     return (
@@ -62,26 +89,6 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
                     <View style={styles.sheetRow}>
                         <Text style={styles.sectionTitleText}>How do I do this?</Text>
                         <View style={styles.sectionContainer}>
-                            {/* <View style={styles.sectionRow}>
-                                <Text style={styles.numberText}>1. </Text>
-                                <Text style={styles.bodyText}>Enter a movie title</Text>
-                            </View>
-                            <View style={styles.sectionRow}>
-                                <Text style={styles.numberText}>2. </Text>
-                                <Text style={styles.bodyText}>Select or enter your search </Text>
-                            </View>
-                            <View style={styles.sectionRow}>
-                                <Text style={styles.numberText}>3. </Text>
-                                <Text style={styles.bodyText}>Select an actor from the list to view their movies.</Text>
-                            </View>
-                            <View style={styles.sectionRow}>
-                                <Text style={styles.numberText}>4. </Text>
-                                <Text style={styles.bodyText}>Then select a movie from that list, to view the cast.</Text>
-                            </View>
-                            <View style={styles.sectionRow}>
-                                <Text style={styles.numberText}>5. </Text>
-                                <Text style={styles.bodyText}>Keep going till your hearts content. 🤗</Text>
-                            </View> */}
                             {helpData.map((item) => (
                                 <View key={item.item} style={styles.sectionRow}>
                                     <Text style={styles.numberText}>{item.item}. </Text>
@@ -89,6 +96,23 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
                                 </View>
                             )
                             )}
+                        </View>
+                    </View>
+                    <View style={styles.sheetRow}>
+                        <Text style={styles.sectionTitleText}>Special Thanks</Text>
+                        <View style={styles.sectionContainer}>
+                            <View style={[ styles.sectionRow, { justifyContent: 'space-evenly' } ]}>
+                                {/* REQUIRED: attribute TMDB as the source of the data */}
+                                <Text style={styles.bodyText}>Data Source:</Text>
+                                <Text>
+                                    <TMDB_LOGO width={175} height={30} />
+                                </Text>
+                            </View>
+                            <View style={styles.sectionRow}>
+                                <Text style={[ styles.bodyText, { fontStyle: 'italic', textAlign: 'center' } ]}>
+                                    This product uses the TMDB API but is not endorsed or certified by TMDB.
+                                </Text>
+                            </View>
                         </View>
                     </View>
                     {fake_options.map((option, index) => (
@@ -115,7 +139,8 @@ const styles = StyleSheet.create({
         borderLeftWidth: 1,
     },
     sectionContainer: {
-        backgroundColor: '#202540',
+        // backgroundColor: '#202540',
+        backgroundColor: '#25292e',
         borderRadius: 10,
         color: '#fff',
         padding: 10,

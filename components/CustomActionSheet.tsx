@@ -37,6 +37,7 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
         { item: '4', text: 'Then select a movie from that list, to view the cast.', },
         { item: '5', text: 'Keep going till your hearts content. 🤗', },
     ];
+    // PICKUP: here. keep doing what done here with all the other sections. slowly replacing the fake options.
 
     return (
         <Modal visible={visible} transparent animationType="slide">
@@ -45,12 +46,10 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
                     <View style={{ flex: 1, alignItems: 'center' }}>
                         <Text style={styles.menuTitle}>Menu</Text>
                     </View>
-                    <Text style={styles.exitButton}>
-                        &#8964;
-                    </Text>
+                    <Text style={styles.exitButton}> &#8964; </Text>
                 </Pressable>
                 <ScrollView
-                    style={{ maxHeight: '60%', backgroundColor: '#25292e' }}
+                    style={styles.scrollView}
                     contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end', }}
                     refreshControl={<RefreshControl
                         refreshing={false}
@@ -107,6 +106,14 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
 };
 
 const styles = StyleSheet.create({
+    scrollView: {
+        maxHeight: '60%',
+        backgroundColor: '#09192e',
+        borderRightColor: '#ccc',
+        borderRightWidth: 1,
+        borderLeftColor: '#ccc',
+        borderLeftWidth: 1,
+    },
     sectionContainer: {
         backgroundColor: '#202540',
         borderRadius: 10,
@@ -116,14 +123,23 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-end',
+        // borderRadius
     },
     sheetRow: {
         padding: 10,
-        backgroundColor: '#25292e',
+        backgroundColor: '#09192e'
     },
     stickyHeaderRow: {
         flexDirection: 'row',
         padding: 10,
+        borderTopEndRadius: 15,
+        borderTopStartRadius: 15,
+        borderTopColor: '#ccc',
+        borderTopWidth: 1,
+        borderLeftColor: '#ccc',
+        borderLeftWidth: 1,
+        borderRightColor: '#ccc',
+        borderRightWidth: 1,
         justifyContent: 'flex-end',
         // backgroundColor: '#25292e',
         backgroundColor: '#202540'
@@ -138,6 +154,7 @@ const styles = StyleSheet.create({
     exitButton: {
         fontSize: 18,
         color: '#ccc',
+        fontWeight: 'bold',
     },
     menuTitle: {
         color: '#ccc',

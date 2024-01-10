@@ -1,17 +1,40 @@
-// import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Modal, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import TMDB_LOGO from "../assets/tmdb_logo.svg";
+import TMDB_LOGO from "../../assets/tmdb_logo.svg";
+import { ExpoIcon } from './ExpoIcon';
+// import EXPO_LOGO from "../../assets/expo.svg";
 type CustomActionSheetProps = {
     visible: boolean;
     onClose: () => void;
     // options: string[];
 };
 
+// FUTURE:
+// import { A } from '@expo/html-elements'; // use like 'Linking' @expo-linking, just a wrapper as an element.
+// Built by Shel Rothman 🐚 \n Powered by Expo 𝝠 todo: put this somewhere not in the thanks but somewhere.
+
+// const Slate = {
+//     "900": "#191A20",
+//     "800": "#282A35",
+//     "500": "#64719E",
+//     "400": "#3d4051",
+//     "200": "#F1F1F1",
+//     "100": "#ffffff",
+// };
 
 
 
 const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
+
+    const RefreshControlComponent: React.ReactElement = <RefreshControl
+        refreshing={false}
+        onRefresh={() => onClose()}
+        colors={[ 'transparent' ]} // make the spinner invisible on android
+        tintColor={'transparent'} // make the spinner invisible on iOS
+        progressBackgroundColor={'transparent'} // make the background invisible on Android
+    />;
+
     /** just using these as i develop, will delete */
     const fake_options = [
         // {
@@ -40,30 +63,36 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
         { item: '4', text: 'Then select a movie from that list, to view the cast.', },
         { item: '5', text: 'Keep going till your hearts content. 🤗', },
     ];
-    // const developerData = [
-    //     {
-    //         icon: <MaterialCommunityIcons name="github" size={24} color="black" />,
-    //         text: 'Github',
-    //         url: '',
-    //     },
-    //     {
-    //         icon: 'linkedin',
-    //         text: 'LinkedIn',
-    //         url: '',
-    //     },
-    //     {
-    //         icon: 'email',
-    //         text: 'Email',
-    //         url: '',
-    //     },
-    //     {
-    //         icon: 'web',
-    //         text: 'Website',
-    //         url: '',
-    //     },
-    // ];
+    const developerData = [
+        {
+            icon: <Ionicons name="logo-github" size={24} color="white" />,
+            text: 'Github',
+            url: 'https://github.com/Shelrothman',
+        },
+        {
+            icon: <FontAwesome name="linkedin-square" size={24} color="white" />,
+            text: 'LinkedIn',
+            url: 'https://www.linkedin.com/in/shelby-anne-rothman/',
+        },
+        {
+            icon: <MaterialCommunityIcons name="email-send" size={24} color="white" />,
+            text: 'Email',
+            url: 'mailto:shel.programmer@gmail.com', /// make sure this works...
+        },
+        {
+            icon: <MaterialCommunityIcons name="web" size={24} color="white" />,
+            text: 'Website',
+            url: 'https://shelbyrothman.com/',
+        },
+        {
+            icon: <FontAwesome5 name="tiktok" size={24} color="white" />,
+            text: 'TikTok',
+            url: 'https://www.tiktok.com/@shel.0000'
+        },
+        // TODO: instagram after i make one lol
+    ];
 
-
+    // TODO: modulate this out ...
     // PICKUP: here. keep doing what done here with all the other sections. slowly replacing the fake options.
 
     return (
@@ -73,18 +102,12 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
                     <View style={{ flex: 1, alignItems: 'center' }}>
                         <Text style={styles.menuTitle}>Menu</Text>
                     </View>
-                    <Text style={styles.exitButton}> &#8964; </Text>
+                    <Text style={styles.exitButton}>&#8964;</Text>
                 </Pressable>
                 <ScrollView
                     style={styles.scrollView}
                     contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end', }}
-                    refreshControl={<RefreshControl
-                        refreshing={false}
-                        onRefresh={() => onClose()}
-                        colors={[ 'transparent' ]} // make the spinner invisible on android
-                        tintColor={'transparent'} // make the spinner invisible on iOS
-                        progressBackgroundColor={'transparent'} // make the background invisible on Android
-                    />}
+                    refreshControl={RefreshControlComponent}
                 >
                     <View style={styles.sheetRow}>
                         <Text style={styles.sectionTitleText}>How do I do this?</Text>
@@ -99,19 +122,26 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
                         </View>
                     </View>
                     <View style={styles.sheetRow}>
+                        {/* TODO: add in powered by expo thing here. */}
                         <Text style={styles.sectionTitleText}>Special Thanks</Text>
                         <View style={styles.sectionContainer}>
                             <View style={[ styles.sectionRow, { justifyContent: 'space-evenly' } ]}>
                                 {/* REQUIRED: attribute TMDB as the source of the data */}
-                                <Text style={styles.bodyText}>Data Source:</Text>
-                                <Text>
+                                <Text style={[ styles.bodyText, { textAlign: 'left' } ]}>Data Source:</Text>
+                                <Text style={{ textAlign: 'right' }}>
                                     <TMDB_LOGO width={175} height={30} />
                                 </Text>
                             </View>
-                            <View style={styles.sectionRow}>
+                            <View style={[ styles.sectionRow, { justifyContent: 'space-between' } ]}>
                                 <Text style={[ styles.bodyText, { fontStyle: 'italic', textAlign: 'center' } ]}>
                                     This product uses the TMDB API but is not endorsed or certified by TMDB.
                                 </Text>
+                            </View>
+                            <View style={[ styles.sectionRow, { justifyContent: 'center', paddingBottom: 0 } ]}>
+                                <Text style={styles.bodyText}>Built by: Shel Rothman 🐚</Text>
+                            </View>
+                            <View style={[ styles.sectionRow, { justifyContent: 'center', paddingVertical: 0 } ]}>
+                                <Text style={styles.bodyText}>Powered by: Expo <ExpoIcon /></Text>
                             </View>
                         </View>
                     </View>
@@ -194,7 +224,6 @@ const styles = StyleSheet.create({
     sectionRow: {
         flexDirection: 'row',
         paddingVertical: 5,
-        justifyContent: 'flex-start',
     },
     numberText: {
         color: '#ccc',

@@ -1,5 +1,5 @@
 import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { Modal, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, Modal, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import TMDB_LOGO from "../../assets/tmdb_logo.svg";
 import { ExpoIcon } from './ExpoIcon';
@@ -41,10 +41,10 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
         //     title: 'Special Thanks',
         //     body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
         // },
-        {
-            title: 'Developer Info',
-            body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
-        },
+        // {
+        //     title: 'Developer Info',
+        //     body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
+        // },
         {
             title: 'Support the App',
             body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
@@ -70,18 +70,13 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
             url: 'https://github.com/Shelrothman',
         },
         {
-            icon: <FontAwesome name="linkedin-square" size={24} color="white" />,
-            text: 'LinkedIn',
-            url: 'https://www.linkedin.com/in/shelby-anne-rothman/',
-        },
-        {
             icon: <MaterialCommunityIcons name="email-send" size={24} color="white" />,
             text: 'Email',
             url: 'mailto:shel.programmer@gmail.com', /// make sure this works...
         },
         {
             icon: <MaterialCommunityIcons name="web" size={24} color="white" />,
-            text: 'Website',
+            text: 'Professional Website',
             url: 'https://shelbyrothman.com/',
         },
         {
@@ -89,11 +84,19 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
             text: 'TikTok',
             url: 'https://www.tiktok.com/@shel.0000'
         },
+        {
+            icon: <FontAwesome name="linkedin-square" size={24} color="white" />,
+            text: 'LinkedIn',
+            url: 'https://www.linkedin.com/in/shelby-anne-rothman/',
+        },
         // TODO: instagram after i make one lol
     ];
 
     // TODO: modulate this out ...
+
+
     // PICKUP: here. keep doing what done here with all the other sections. slowly replacing the fake options.
+    // NEXT do the dev data.
 
     return (
         <Modal visible={visible} transparent animationType="slide">
@@ -122,7 +125,6 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
                         </View>
                     </View>
                     <View style={styles.sheetRow}>
-                        {/* TODO: add in powered by expo thing here. */}
                         <Text style={styles.sectionTitleText}>Special Thanks</Text>
                         <View style={styles.sectionContainer}>
                             <View style={[ styles.sectionRow, { justifyContent: 'space-evenly' } ]}>
@@ -138,11 +140,58 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
                                 </Text>
                             </View>
                             <View style={[ styles.sectionRow, { justifyContent: 'center', paddingBottom: 0 } ]}>
-                                <Text style={styles.bodyText}>Built by: Shel Rothman 🐚</Text>
+                                <Text style={styles.bodyText}>Built By: Shel Rothman 🐚</Text>
                             </View>
                             <View style={[ styles.sectionRow, { justifyContent: 'center', paddingVertical: 0 } ]}>
-                                <Text style={styles.bodyText}>Powered by: Expo <ExpoIcon /></Text>
+                                <Text style={styles.bodyText}>Powered By: Expo <ExpoIcon /></Text>
                             </View>
+                        </View>
+                    </View>
+                    <View style={styles.sheetRow}>
+                        <Text style={styles.sectionTitleText}>Developer Info</Text>
+                        <View style={styles.sectionContainer}>
+                            {developerData.map((item, index) => (
+                                <View key={index} style={styles.sectionRow}>
+                                    <Pressable onPress={() => { Linking.openURL(item.url); }}
+                                        style={({ pressed }) => [
+                                            {
+                                                opacity: pressed ? 0.5 : 1,
+                                                transform: [ { scale: pressed ? 0.95 : 1 } ],
+                                                flexDirection: 'row', alignItems: 'center',
+                                                justifyContent: 'space-between',
+                                                flex: 1,    
+                                            }
+                                        ]}
+
+                                    // style={{
+                                    //     flexDirection: 'row', alignItems: 'center',
+                                    //     justifyContent: 'space-between',
+                                    //     flex: 1,
+                                    // }}
+                                    >
+                                        {/* <Text>{item.icon}</Text> */}
+                                        <Text style={styles.bodyText}>{item.icon}&nbsp;&nbsp;&nbsp;{item.text}</Text>
+                                        <FontAwesome name="external-link" size={24} color="#ccc" />
+                                    </Pressable>
+                                </View>
+                            ))}
+                            {/* <View style={[ styles.sectionRow, { justifyContent: 'space-evenly' } ]}>
+                                <Text style={[ styles.bodyText, { textAlign: 'left' } ]}>Data Source:</Text>
+                                <Text style={{ textAlign: 'right' }}>
+                                    <TMDB_LOGO width={175} height={30} />
+                                </Text>
+                            </View>
+                            <View style={[ styles.sectionRow, { justifyContent: 'space-between' } ]}>
+                                <Text style={[ styles.bodyText, { fontStyle: 'italic', textAlign: 'center' } ]}>
+                                    This product uses the TMDB API but is not endorsed or certified by TMDB.
+                                </Text>
+                            </View>
+                            <View style={[ styles.sectionRow, { justifyContent: 'center', paddingBottom: 0 } ]}>
+                                <Text style={styles.bodyText}>Built By: Shel Rothman 🐚</Text>
+                            </View>
+                            <View style={[ styles.sectionRow, { justifyContent: 'center', paddingVertical: 0 } ]}>
+                                <Text style={styles.bodyText}>Powered By: Expo <ExpoIcon /></Text>
+                            </View> */}
                         </View>
                     </View>
                     {fake_options.map((option, index) => (
@@ -218,7 +267,7 @@ const styles = StyleSheet.create({
     },
     bodyText: {
         color: '#ccc',
-        fontSize: 14,
+        fontSize: 16,
         flexShrink: 1,
     },
     sectionRow: {

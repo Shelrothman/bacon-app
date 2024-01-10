@@ -37,14 +37,6 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
 
     /** just using these as i develop, will delete */
     const fake_options = [
-        // {
-        //     title: 'Special Thanks',
-        //     body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
-        // },
-        // {
-        //     title: 'Developer Info',
-        //     body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
-        // },
         {
             title: 'Support the App',
             body: 'lorem ipsim lorems lorem lor lorem lorem lorem lor'
@@ -91,6 +83,26 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
         },
         // TODO: instagram after i make one lol
     ];
+    // TODO: use the proper url for writing review once u get the app on the app store.
+    const supportData = [
+        {
+            icon: "📝",
+            text: "Write a review",
+            url: "https://www.google.com/search?q=todo&rlz=1C1GCEA_enUS997US997&oq=todo&gs_lcrp=EgZjaHJvbWUyFAgAEEUYORhDGIMBGLEDGIAEGIoFMhIIARAAGEMYgwEYsQMYgAQYigUyDAgCEAAYQxiABBiKBTIMCAMQABhDGIAEGIoFMgwIBBAAGEMYgAQYigUyDQgFEC4YgwEYsQMYgAQyDAgGEAAYQxiABBiKBTIKCAcQABixAxiABDINCAgQLhivARjHARiABDINCAkQABiDARixAxiABNIBBzY4NWowajeoAgCwAgA&sourceid=chrome&ie=UTF-8"
+            // link: `itms-apps://itunes.apple.com/app/viewContentsUserReviews/id${require("../../../eas.json").submit.production.ios.ascAppId}?action=write-review` <--- use this but with bacon.
+        },
+        {
+            icon: "⭐",
+            text: "Star the project on Github",
+            url: "https://github.com/Shelrothman/bacon-app"
+        },
+        {
+            icon: "🐛",
+            text: "Report a bug",
+            url: "https://github.com/Shelrothman/bacon-app/issues/new"
+        }
+    ];
+
 
     // TODO: modulate this out ...
 
@@ -151,47 +163,42 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
                         <Text style={styles.sectionTitleText}>Developer Info</Text>
                         <View style={styles.sectionContainer}>
                             {developerData.map((item, index) => (
-                                <View key={index} style={styles.sectionRow}>
+                                <View key={index} style={[ styles.sectionRow, { paddingVertical: 10 } ]}>
                                     <Pressable onPress={() => { Linking.openURL(item.url); }}
                                         style={({ pressed }) => [
                                             {
                                                 opacity: pressed ? 0.5 : 1,
                                                 transform: [ { scale: pressed ? 0.95 : 1 } ],
-                                                flexDirection: 'row', alignItems: 'center',
-                                                justifyContent: 'space-between',
-                                                flex: 1,    
-                                            }
+                                            },
+                                            { ...styles.pressableLink }
                                         ]}
-
-                                    // style={{
-                                    //     flexDirection: 'row', alignItems: 'center',
-                                    //     justifyContent: 'space-between',
-                                    //     flex: 1,
-                                    // }}
                                     >
-                                        {/* <Text>{item.icon}</Text> */}
                                         <Text style={styles.bodyText}>{item.icon}&nbsp;&nbsp;&nbsp;{item.text}</Text>
                                         <FontAwesome name="external-link" size={24} color="#ccc" />
                                     </Pressable>
                                 </View>
                             ))}
-                            {/* <View style={[ styles.sectionRow, { justifyContent: 'space-evenly' } ]}>
-                                <Text style={[ styles.bodyText, { textAlign: 'left' } ]}>Data Source:</Text>
-                                <Text style={{ textAlign: 'right' }}>
-                                    <TMDB_LOGO width={175} height={30} />
-                                </Text>
-                            </View>
-                            <View style={[ styles.sectionRow, { justifyContent: 'space-between' } ]}>
-                                <Text style={[ styles.bodyText, { fontStyle: 'italic', textAlign: 'center' } ]}>
-                                    This product uses the TMDB API but is not endorsed or certified by TMDB.
-                                </Text>
-                            </View>
-                            <View style={[ styles.sectionRow, { justifyContent: 'center', paddingBottom: 0 } ]}>
-                                <Text style={styles.bodyText}>Built By: Shel Rothman 🐚</Text>
-                            </View>
-                            <View style={[ styles.sectionRow, { justifyContent: 'center', paddingVertical: 0 } ]}>
-                                <Text style={styles.bodyText}>Powered By: Expo <ExpoIcon /></Text>
-                            </View> */}
+                        </View>
+                    </View>
+                    <View style={styles.sheetRow}>
+                        <Text style={styles.sectionTitleText}>Support the App</Text>
+                        <View style={styles.sectionContainer}>
+                            {supportData.map((item, index) => (
+                                <View key={index} style={[ styles.sectionRow, { paddingVertical: 10 } ]}>
+                                    <Pressable onPress={() => { Linking.openURL(item.url); }}
+                                        style={({ pressed }) => [
+                                            {
+                                                opacity: pressed ? 0.5 : 1,
+                                                transform: [ { scale: pressed ? 0.95 : 1 } ],
+                                            },
+                                            { ...styles.pressableLink }
+                                        ]}
+                                    >
+                                        <Text style={styles.bodyText}>{item.icon}&nbsp;&nbsp;&nbsp;{item.text}</Text>
+                                        <FontAwesome name="external-link" size={24} color="#ccc" />
+                                    </Pressable>
+                                </View>
+                            ))}
                         </View>
                     </View>
                     {fake_options.map((option, index) => (
@@ -209,6 +216,12 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
 };
 
 const styles = StyleSheet.create({
+    pressableLink: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flex: 1,
+    },
     scrollView: {
         maxHeight: '60%',
         backgroundColor: '#09192e',

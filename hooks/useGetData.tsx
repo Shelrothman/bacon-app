@@ -2,7 +2,7 @@ import { Keyboard } from "react-native";
 
 import { BaconServiceFactory } from "../api/services/ServiceFactory";
 import { useAppContext } from "../contexts/AppContext";
-import { BaconMovieOption } from "../types";
+import { BaconMovieOption } from "../types/api";
 
 /**
  * @hook useGetData - get cast of movie and/or actors movies for the UI

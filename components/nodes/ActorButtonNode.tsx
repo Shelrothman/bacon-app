@@ -1,6 +1,6 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { BaconActor } from '../../types'
+import { BaconActor } from '../../types/api'
 import { NodeWrapper } from './NodeWrapper';
 
 type ActorButtonNodeProps = BaconActor & {

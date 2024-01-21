@@ -3,5 +3,7 @@
         "clearcache",
         "squarestates",
         "TMDB"
-    ]
+    ],
+    "editor.formatOnSave": true,
+    "prettier.printWidth": 80,
 }

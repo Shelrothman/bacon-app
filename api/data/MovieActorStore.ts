@@ -1,4 +1,4 @@
-import { BaconActor, BaconFeature, BaconMovieOption } from '../../types';
+import { BaconActor, BaconFeature, BaconMovieOption } from '../../types/api';
 import { ActorTMDB, MovieActorTMDB, MovieTMDB } from '../../types/tmdb';
 import { config } from '../config';
 

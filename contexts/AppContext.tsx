@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 // import * as mockedCast from '../api/mocked/mockedCast.json';
 // import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
 import { BaconServiceFactory } from '../api/services/ServiceFactory';
-import { BaconActorList, BaconFeatureList, BaconSquareState } from '../types';
+import { BaconActorList, BaconFeatureList, BaconSquareState } from '../types/api';
 
 type ContextProps = {
     /** can be one of 3: movieInput, movieCast, actorsMovies */

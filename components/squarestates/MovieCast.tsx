@@ -3,7 +3,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native'
 
 import useGetData from '../../hooks/useGetData'
 import { container_style, pressable_style, text_style } from '../../styles'
-import { BaconActorList } from '../../types'
+import { BaconActorList } from '../../types/api'
 import { InfoModal } from '../InfoModal'
 import { ActorButtonNode } from '../nodes/ActorButtonNode'
 

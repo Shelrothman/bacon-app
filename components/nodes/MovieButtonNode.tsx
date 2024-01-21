@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { BaconMovie } from '../../types'
+import { BaconMovie } from '../../types/api'
 import { NodeWrapper } from './NodeWrapper';
 
 type MovieButtonNodeProps = BaconMovie & {

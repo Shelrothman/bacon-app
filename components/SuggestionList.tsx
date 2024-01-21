@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native'
 
 import useGetData from '../hooks/useGetData';
 import { container_style } from '../styles';
-import { BaconMovieOption } from '../types';
+import { BaconMovieOption } from '../types/api';
 import { SearchInputNode } from './nodes/SearchInputNode';
 import { SuggestionNode } from './nodes/SuggestionNode';
 

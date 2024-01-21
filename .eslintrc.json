@@ -22,6 +22,7 @@
         "@typescript-eslint/no-var-requires": "off",
         "react/react-in-jsx-scope": "off",
         "react/react-in-tsx-scope": "off",
+        // "max-len": ["error", { "code": 80 }],
         // no more whitespace battles:
         "object-curly-spacing": [
             "error",

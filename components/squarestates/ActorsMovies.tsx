@@ -1,7 +1,7 @@
 import { ScrollView, View } from 'react-native'
 
 import useGetData from '../../hooks/useGetData'
-import { BaconFeatureList } from '../../types'
+import { BaconFeatureList } from '../../types/api'
 import { MovieButtonNode } from '../nodes/MovieButtonNode'
 import { SquareHeader } from '../SquareHeader'
 
@@ -11,14 +11,14 @@ export function ActorsMovies(props: ActorsMoviesProps) {
 
     const { handleGetCast } = useGetData();
 
-    return (      
+    return (
         <View >
             <SquareHeader title={`${props.actorName} Movies`} />
             <ScrollView showsVerticalScrollIndicator={true}>
                 {props.features.map((feature) => {
                     return (
                         <MovieButtonNode
-                            key={feature.id+feature.title+feature.characterName}
+                            key={feature.id + feature.title + feature.characterName}
                             id={feature.id}
                             title={feature.title}
                             characterName={feature.characterName}

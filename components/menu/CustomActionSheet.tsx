@@ -1,6 +1,8 @@
 import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Linking, Modal, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { AntDesign } from '@expo/vector-icons';
+
 import TMDB_LOGO from "../../assets/tmdb_logo.svg";
 import { ExpoIcon } from './ExpoIcon';
 // import EXPO_LOGO from "../../assets/expo.svg";
@@ -12,17 +14,6 @@ type CustomActionSheetProps = {
 
 // FUTURE:
 // import { A } from '@expo/html-elements'; // use like 'Linking' @expo-linking, just a wrapper as an element.
-// Built by Shel Rothman 🐚 \n Powered by Expo 𝝠 todo: put this somewhere not in the thanks but somewhere.
-
-// const Slate = {
-//     "900": "#191A20",
-//     "800": "#282A35",
-//     "500": "#64719E",
-//     "400": "#3d4051",
-//     "200": "#F1F1F1",
-//     "100": "#ffffff",
-// };
-
 
 
 const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
@@ -107,23 +98,19 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
     // TODO: modulate this out ...
 
 
-    // PICKUP: here. keep doing what done here with all the other sections. slowly replacing the fake options.
-    // NEXT do the dev data.
-
     return (
         <Modal visible={visible} transparent animationType="slide">
             <View style={styles.container}>
-                <Pressable style={styles.stickyHeaderRow} onPress={() => onClose()}>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
-                        <Text style={styles.menuTitle}>Menu</Text>
-                    </View>
-                    <Text style={styles.exitButton}>&#8964;</Text>
-                </Pressable>
                 <ScrollView
                     style={styles.scrollView}
                     contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end', }}
                     refreshControl={RefreshControlComponent}
+                    showsVerticalScrollIndicator={false}
+                    stickyHeaderIndices={[ 0 ]}
                 >
+                    <Pressable style={styles.stickyHeaderRow} onPress={() => onClose()}>
+                        <Text style={styles.menuTitle}>Menu <AntDesign name="down" size={24} color="#202540" /></Text>
+                    </Pressable>
                     <View style={styles.sheetRow}>
                         <Text style={styles.sectionTitleText}>How do I do this?</Text>
                         <View style={styles.sectionContainer}>
@@ -132,8 +119,7 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
                                     <Text style={styles.numberText}>{item.item}. </Text>
                                     <Text style={styles.bodyText}>{item.text}</Text>
                                 </View>
-                            )
-                            )}
+                            ))}
                         </View>
                     </View>
                     <View style={styles.sheetRow}>
@@ -224,14 +210,8 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         maxHeight: '60%',
-        backgroundColor: '#09192e',
-        borderRightColor: '#ccc',
-        borderRightWidth: 1,
-        borderLeftColor: '#ccc',
-        borderLeftWidth: 1,
     },
     sectionContainer: {
-        // backgroundColor: '#202540',
         backgroundColor: '#25292e',
         borderRadius: 10,
         color: '#fff',
@@ -240,26 +220,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-end',
-        // borderRadius
     },
     sheetRow: {
         padding: 10,
-        backgroundColor: '#09192e'
+        backgroundColor: '#09192e',
+        paddingTop: 20,
     },
     stickyHeaderRow: {
         flexDirection: 'row',
-        padding: 10,
         borderTopEndRadius: 15,
         borderTopStartRadius: 15,
-        borderTopColor: '#ccc',
-        borderTopWidth: 1,
-        borderLeftColor: '#ccc',
-        borderLeftWidth: 1,
-        borderRightColor: '#ccc',
-        borderRightWidth: 1,
-        justifyContent: 'flex-end',
-        // backgroundColor: '#25292e',
-        backgroundColor: '#202540'
+        backgroundColor: '#c8c1d4',
     },
     sectionTitleText: {
         fontSize: 20,
@@ -268,15 +239,12 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingBottom: 5,
     },
-    exitButton: {
-        fontSize: 18,
-        color: '#ccc',
-        fontWeight: 'bold',
-    },
     menuTitle: {
-        color: '#ccc',
+        color: '#202540',
         fontSize: 24,
         fontFamily: 'Bacon-Stencil',
+        textAlign: 'center',
+        padding: 5,
     },
     bodyText: {
         color: '#ccc',

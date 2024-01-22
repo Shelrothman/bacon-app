@@ -13,6 +13,11 @@ export const text_style = StyleSheet.create({
         color: '#25292e',
         fontFamily: 'Bacon-Inline'
     },
+    switchText: {
+        color: '#ccc',
+        marginRight: 5,
+        fontStyle: 'italic',
+    },
     suggestionHeader: {
         color: '#25292e',
         fontSize: 16,

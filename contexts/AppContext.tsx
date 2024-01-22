@@ -6,7 +6,7 @@ import { BaconServiceFactory } from '../api/services/ServiceFactory';
 import { BaconActorList, BaconFeatureList, BaconSquareState } from '../types/api';
 
 type ContextProps = {
-    /** can be one of 3: movieInput, movieCast, actorsMovies */
+    /** can be one of 4: movieInput, actorInput, movieCast, actorsMovies */
     squareState: BaconSquareState;
     setSquareState: (squareState: BaconSquareState) => void;
     isLoading: boolean;

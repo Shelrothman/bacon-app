@@ -9,6 +9,12 @@ export const container_style = StyleSheet.create({
         position: 'relative',
         justifyContent: 'center',
     },
+    switchContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 10,
+        justifyContent: 'flex-end',
+    },
     mainSquareWrapper: {
         flex: 1,
         paddingTop: 50,

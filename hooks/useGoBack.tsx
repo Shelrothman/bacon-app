@@ -15,8 +15,9 @@ const useGoBack = () => {
 
     /** takes user back to the movieInput screen when they are on their first step */
     const handleLastGoBack = () => {
-        setSquareState && setSquareState('movieInput');
         setSessionMap && setSessionMap([]);
+        if (squareState === 'actorsMovies') return setSquareState!('actorInput');
+        return setSquareState!('movieInput');
     };
     /** takes user back to the actorsMovies of the actor-id of the sessionStep before the step where goBack is called from  */
     const handleGoBackFromMovieCast = async (sessionMap: number[]) => {

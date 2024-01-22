@@ -22,7 +22,11 @@ export function MovieInput() {
 
     return (
         <View style={searchMode ? container_style.containerWithSearch : container_style.containerNoSearch}>
-            <Text style={text_style.movieInputHeader}>What Movie has You Curious?</Text>
+            <Text style={text_style.movieInputHeader}>
+                {squareState === 'movieInput'
+                    ? 'What Movie has You Curious?'
+                    : 'Actor'}
+            </Text>
             <View style={container_style.inputContainer}>
                 <Fontisto name="film" size={24} color="white" />
                 <TextInput

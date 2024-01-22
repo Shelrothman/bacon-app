@@ -7,12 +7,13 @@ import { useAppContext } from '../../contexts/AppContext';
 
 export function ActorMovieSwitch() {
 
-    const [ isEnabled, setIsEnabled ] = useState(false);
+    const { squareState, setSquareState } = useAppContext();
+    const [ isEnabled, setIsEnabled ] = useState(squareState === 'actorInput');
+    console.log('squareState: ', squareState)
     /* 
         isEnabled = true -> search by actor
         isEnabled = false -> search by movie
     */
-    const { squareState, setSquareState } = useAppContext();
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState);
         if (squareState === 'movieInput') return setSquareState!('actorInput');

@@ -44,43 +44,35 @@ export function SuggestionList(props: SuggestionListProps) {
         if (inputMode === 'movieInput') {
             getMovieSuggestions && getMovieSuggestions(inputSearch).then((results) => {
                 setMovieSuggestionList(results);
-            }).finally(() => {
-                return;
-            });
+            }).finally(() => void 0);
         }
         getActorSuggestions && getActorSuggestions(inputSearch).then((results) => {
             setActorSuggestionList(results);
-        }).finally(() => {
-            return;
-        });
+        }).finally(() => void 0);
     }
+
+    const renderSearchInputNode = () => <SearchInputNode
+        inputSearch={inputSearch}
+        pressHandler={() => handleGetCast(inputSearch, false, true)}
+    />
 
     return (
         <ScrollView style={container_style.suggestionListScrollView} keyboardDismissMode='on-drag' keyboardShouldPersistTaps='handled'>
-            <SearchInputNode
-                pressHandler={() => handleGetCast(inputSearch, false, true)}
-                inputSearch={inputSearch} />
-            {inputMode === 'movieInput' ? movieSuggestionList.map((result) => {
-                return (
-                    <SuggestionNode
-                        key={result.id + result.title + result.release_date}
-                        release_date={result.release_date}
-                        title={result.title}
-                        handleOnPress={() => handleGetCast(result.title, true, true)}
-                    />
-                )
-            }) : actorSuggestionList.map((result) => {
-                return (
-                    <SuggestionNode
-                        key={result.id + result.name}
-                        title={result.name}
-                        handleOnPress={() => handleGetMoviesfromActorNode(result.id, result.name, true)}
-                    />
-                )
-            })}
-            {(movieSuggestionList && movieSuggestionList.length >= 3) && <SearchInputNode
-                inputSearch={inputSearch} pressHandler={() => handleGetCast(inputSearch, false, true)}
-            />}
+            {renderSearchInputNode()}
+            {inputMode === 'movieInput' ? movieSuggestionList.map(result => <SuggestionNode
+                key={result.id + result.title}
+                release_date={result.release_date}
+                title={result.title}
+                handleOnPress={() => handleGetCast(result.title, true, true)}
+            />) : actorSuggestionList.map(result => <SuggestionNode
+                key={result.id + result.name}
+                title={result.name}
+                known_for={result.known_for}
+                handleOnPress={() => handleGetMoviesfromActorNode(result.id, result.name, true)}
+            />)}
+            {((movieSuggestionList && movieSuggestionList.length >= 3)
+                || (actorSuggestionList && actorSuggestionList.length >= 3))
+                && renderSearchInputNode()}
         </ScrollView>
     )
 }

@@ -1,5 +1,4 @@
 import { Keyboard } from "react-native";
-
 import { BaconServiceFactory } from "../api/services/ServiceFactory";
 import { useAppContext } from "../contexts/AppContext";
 import { BaconActorOption, BaconMovieOption } from "../types/api";

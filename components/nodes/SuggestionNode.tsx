@@ -11,6 +11,7 @@ type SuggestionNodeProps = {
     known_for?: BaconMovie[];
 };
 
+// TODO: return hwew to customize the look for the suggestion node for actorInput
 
 /**
  * @component
@@ -33,7 +34,7 @@ export function SuggestionNode(props: SuggestionNodeProps) {
                 <MaterialCommunityIcons name="theater" size={20} color="black" />
                 <Text style={text_style.suggestionReleaseDate}>
                     {`\t\t`}{props.release_date && props.release_date}
-                    {props.known_for && props.known_for[ 0 ].title}
+                    {props.known_for && (props.known_for[ 0 ]?.title || 'fucku')}
                 </Text>
             </Text>
         </Pressable>

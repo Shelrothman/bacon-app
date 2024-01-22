@@ -12,8 +12,8 @@ import { container_style } from './styles';
 
 // TODO: a cool engagin splash screeen like ready to get that off your tongue yahoo thing
 
-// TODO: must do proper accreditation for the tmdb api
-
+// PICKUP: here to tackle the option for user to search by actor. need to go into context etc etc...  :-)
+// maybe use info: genre_ids for the search by keyword.....
 
 export default function App() {
 

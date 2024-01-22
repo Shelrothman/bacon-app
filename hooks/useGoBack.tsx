@@ -11,7 +11,7 @@ const PERSISTANCE_MSG = 'If this issue persists, please contact support, shel.pr
 const useGoBack = () => {
 
     const { setIsLoading, setSquareState, squareState, sessionMap, setSessionMap } = useAppContext();
-    const { handleGetCast, handleGetMovies } = useGetData();
+    const { handleGetCast, handleGetMoviesfromActorNode } = useGetData();
 
     /** takes user back to the movieInput screen when they are on their first step */
     const handleLastGoBack = () => {
@@ -21,13 +21,13 @@ const useGoBack = () => {
     /** takes user back to the actorsMovies of the actor-id of the sessionStep before the step where goBack is called from  */
     const handleGoBackFromMovieCast = async (sessionMap: number[]) => {
         const secondToLastId = sessionMap[ sessionMap.length - 2 ];
-        const actorService = BaconServiceFactory.createActorService({ actor_id: secondToLastId });
-        const actorName = await actorService.getActorName();
+        const actorService = BaconServiceFactory.createActorService();
+        const actorName = await actorService.getActorName(secondToLastId);
         if (!actorName) {
             return alert(`An unknown error occurred while attempting to get the last actors info, please try again. ${PERSISTANCE_MSG}`);
         }
         setSessionMap && setSessionMap(sessionMap.slice(0, sessionMap.length - 1)); // remove last item from sessionMap to stay in sync
-        handleGetMovies && handleGetMovies(secondToLastId, actorName, false);
+        handleGetMoviesfromActorNode && handleGetMoviesfromActorNode(secondToLastId, actorName, false);
     };
     /** takes user back to the movieCast of the movie-id of the sessionStep before the step where goBack is called from  */
     const handleGoBackFromActorsMovies = async (sessionMap: number[]) => {

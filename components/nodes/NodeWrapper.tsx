@@ -32,7 +32,7 @@ export function NodeWrapper(props: NodeWrapperProps) {
             <LinearGradient style={pressable_style.innerContainerWrapper} colors={backgrounds} >
                 <Text>
                     {innerIcon}
-                    <Text style={{ fontFamily: 'Bacon-Limelight', fontSize: 20 }}> {nameOrTitle}</Text> {`\n`}
+                    <Text style={{ fontFamily: 'Bacon-Limelight', fontSize: 20 }}>&nbsp;{nameOrTitle}</Text> {`\n`}
                     <Text style={{ textAlign: 'right', fontFamily: 'Bacon-Inline', fontSize: 20 }}>{characterName || 'unknown'}</Text>
                 </Text>
             </LinearGradient>

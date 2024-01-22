@@ -2,16 +2,23 @@ import { Keyboard } from "react-native";
 
 import { BaconServiceFactory } from "../api/services/ServiceFactory";
 import { useAppContext } from "../contexts/AppContext";
-import { BaconMovieOption } from "../types/api";
+import { BaconActorOption, BaconMovieOption } from "../types/api";
 
 /**
  * @hook useGetData - get cast of movie and/or actors movies for the UI
  */
 const useGetData = () => {
     const {
-        setSquareState, getCastAndSetMovieInfo: getCastAndSetTitle, setIsLoading, setCurrentCardCast,
-        getMovies, setCurrentCardMovies, setCurrentActorName, setCurrentActorID
+        setSquareState, getCastAndSetMovieInfo, setIsLoading, setCurrentCardCast,
+        getMovies, setCurrentCardMovies, setCurrentActorName, setCurrentActorID,
+        setSessionMap, sessionMap
     } = useAppContext();
+
+    /** appends new session step to tree */
+    const handleChangeMap = (id: number) => {
+        const newSessionMap = [ ...sessionMap!, id ];
+        setSessionMap!(newSessionMap);
+    };
 
     /** 
      * gets the cast of the movie
@@ -24,10 +31,11 @@ const useGetData = () => {
         if (movieTitle.length < 1) return;
         if (!isActorNodePress) Keyboard.dismiss(); // pickup: is this redundant?
         setIsLoading && setIsLoading(true);
-        getCastAndSetTitle && getCastAndSetTitle(movieTitle, changeMap).then((result) => {
+        getCastAndSetMovieInfo && getCastAndSetMovieInfo(movieTitle, changeMap).then((result) => {
             if (result) {
                 setCurrentCardCast && setCurrentCardCast(result);
                 setSquareState && setSquareState('movieCast');
+                if (changeMap) handleChangeMap(result.id);
             }
         }).finally(() => {
             setIsLoading && setIsLoading(false);
@@ -40,7 +48,7 @@ const useGetData = () => {
      * @param {string} actorName - the name of the actor to get the movies for
      * @param {boolean} changeMap - if the call should change the sessionMap
      */
-    const handleGetMovies = (id: number, actorName: string, changeMap: boolean) => {
+    const handleGetMoviesfromActorNode = (id: number, actorName: string, changeMap: boolean) => {
         setIsLoading && setIsLoading(true);
         getMovies && getMovies(id, changeMap).then((result) => {
             if (result) {
@@ -48,15 +56,32 @@ const useGetData = () => {
                 setSquareState && setSquareState('actorsMovies');
                 setCurrentActorName && setCurrentActorName(actorName);
                 setCurrentActorID && setCurrentActorID(id);
+                if (changeMap) handleChangeMap(id);
             }
         }).finally(() => {
             setIsLoading && setIsLoading(false);
         });
     };
 
+    const handleGetMoviesFromInput = (actorName: string, changeMap: boolean) => {
+        Keyboard.dismiss();
+        setIsLoading && setIsLoading(true);
+        const actorService = BaconServiceFactory.createActorService();
+        actorService.getActorFeaturesObject(actorName).then((resultObj) => {
+            if (resultObj && resultObj.features && resultObj.id) {
+                setCurrentCardMovies && setCurrentCardMovies(resultObj);
+                setSquareState && setSquareState('actorsMovies');
+                setCurrentActorName && setCurrentActorName(actorName);
+                setCurrentActorID && setCurrentActorID(resultObj.id);
+                if (changeMap) handleChangeMap(resultObj.id);
+            }
+        }).finally(() => {
+            setIsLoading && setIsLoading(false);
+        });
+    };
 
-    /** gets the suggestionList based on current value of searchInput */
-    async function getSuggestions(prefix: string): Promise<BaconMovieOption[]> {
+    /** gets the suggestionList based on current value of searchInput in movieInput mode */
+    async function getMovieSuggestions(prefix: string): Promise<BaconMovieOption[]> {
         try {
             const featureService = BaconServiceFactory.createFeatureService();
             const suggestions = await featureService.getListOfFeaturesByPrefix(prefix);
@@ -69,7 +94,27 @@ const useGetData = () => {
         }
     }
 
-    return { handleGetCast, handleGetMovies, getSuggestions };
+    /** gets the suggestionList based on current value of searchInput in actorInput mode */
+    async function getActorSuggestions(prefix: string): Promise<BaconActorOption[]> {
+        try {
+            const actorService = BaconServiceFactory.createActorService();
+            const suggestions = await actorService.getListOfActorsByPrefix(prefix);
+            if (suggestions) return suggestions;
+            return [];
+        } catch (error) {
+            console.log('---------------------------------');
+            console.error(error);
+            return [];
+        }
+    }
+
+    return {
+        handleGetCast,
+        handleGetMoviesfromActorNode,
+        getMovieSuggestions,
+        getActorSuggestions,
+        handleGetMoviesFromInput
+    };
 
 };
 

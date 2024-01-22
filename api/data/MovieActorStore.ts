@@ -1,4 +1,4 @@
-import { BaconActor, BaconFeature, BaconMovieOption } from '../../types/api';
+import { BaconActor, BaconFeature, BaconMovieOption, BaconActorOption, FeatureListResponse } from '../../types/api';
 import { ActorTMDB, MovieActorTMDB, MovieTMDB } from '../../types/tmdb';
 import { config } from '../config';
 
@@ -47,6 +47,11 @@ export class MovieActorStore {
         }
     }
 
+    /**
+     * Retrieves ten movies by prefix from the API.
+     * @param prefix - The prefix to search for.
+     * @returns A promise that resolves to an array of BaconMovieOption objects or null if no movies are found.
+     */
     async getTenMoviesByPrefix(prefix: string): Promise<BaconMovieOption[] | null> {
         const url = `${this.api_base}/search/movie?query=${prefix}${this.url_suffix}`;
         const response = await fetch(url);
@@ -60,12 +65,29 @@ export class MovieActorStore {
     }
 
     /**
+     * Retrieves the first ten actors whose names start with the specified prefix.
+     * @param prefix - The prefix to search for.
+     * @returns A promise that resolves to an array of BaconActor objects, or null if no actors are found.
+     */
+    async getTenActorsByPrefix(prefix: string): Promise<BaconActorOption[] | null> {
+        const url = `${this.api_base}/search/person?query=${prefix}${this.url_suffix}`;
+        const response = await fetch(url);
+        const data = await response.json() as { results: ActorTMDB[] };
+        if (data && data.results && data.results.length > 0) {
+            const firstTenActors = data.results.slice(0, 10);
+            return firstTenActors;
+        } else {
+            return [];
+        }
+    }
+
+    /**
      * @method getCastByMovieId
      * @param id - the TMDB defined id of the movie to get the cast for
      * @returns {BaconActor[]} list of actors
      */
     async getBaconActorListByMovieId(id: number): Promise<BaconActor[] | null> {
-        // only try catch in the route/controller bc that is what makes sense dug
+        // only try catch in the route/controller bc that is what makes sense duh
         const url = `${this.api_base}/movie/${id}/credits?api_key=${this.api_key}`;
         const response = await fetch(url);
         const data = await response.json() as { cast: ActorTMDB[] };
@@ -80,7 +102,7 @@ export class MovieActorStore {
     /**
      * @method getMoviesByActorId
      * gets a list of every movie feature an actor has been in
-     * @returns 
+     * @returns the features of the actor as BaconFeature[]
      */
     async getMoviesByActorId(id: number): Promise<BaconFeature[] | null> {
         const url = `${this.api_base}/person/${id}/movie_credits?api_key=${this.api_key}`;
@@ -93,7 +115,6 @@ export class MovieActorStore {
         }
     }
 
-
     /**
      * @method getActorNameById
      * gets the actor name by id
@@ -104,6 +125,35 @@ export class MovieActorStore {
         const data = await response.json() as { name: string };
         if (data && data.name) {
             return data.name;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @method getMoviesByActorName
+     * gets a list of every movie feature an actor has been in
+     * @returns the features of the actor as BaconFeature[] and the actor id 
+     */
+    async getMoviesByActorName(name: string): Promise<FeatureListResponse | null> {
+        const actorId = await this.getActorIdByName(name);
+        if (actorId) {
+            const features = await this.getMoviesByActorId(actorId);
+            if (features) return { id: actorId, features };
+            else return null;
+        } else {
+            return null;
+        }
+    }
+
+    async getActorIdByName(name: string): Promise<number | null> {
+        const url = `${this.api_base}/search/person?query=${name}${this.url_suffix}`;
+        const response = await fetch(url);
+        const data = await response.json() as { results: ActorTMDB[] };
+        if (data && data.results && data.results.length > 0) {
+            // info: we force the top one, user can always search again or use a suggestion.
+            const actorId = data.results[ 0 ].id;
+            return actorId;
         } else {
             return null;
         }
@@ -147,9 +197,3 @@ export class MovieActorStore {
     }
 
 }
-
-
-
-
-
-

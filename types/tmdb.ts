@@ -54,4 +54,5 @@ export type ActorTMDB = {
     character?: string;
     credit_id: string;
     order: number;
+    known_for: MovieTMDB[];
 };

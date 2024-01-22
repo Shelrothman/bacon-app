@@ -14,7 +14,7 @@ import CustomActionSheet from './menu/CustomActionSheet';
 export default function Footer() {
     const [ actionSheetVisible, setActionSheetVisible ] = useState(false);
     const {
-        setSquareState, setSessionMap, sessionMap, setMovieInputTitle, isLoading
+        setSquareState, setSessionMap, sessionMap, setInputTitle, isLoading
     } = useAppContext()
     const { handleGoBack } = useGoBack();
 
@@ -25,7 +25,6 @@ export default function Footer() {
             <CustomActionSheet
                 visible={actionSheetVisible}
                 onClose={() => setActionSheetVisible(false)}
-            // options={[ 'Menu', 'What is this', 'Special Thanks', 'Developer Info', 'Support the App', 'App Info' ]}
             />
             <FooterButton
                 icon={<FontAwesome name="fast-backward" size={24}
@@ -39,7 +38,7 @@ export default function Footer() {
                 icon={<MaterialCommunityIcons name="restart" size={24} color="white" />}
                 text='Reset'
                 handlePress={() => {
-                    setMovieInputTitle && setMovieInputTitle('');
+                    setInputTitle && setInputTitle('');
                     setSessionMap && setSessionMap([]);
                     setSquareState && setSquareState('movieInput');
                     return;

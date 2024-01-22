@@ -4,6 +4,7 @@ import { container_style, text_style } from '../../styles';
 
 import { useAppContext } from '../../contexts/AppContext';
 
+
 export function ActorMovieSwitch() {
 
     const [ isEnabled, setIsEnabled ] = useState(false);
@@ -12,23 +13,19 @@ export function ActorMovieSwitch() {
         isEnabled = false -> search by movie
     */
     const { squareState, setSquareState } = useAppContext();
-
-    // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState);
-        if (squareState === 'movieInput') {
-            return setSquareState!('actorInput');
-        }
+        if (squareState === 'movieInput') return setSquareState!('actorInput');
         return setSquareState!('movieInput');
     }
 
     return (
         <View style={container_style.switchContainer}>
-            <Text style={text_style.switchText}>search by actor:</Text>
+            <Text style={text_style.switchText}>search by {isEnabled ? 'movie' : 'actor'}:</Text>
             <Switch
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
-                thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
+                trackColor={{ false: '#3e3e3e', true: '#bee9cc' }}
+                thumbColor={isEnabled ? '#41be69' : '#BEA841'}
+                ios_backgroundColor='#3e3e3e'
                 onValueChange={toggleSwitch}
                 value={isEnabled}
             />

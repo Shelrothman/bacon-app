@@ -43,8 +43,8 @@ type ContextProps = {
     sessionMap: number[];
     setSessionMap: (sessionMap: number[]) => void;
     /** active text in inputSearch */
-    movieInputTitle: string;
-    setMovieInputTitle: (movieInputTitle: string) => void;
+    inputTitle: string;
+    setInputTitle: (inputTitle: string) => void;
 };
 
 const AppContext = createContext<Partial<ContextProps>>({});
@@ -71,18 +71,14 @@ const AppProvider = (props: Props) => {
     const [ currentMovieReleaseDate, setCurrentMovieReleaseDate ] = useState<string>('');
     const [ currentActorID, setCurrentActorID ] = useState<number>(0);
     const [ sessionMap, setSessionMap ] = useState<number[]>([]);
-    const [ movieInputTitle, setMovieInputTitle ] = useState<string>('');
+    const [ inputTitle, setInputTitle ] = useState<string>('');
 
     const featureService = BaconServiceFactory.createFeatureService();
 
-    /** appends new session step to tree */
-    const handleChangeMap = (id: number) => {
-        const newSessionMap = [ ...sessionMap, id ];
-        setSessionMap(newSessionMap);
-    };
 
+    // TODO: these functions are only used in one place, so move them there.
     /** gets the cast and sets the currentMovieTitle with official title */
-    async function getCastAndSetMovieInfo(movieName: string, changeMap: boolean): Promise<BaconActorList | void> {
+    async function getCastAndSetMovieInfo(movieName: string): Promise<BaconActorList | void> {
         try {
             // if (isMocked) {
             //     console.log('MOCK MODE ON, returning fake data...');
@@ -98,7 +94,7 @@ const AppProvider = (props: Props) => {
             if (!featureCast) {
                 return alert(`No cast found for ${movieName}. Please try again.`);
             }
-            if (changeMap) handleChangeMap(feature_object.id)
+            // if (changeMap) handleChangeMap(feature_object.id)
             return { id: feature_object.id, actors: featureCast };
         } catch (error) {
             return alert(
@@ -107,19 +103,19 @@ const AppProvider = (props: Props) => {
         }
     }
     /** the movie title will always exist for this since it comes from an existing actor entity */
-    async function getMovies(actorID: number, changeMap: boolean): Promise<BaconFeatureList | void> {
+    async function getMovies(actorID: number): Promise<BaconFeatureList | void> {
         try {
             // if (isMocked) {
             //     console.log('MOCK MODE ON, returning fake data...');
             //     console.log('---------------------------------');
             //     return { id: 12345, features: mockedFeatures.features, }
             // }
-            const actorService = BaconServiceFactory.createActorService({ actor_id: actorID });
-            const featureListResult = await actorService.getFeaturesForActor();
+            const actorService = BaconServiceFactory.createActorService();
+            const featureListResult = await actorService.getFeaturesByActorId(actorID);
             if (!featureListResult) {
                 return alert('cannot find any features for the requested actor. Please try again.');
             }
-            if (changeMap) handleChangeMap(actorID);
+            // if (changeMap) handleChangeMap(actorID);
             return { id: actorID, features: featureListResult };
         } catch (error) {
             return alert(
@@ -128,14 +124,13 @@ const AppProvider = (props: Props) => {
         }
     }
 
-
     return (
         <AppContext.Provider value={{
             squareState,
             setSquareState,
             sessionMap,
             setSessionMap,
-            getCastAndSetMovieInfo: getCastAndSetMovieInfo,
+            getCastAndSetMovieInfo,
             getMovies,
             isLoading,
             setIsLoading,
@@ -153,8 +148,8 @@ const AppProvider = (props: Props) => {
             setCurrentMovieOverview,
             currentMovieReleaseDate,
             setCurrentMovieReleaseDate,
-            movieInputTitle,
-            setMovieInputTitle,
+            inputTitle,
+            setInputTitle,
         }}>
             {props.children}
         </AppContext.Provider>

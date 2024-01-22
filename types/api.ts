@@ -25,6 +25,15 @@ export type BaconMovieOption = BaconMovie & {
 };
 
 /**
+ * @type BaconActorOption
+ * type for list of optional actors to search for
+ */
+export type BaconActorOption = BaconActor & {
+    /** use known_for for onHover/slide/tbd events for the suggestionList for user to see */
+    known_for: BaconMovie[];
+};
+
+/**
  * @type BaconActor
  * actor return type
  */
@@ -68,5 +77,12 @@ export type BaconActorList = {
     id: number;
     actors: BaconActor[];
 };
+
+
+export type FeatureListResponse = {
+    /** the id of the actor assigned by db  */
+    id: number,
+    features: BaconFeature[]
+}
 
 export type BaconSquareState = 'movieInput' | 'actorInput' | 'movieCast' | 'actorsMovies';

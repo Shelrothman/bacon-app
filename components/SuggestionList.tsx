@@ -3,11 +3,16 @@ import { ScrollView } from 'react-native'
 
 import useGetData from '../hooks/useGetData';
 import { container_style } from '../styles';
-import { BaconMovieOption } from '../types/api';
+import { BaconMovieOption, BaconActorOption } from '../types/api';
 import { SearchInputNode } from './nodes/SearchInputNode';
 import { SuggestionNode } from './nodes/SuggestionNode';
 
-type SuggestionListProps = { inputSearch: string; };
+
+type SuggestionListProps = {
+    inputSearch: string;
+    /** either movieInput or actorInput */
+    inputMode: string;
+};
 
 /** 
  * @component - SuggestionList
@@ -19,19 +24,32 @@ type SuggestionListProps = { inputSearch: string; };
  */
 export function SuggestionList(props: SuggestionListProps) {
 
-    const { inputSearch } = props;
-    const [ suggestionList, setSuggestionList ] = useState<BaconMovieOption[]>([]);
-    const { handleGetCast, getSuggestions } = useGetData();
+    const { inputSearch, inputMode } = props;
+    const [ movieSuggestionList, setMovieSuggestionList ] = useState<BaconMovieOption[]>([]);
+    const [ actorSuggestionList, setActorSuggestionList ] = useState<BaconActorOption[]>([]);
+    const {
+        handleGetCast,
+        getMovieSuggestions,
+        getActorSuggestions,
+        handleGetMoviesfromActorNode
+    } = useGetData();
 
     useEffect(() => {
-        if (inputSearch.length < 3) setSuggestionList([]);
+        if (inputSearch.length < 3) setMovieSuggestionList([]);
         else onLoad();
     }, [ inputSearch ]);
 
     const onLoad = () => {
-        if (inputSearch.length < 3) setSuggestionList([]);
-        getSuggestions && getSuggestions(inputSearch).then((results) => {
-            setSuggestionList(results);
+        if (inputSearch.length < 3) return setMovieSuggestionList([]);
+        if (inputMode === 'movieInput') {
+            getMovieSuggestions && getMovieSuggestions(inputSearch).then((results) => {
+                setMovieSuggestionList(results);
+            }).finally(() => {
+                return;
+            });
+        }
+        getActorSuggestions && getActorSuggestions(inputSearch).then((results) => {
+            setActorSuggestionList(results);
         }).finally(() => {
             return;
         });
@@ -42,7 +60,7 @@ export function SuggestionList(props: SuggestionListProps) {
             <SearchInputNode
                 pressHandler={() => handleGetCast(inputSearch, false, true)}
                 inputSearch={inputSearch} />
-            {suggestionList.map((result) => {
+            {inputMode === 'movieInput' ? movieSuggestionList.map((result) => {
                 return (
                     <SuggestionNode
                         key={result.id + result.title + result.release_date}
@@ -51,8 +69,16 @@ export function SuggestionList(props: SuggestionListProps) {
                         handleOnPress={() => handleGetCast(result.title, true, true)}
                     />
                 )
+            }) : actorSuggestionList.map((result) => {
+                return (
+                    <SuggestionNode
+                        key={result.id + result.name}
+                        title={result.name}
+                        handleOnPress={() => handleGetMoviesfromActorNode(result.id, result.name, true)}
+                    />
+                )
             })}
-            {(suggestionList && suggestionList.length >= 3) && <SearchInputNode
+            {(movieSuggestionList && movieSuggestionList.length >= 3) && <SearchInputNode
                 inputSearch={inputSearch} pressHandler={() => handleGetCast(inputSearch, false, true)}
             />}
         </ScrollView>

@@ -6,12 +6,19 @@ import { useAppContext } from '../../contexts/AppContext';
 import useGetData from '../../hooks/useGetData';
 import { container_style, pressable_style, text_style } from '../../styles';
 import { SuggestionList } from '../SuggestionList';
+import { ActorMovieSwitch } from '../utils/ActorMovieSwitch';
 
 export function MovieInput() {
 
     const [ searchMode, setSearchMode ] = useState<boolean>(false);
-    const { movieInputTitle, setMovieInputTitle } = useAppContext();
-    const { handleGetCast } = useGetData();
+    const { inputTitle, setInputTitle, squareState } = useAppContext();
+    const { handleGetCast, handleGetMoviesFromInput } = useGetData();
+
+    const handleSubmit = () => {
+        console.log('squareState: ', squareState)
+        if (squareState === 'movieInput') return handleGetCast(inputTitle!, false, true);
+        return handleGetMoviesFromInput(inputTitle!, true);
+    }
 
     return (
         <View style={searchMode ? container_style.containerWithSearch : container_style.containerNoSearch}>
@@ -20,26 +27,27 @@ export function MovieInput() {
                 <Fontisto name="film" size={24} color="white" />
                 <TextInput
                     style={text_style.textInput}
-                    placeholder="Enter Movie Title..."
+                    placeholder={`Enter ${squareState === 'movieInput' ? 'Movie Title' : 'Actor Name'}...`}
                     autoCorrect={false}
                     autoCapitalize="none"
-                    onChangeText={(text) => setMovieInputTitle!(text)}
-                    value={movieInputTitle}
+                    onChangeText={(text) => setInputTitle!(text)}
+                    value={inputTitle}
                     placeholderTextColor={'#8e8e8e'}
                     returnKeyType="search"
-                    onSubmitEditing={() => handleGetCast(movieInputTitle!, false, true)}
-                    // info: the user can click if they dont hit the search on the keyboard. this leave itup to them
+                    onSubmitEditing={() => handleSubmit()}
+                    /* info: the user can click if they dont hit the search on the keyboard. this leave itup to them */
                     onBlur={() => setSearchMode(false)}
                     onFocus={() => setSearchMode(true)}
                 />
-                {movieInputTitle!.length >= 1 && <Pressable
-                    onPress={() => setMovieInputTitle!('')}
+                {inputTitle!.length >= 1 && <Pressable
+                    onPress={() => setInputTitle!('')}
                     style={pressable_style.clearButtonParent}
                 >
                     <Octicons name="x-circle-fill" size={20} color={"#8e8e8e"} />
                 </Pressable>}
             </View>
-            {movieInputTitle!.length >= 3 && <SuggestionList inputSearch={movieInputTitle!} />}
+            <ActorMovieSwitch />
+            {inputTitle!.length >= 3 && <SuggestionList inputSearch={inputTitle!} inputMode={squareState!} />}
         </View>
     )
 }

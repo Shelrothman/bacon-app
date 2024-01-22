@@ -10,7 +10,7 @@ import { ActorButtonNode } from '../nodes/ActorButtonNode'
 type MovieCastProps = BaconActorList & { title: string; };
 
 export function MovieCast(props: MovieCastProps) {
-    const { handleGetMovies } = useGetData();
+    const { handleGetMoviesfromActorNode } = useGetData();
     const [ modalVisible, setModalVisible ] = useState(false);
 
 
@@ -37,7 +37,7 @@ export function MovieCast(props: MovieCastProps) {
                             id={actor.id}
                             name={actor.name}
                             characterName={actor.characterName}
-                            handleActorNodePress={() => handleGetMovies(actor.id, actor.name, true)}
+                            handleActorNodePress={() => handleGetMoviesfromActorNode(actor.id, actor.name, true)}
                         />
                     )
                 })}

@@ -1,9 +1,12 @@
 import { MovieActorStore } from "../data/MovieActorStore";
-import { FeatureListResponse } from "../../types/api";
+import { BaconActorOption, FeatureListResponse } from "../../types/api";
+import { MovieTMDB } from "../../types/tmdb";
 
 export type ActorServiceParams = {
     dataStore: MovieActorStore;
 }
+
+// TODO: have it choose the known_for that is the most popular for the suggestion list
 
 /**
  * @class ActorService
@@ -38,9 +41,31 @@ export class ActorService {
         return featureName;
     }
 
-    getListOfActorsByPrefix = async (actor_name: string) => {
+    getListOfActorsByPrefix = async (actor_name: string): Promise<BaconActorOption[]> => {
         const actors = await this.dataStore.getTenActorsByPrefix(actor_name);
-        return actors;
+        if (!actors) return [] as BaconActorOption[];
+        const returnActors: BaconActorOption[] = [];
+        // TODO: ensure this doesnt lag the performance
+        for (let x = 0, max = actors.length; x < max; x++) {
+            const actor = actors[ x ];
+            if (actor.known_for && actor.known_for.length > 0) {
+                const mostPopularFeature = actor.known_for.reduce((prev, current) => {
+                    return (prev.popularity > current.popularity) ? prev : current;
+                });
+                const returnActor = this.convertToBaconActorOption(
+                    actor.id, actor.name, mostPopularFeature
+                );
+                returnActors.push(returnActor);
+            } else {
+                const returnActor = this.convertToBaconActorOption(actor.id, actor.name);
+                returnActors.push(returnActor);
+            }
+        }
+        return returnActors;
+    }
+
+    private convertToBaconActorOption = (id: number, name: string, movieObJ?: MovieTMDB): BaconActorOption => {
+        return { id, name, most_known_for: movieObJ };
     }
 
 }    

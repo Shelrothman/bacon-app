@@ -63,11 +63,13 @@ export function SuggestionList(props: SuggestionListProps) {
                 key={result.id + result.title}
                 release_date={result.release_date}
                 title={result.title}
+                inputMode={0}
                 handleOnPress={() => handleGetCast(result.title, true, true)}
             />) : actorSuggestionList.map(result => <SuggestionNode
                 key={result.id + result.name}
                 title={result.name}
-                known_for={result.known_for}
+                inputMode={1}
+                known_for={result.most_known_for}
                 handleOnPress={() => handleGetMoviesfromActorNode(result.id, result.name, true)}
             />)}
             {((movieSuggestionList && movieSuggestionList.length >= 3)

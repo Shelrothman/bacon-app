@@ -25,7 +25,8 @@ export function MovieInput() {
             <Text style={text_style.movieInputHeader}>
                 {squareState === 'movieInput'
                     ? 'What Movie has You Curious?'
-                    : 'Actor'}
+                    : 'Who is in the Movie?'
+                }
             </Text>
             <View style={container_style.inputContainer}>
                 <Fontisto name="film" size={24} color="white" />

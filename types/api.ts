@@ -1,3 +1,5 @@
+import { MovieTMDB } from "./tmdb";
+
 /**
  * @fileoverview typescript types for the bacon api
  */
@@ -12,6 +14,8 @@ export type BaconMovie = {
     id: number;
     /** user friendly official title returned from db */
     title: string;
+    /** name if it happens to be of different media */
+    name?: string;
 };
 
 /**
@@ -26,11 +30,11 @@ export type BaconMovieOption = BaconMovie & {
 
 /**
  * @type BaconActorOption
- * type for list of optional actors to search for
+ * type for list of optional actors to search for when user is in actorInput mode
  */
 export type BaconActorOption = BaconActor & {
     /** use known_for for onHover/slide/tbd events for the suggestionList for user to see */
-    known_for: BaconMovie[];
+    most_known_for?: MovieTMDB;
 };
 
 /**

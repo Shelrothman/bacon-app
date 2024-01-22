@@ -1,4 +1,4 @@
-import { BaconActor, BaconFeature, BaconMovieOption, BaconActorOption, FeatureListResponse } from '../../types/api';
+import { BaconActor, BaconFeature, BaconMovieOption, /* BaconActorOption, */ FeatureListResponse } from '../../types/api';
 import { ActorTMDB, MovieActorTMDB, MovieTMDB } from '../../types/tmdb';
 import { config } from '../config';
 
@@ -69,7 +69,7 @@ export class MovieActorStore {
      * @param prefix - The prefix to search for.
      * @returns A promise that resolves to an array of BaconActor objects, or null if no actors are found.
      */
-    async getTenActorsByPrefix(prefix: string): Promise<BaconActorOption[] | null> {
+    async getTenActorsByPrefix(prefix: string): Promise<ActorTMDB[] | null> {
         const url = `${this.api_base}/search/person?query=${prefix}${this.url_suffix}`;
         const response = await fetch(url);
         const data = await response.json() as { results: ActorTMDB[] };

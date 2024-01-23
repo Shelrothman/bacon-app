@@ -12,8 +12,11 @@ export const container_style = StyleSheet.create({
     switchContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: 10,
-        justifyContent: 'flex-end',
+    },
+    switchContainerWrapper: {
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        paddingTop: 20,
     },
     mainSquareWrapper: {
         flex: 1,

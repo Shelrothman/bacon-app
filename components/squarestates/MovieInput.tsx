@@ -15,7 +15,6 @@ export function MovieInput() {
     const { handleGetCast, handleGetMoviesFromInput } = useGetData();
 
     const handleSubmit = () => {
-        console.log('squareState: ', squareState)
         if (squareState === 'movieInput') return handleGetCast(inputTitle!, false, true);
         return handleGetMoviesFromInput(inputTitle!, true);
     }

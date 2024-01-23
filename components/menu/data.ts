@@ -1,12 +1,11 @@
-// import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-// import { SettingData } from '../../types/ui';
 
 const helpData = [
-    { item: '1', text: 'Enter a movie title', },
-    { item: '2', text: 'Select or enter your search', },
-    { item: '3', text: 'Select an actor from the list to view their movies.', },
-    { item: '4', text: 'Then select a movie from that list, to view the cast.', },
-    { item: '5', text: 'Keep going till your hearts content. 🤗', },
+    { item: '1', text: 'Enter a movie title.', },
+    { item: '2', text: 'Or switch the search type and enter an acto name.', },
+    { item: '3', text: 'Select or enter your search.', },
+    { item: '4', text: 'Select an actor from the list to view their movies.', },
+    { item: '5', text: 'Then select a movie from that list, to view the cast.', },
+    { item: '6', text: 'Keep going till your hearts content. 🤗', },
 ];
 // TODO: use the proper url for writing review once u get the app on the app store.
 const supportData = [

@@ -14,6 +14,7 @@ export const pressable_style = StyleSheet.create({
         marginHorizontal: 10,
         paddingHorizontal: 10,
         paddingVertical: 5,
+        // justifyContent: 'space-between',
     },
     suggestionLst: {
         width: '100%',

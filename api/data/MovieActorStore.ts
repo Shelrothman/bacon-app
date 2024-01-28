@@ -23,6 +23,21 @@ export class MovieActorStore {
 
     static init = () => new MovieActorStore();
 
+
+    async getImageHref(poster_path: string): Promise<string> {
+        const url = `${config.API_BASE_URL}/configuration?api_key=${this.api_key}`;
+        const response = await fetch(url);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const data = await response.json() as any;
+        if (data && data.images && data.images.length > 0) {
+            const baseUrl = data.images.secure_base_url;
+            const size = data.images.poster_sizes[ 0 ]; // the smallest size
+            return `${baseUrl}${size}/${poster_path}`;
+        } else {
+            return '';
+        }
+    }
+
     /**
      * 
      * @param title - the title of the movie to search for
@@ -87,7 +102,6 @@ export class MovieActorStore {
      * @returns {BaconActor[]} list of actors
      */
     async getBaconActorListByMovieId(id: number): Promise<BaconActor[] | null> {
-        // only try catch in the route/controller bc that is what makes sense duh
         const url = `${this.api_base}/movie/${id}/credits?api_key=${this.api_key}`;
         const response = await fetch(url);
         const data = await response.json() as { cast: ActorTMDB[] };

@@ -15,7 +15,7 @@ export function ActorMovieSwitch() {
         <View style={container_style.switchContainerWrapper}>
             <Text style={text_style.switchTextBold}>searching by {mode === 'actorInput' ? 'actor' : 'movie'}{'\n'}</Text>
             <View style={container_style.switchContainer}>
-                <Text style={text_style.switchText}>search by {mode === 'actorInput' ? 'movie' : 'actor'}:</Text>
+                <Text style={text_style.switchText}>switch to {mode === 'actorInput' ? 'movie' : 'actor'}:</Text>
                 <Switch
                     trackColor={{ false: '#3e3e3e', true: '#bee9cc' }}
                     thumbColor={mode === 'actorInput' ? '#41be69' : '#BEA841'}

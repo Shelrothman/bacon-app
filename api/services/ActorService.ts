@@ -30,9 +30,9 @@ export class ActorService {
         return actorName;
     }
 
-    getActorImageSrc = async (poster_path: string) => {
-        const url = await this.dataStore.getImageHref(poster_path);
-        return url;
+    getActorImageSrc = async (actor_id: number) => {
+        const profile_path = await this.dataStore.getActorImageById(actor_id);
+        return profile_path;
     }
 
     /** mainly used for initial search */

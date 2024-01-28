@@ -48,6 +48,8 @@ export type BaconActor = {
     name: string;
     /** do we want the character name */
     characterName?: string;
+    /** image src */
+    profile_path?: string;
 };
 
 /**

@@ -3,6 +3,8 @@ import { BaconServiceFactory } from "../api/services/ServiceFactory";
 import { useAppContext } from "../contexts/AppContext";
 import { BaconActorOption, BaconMovieOption } from "../types/api";
 
+// TODO: this and app context really need to be refactored for performance
+
 /**
  * @hook useGetData - get cast of movie and/or actors movies for the UI
  */
@@ -10,8 +12,9 @@ const useGetData = () => {
     const {
         setSquareState, getCastAndSetMovieInfo, setIsLoading, setCurrentCardCast,
         getMovies, setCurrentCardMovies, setCurrentActorName, setCurrentActorID,
-        setSessionMap, sessionMap
+        setSessionMap, sessionMap, setCurrentActorHref
     } = useAppContext();
+    const actorService = BaconServiceFactory.createActorService();
 
     /** appends new session step to tree */
     const handleChangeMap = (id: number) => {
@@ -47,25 +50,24 @@ const useGetData = () => {
      * @param {string} actorName - the name of the actor to get the movies for
      * @param {boolean} changeMap - if the call should change the sessionMap
      */
-    const handleGetMoviesfromActorNode = (id: number, actorName: string, changeMap: boolean) => {
+    const handleGetMoviesfromActorNode = async (id: number, actorName: string, changeMap: boolean) => {
         setIsLoading && setIsLoading(true);
-        getMovies && getMovies(id, changeMap).then((result) => {
-            if (result) {
-                setCurrentCardMovies && setCurrentCardMovies(result);
-                setSquareState && setSquareState('actorsMovies');
-                setCurrentActorName && setCurrentActorName(actorName);
-                setCurrentActorID && setCurrentActorID(id);
-                if (changeMap) handleChangeMap(id);
-            }
-        }).finally(() => {
-            setIsLoading && setIsLoading(false);
-        });
+        const result = await getMovies!(id, changeMap);
+        if (result) {
+            setCurrentCardMovies && setCurrentCardMovies(result);
+            setSquareState && setSquareState('actorsMovies');
+            setCurrentActorName && setCurrentActorName(actorName);
+            setCurrentActorID && setCurrentActorID(id);
+            const imgSrc = await actorService.getActorImageSrc(id);
+            setCurrentActorHref && setCurrentActorHref(imgSrc || '');
+            if (changeMap) handleChangeMap(id);
+        }
+        setIsLoading && setIsLoading(false);
     };
 
     const handleGetMoviesFromInput = (actorName: string, changeMap: boolean) => {
         Keyboard.dismiss();
         setIsLoading && setIsLoading(true);
-        const actorService = BaconServiceFactory.createActorService();
         actorService.getActorFeaturesObject(actorName).then((resultObj) => {
             if (resultObj && resultObj.features && resultObj.id) {
                 setCurrentCardMovies && setCurrentCardMovies(resultObj);

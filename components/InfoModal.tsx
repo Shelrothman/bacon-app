@@ -1,16 +1,18 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import Toast from 'react-native-root-toast';
 
-import { useAppContext } from '../contexts/AppContext';
+// import { useAppContext } from '../contexts/AppContext';
+import { modal_styles } from '../styles/Modal';
 
 type InfoModalProps = {
     modalVisible: boolean;
     setModalVisible: (arg: boolean) => void;
+    innerContent: React.ReactNode;
 };
 
 export function InfoModal(props: InfoModalProps) {
-    const { modalVisible, setModalVisible } = props;
-    const { currentMovieTitle, currentMovieOverview, currentMovieReleaseDate } = useAppContext();
+    const { modalVisible, setModalVisible, innerContent } = props;
+    // const { currentMovieTitle, currentMovieOverview, currentMovieReleaseDate } = useAppContext();
 
 
     return (
@@ -24,9 +26,8 @@ export function InfoModal(props: InfoModalProps) {
             hideOnPress={false}
         >
             <View>
-                <Text style={modal_styles.movieTitle}>{currentMovieTitle}</Text>
-                <Text style={modal_styles.releaseDate}>{currentMovieReleaseDate}</Text>
-                <Text style={modal_styles.movieOverview}>{currentMovieOverview}</Text>
+                {/*  */}
+                {innerContent}
                 <Pressable
                     style={({ pressed }) => [ {
                         opacity: pressed ? 0.5 : 1,
@@ -42,36 +43,3 @@ export function InfoModal(props: InfoModalProps) {
 }
 
 
-const modal_styles = StyleSheet.create({
-    exitButtonWrapper: {
-        alignSelf: 'flex-end',
-        borderRadius: 20,
-        borderWidth: 1.5,
-        borderColor: '#000',
-        padding: 10,
-        // elevation: 2,
-        backgroundColor: '#2196F3',
-    },
-    exitText: {
-        color: '#000',
-        // fontWeight: 'bold',
-        fontSize: 16,
-        textAlign: 'center',
-        fontFamily: 'Bacon-Inline',
-    },
-    releaseDate: {
-        textAlign: 'right',
-        fontStyle: 'italic',
-    },
-    movieOverview: {
-        fontFamily: 'Bacon-Bold',
-        fontSize: 16,
-        overflow: 'scroll',
-    },
-    movieTitle: {
-        textAlign: 'center',
-        fontFamily: 'Bacon-Limelight',
-        textDecorationLine: 'underline',
-        fontSize: 25,
-    },
-});

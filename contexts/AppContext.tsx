@@ -1,7 +1,4 @@
 import { createContext, useContext, useState } from 'react';
-
-// import * as mockedCast from '../api/mocked/mockedCast.json';
-// import * as mockedFeatures from '../api/mocked/mockedFeatures.json';
 import { BaconServiceFactory } from '../api/services/ServiceFactory';
 import { BaconActorList, BaconFeatureList, BaconSquareState } from '../types/api';
 
@@ -36,6 +33,9 @@ type ContextProps = {
     /** release date of current movie */
     currentMovieReleaseDate: string;
     setCurrentMovieReleaseDate: (movieReleaseDate: string) => void;
+    /** current actor href */
+    currentActorHref: string;
+    setCurrentActorHref: (actorHref: string) => void;
     /** 
      * array of entities for the user session in consecutive order FOR navigation 
      * the [0] will always be the cast of the first movie the user entered in input
@@ -55,11 +55,6 @@ export function useAppContext() {
     return useContext(AppContext);
 }
 
-// PICKUP: delete this and everything using it before shipped.. 
-// just need it so don't use too much API calls while developing.
-// const isMocked = process.env.EXPO_PUBLIC_MOCK_MODE === 'true';
-// const isMocked = false;
-
 const AppProvider = (props: Props) => {
     const [ squareState, setSquareState ] = useState<BaconSquareState>('movieInput');
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
@@ -72,19 +67,16 @@ const AppProvider = (props: Props) => {
     const [ currentActorID, setCurrentActorID ] = useState<number>(0);
     const [ sessionMap, setSessionMap ] = useState<number[]>([]);
     const [ inputTitle, setInputTitle ] = useState<string>('');
+    const [ currentActorHref, setCurrentActorHref ] = useState<string>('');
 
     const featureService = BaconServiceFactory.createFeatureService();
+    const actorService = BaconServiceFactory.createActorService();
 
 
     // TODO: these functions are only used in one place, so move them there.
     /** gets the cast and sets the currentMovieTitle with official title */
     async function getCastAndSetMovieInfo(movieName: string): Promise<BaconActorList | void> {
         try {
-            // if (isMocked) {
-            //     console.log('MOCK MODE ON, returning fake data...');
-            //     console.log('---------------------------------');
-            //     return { id: 12345, actors: mockedCast.cast, }
-            // }
             const feature_object = await featureService.getFeatureByTitle(movieName);
             if (!feature_object) return alert('No Movie found with provided title, please try again.');
             setCurrentMovieOverview(feature_object.overview);
@@ -94,7 +86,6 @@ const AppProvider = (props: Props) => {
             if (!featureCast) {
                 return alert(`No cast found for ${movieName}. Please try again.`);
             }
-            // if (changeMap) handleChangeMap(feature_object.id)
             return { id: feature_object.id, actors: featureCast };
         } catch (error) {
             return alert(
@@ -105,17 +96,10 @@ const AppProvider = (props: Props) => {
     /** the movie title will always exist for this since it comes from an existing actor entity */
     async function getMovies(actorID: number): Promise<BaconFeatureList | void> {
         try {
-            // if (isMocked) {
-            //     console.log('MOCK MODE ON, returning fake data...');
-            //     console.log('---------------------------------');
-            //     return { id: 12345, features: mockedFeatures.features, }
-            // }
-            const actorService = BaconServiceFactory.createActorService();
             const featureListResult = await actorService.getFeaturesByActorId(actorID);
             if (!featureListResult) {
                 return alert('cannot find any features for the requested actor. Please try again.');
             }
-            // if (changeMap) handleChangeMap(actorID);
             return { id: actorID, features: featureListResult };
         } catch (error) {
             return alert(
@@ -150,6 +134,8 @@ const AppProvider = (props: Props) => {
             setCurrentMovieReleaseDate,
             inputTitle,
             setInputTitle,
+            currentActorHref,
+            setCurrentActorHref,
         }}>
             {props.children}
         </AppContext.Provider>

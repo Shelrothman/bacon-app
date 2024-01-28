@@ -4,7 +4,6 @@ import { StatusBar } from 'expo-status-bar';
 import { useCallback } from 'react';
 import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, View } from 'react-native';
 import { RootSiblingParent } from 'react-native-root-siblings';
-
 import Footer from './components/Footer';
 import { MainSquare } from './components/squarestates/MainSquare';
 import { AppProvider } from './contexts/AppContext';
@@ -12,8 +11,6 @@ import { container_style } from './styles';
 
 // TODO: a cool engagin splash screeen like ready to get that off your tongue yahoo thing
 
-// PICKUP: here to tackle the option for user to search by actor. need to go into context etc etc...  :-)
-// maybe use info: genre_ids for the search by keyword.....
 
 export default function App() {
 
@@ -27,6 +24,7 @@ export default function App() {
         'Bacon-Stencil-Bold': require('./assets/fonts/Stencil-Bold.ttf'),
     });
 
+    // TODO: organze this into a better structure
     const onLayoutRootView = useCallback(async () => {
         if (fontsLoaded) {
             await SplashScreen.hideAsync();

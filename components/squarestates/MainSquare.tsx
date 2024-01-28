@@ -8,12 +8,12 @@ import { ActorsMovies } from './ActorsMovies';
 import { MovieCast } from './MovieCast';
 import { MovieInput } from './MovieInput';
 
+
 /**
  * @component - MainSquare
  * the square that will hold one of the three states.
  */
 export function MainSquare() {
-
     const { squareState, isLoading, currentCardCast, currentCardMovies, currentMovieTitle, currentActorName } = useAppContext();
 
     return (

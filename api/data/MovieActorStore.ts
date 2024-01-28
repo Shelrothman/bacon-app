@@ -23,20 +23,25 @@ export class MovieActorStore {
 
     static init = () => new MovieActorStore();
 
-
-    async getImageHref(poster_path: string): Promise<string> {
-        const url = `${config.API_BASE_URL}/configuration?api_key=${this.api_key}`;
-        const response = await fetch(url);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const data = await response.json() as any;
-        if (data && data.images && data.images.length > 0) {
-            const baseUrl = data.images.secure_base_url;
-            const size = data.images.poster_sizes[ 0 ]; // the smallest size
-            return `${baseUrl}${size}/${poster_path}`;
-        } else {
-            return '';
-        }
-    }
+    /**
+     * fetch config details for the api
+     * INFO: not used right now but may need a dynamioc way to get this in the future: 
+     * https://developer.themoviedb.org/docs/image-basics 
+     *     */
+    // async getActorImageHrefPrefix(): Promise<string> {
+    //     const url = `${config.API_BASE_URL}/configuration?api_key=${this.api_key}`;
+    //     const response = await fetch(url);
+    //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    //     const data = await response.json() as any;
+    //     if (data && data.images && data.images.length > 0) {
+    //         const baseUrl = data.images.secure_base_url;
+    //         console.log('baseUrl', data)
+    //         const size = data.images.progile_sizes[ 1 ]; // the second smallest size
+    //         return `${baseUrl}${size}`;
+    //     } else {
+    //         return '';
+    //     }
+    // }
 
     /**
      * 
@@ -144,6 +149,17 @@ export class MovieActorStore {
         }
     }
 
+    async getActorImageById(id: number): Promise<string | null> {
+        const url = `${this.api_base}/person/${id}?api_key=${this.api_key}`;
+        const response = await fetch(url);
+        const data = await response.json() as { profile_path: string };
+        if (data && data.profile_path) {
+            return data.profile_path;
+        } else {
+            return null;
+        }
+    }
+
     /**
      * @method getMoviesByActorName
      * gets a list of every movie feature an actor has been in
@@ -206,6 +222,7 @@ export class MovieActorStore {
             id: data.id,
             name: data.name || data.original_name,
             characterName: data.character || 'unknown',
+            profile_path: data.profile_path || '',
         };
         return actorObject;
     }

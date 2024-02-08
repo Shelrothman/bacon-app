@@ -21,11 +21,11 @@ export function MovieCast(props: MovieCastProps) {
             {modalVisible && <InfoModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
-                innerContent={<>
+                innerContent={<View style={modal_styles.movieModalContainer}>
                     <Text style={modal_styles.movieTitle}>{currentMovieTitle}</Text>
                     <Text style={modal_styles.releaseDate}>{currentMovieReleaseDate}</Text>
                     <Text style={modal_styles.movieOverview}>{currentMovieOverview}</Text>
-                </>}
+                </View>}
             />}
             <SquareHeader title={props.title} setModalVisible={setModalVisible} />
             <ScrollView showsVerticalScrollIndicator={true}>

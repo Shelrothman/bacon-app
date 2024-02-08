@@ -29,7 +29,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
                     <Image
                         source={{ uri: `https://image.tmdb.org/t/p/w185${currentActorHref}` }}
                         style={modal_styles.image} />
-                    <Text style={modal_styles.actorName}>{props.actorName}</Text>
+                    <Text style={modal_styles.actorName}>{'\n'}{props.actorName}</Text>
                 </View>}
             />}
             <SquareHeader
@@ -44,7 +44,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
                             id={feature.id}
                             title={feature.title}
                             characterName={feature.characterName}
-                            handleMovieNodePress={() => handleGetCast(feature.title, true, true)}
+                            handleMovieNodePress={() => handleGetCast(feature.title, true)}
                         />
                     )
                 })}

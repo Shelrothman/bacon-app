@@ -29,6 +29,7 @@ export const modal_styles = StyleSheet.create({
         fontFamily: 'Bacon-Bold',
         fontSize: 20,
         textAlign: 'center',
+        marginBottom: 10,
     },
     movieTitle: {
         textAlign: 'center',
@@ -39,11 +40,9 @@ export const modal_styles = StyleSheet.create({
     image: {
         width: 185,
         height: 150,
-        marginVertical: 10,
-        marginHorizontal: 10,
+        transform: [ { translateY: 20 } ]
     },
     actorModalContainer: {
-        display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
@@ -53,5 +52,13 @@ export const modal_styles = StyleSheet.create({
         maxWidth: 200,
         height: 200,
         maxHeight: 200,
+        padding: 10,
+    },
+    movieModalContainer: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        textAlignVertical: 'center',
+        maxHeight: 800,
+        overflow: 'hidden',
     },
 });

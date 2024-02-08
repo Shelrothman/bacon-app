@@ -7,17 +7,14 @@ export const modal_styles = StyleSheet.create({
         borderWidth: 1.5,
         borderColor: '#000',
         padding: 10,
-        // elevation: 2,
         backgroundColor: '#2196F3',
         margin: 10,
     },
     exitText: {
         color: '#000',
-        // fontWeight: 'bold',
         fontSize: 16,
         textAlign: 'center',
         fontFamily: 'Bacon-Inline',
-        // padding: 5,
     },
     releaseDate: {
         textAlign: 'right',

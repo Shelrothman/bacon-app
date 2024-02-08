@@ -8,7 +8,7 @@ export function ExpoIcon() {
             borderRadius: 6,
             padding: 6,
             backgroundColor: '#000',
-            transform: [ { translateY: 8 } ],
+            transform: [ { translateY: 3 } ],
         }}>
             <Text style={{ color: '#fff', fontWeight: '900', }}>
                 𝝠

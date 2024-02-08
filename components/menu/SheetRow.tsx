@@ -15,7 +15,12 @@ export function SheetRow({ title, data }: SheetRowProps) {
             <Text style={sheet_styles.sectionTitleText}>{title}</Text>
             <View style={sheet_styles.sectionContainer}>
                 {data.map((item, index) => (
-                    <View key={index} style={[ sheet_styles.sectionRow, { paddingVertical: 10 } ]}>
+                    <View key={index} style={!(index % 2) ? sheet_styles.sectionRow
+                        : (index === data.length - 1)
+                            ? [ sheet_styles.sectionRowAlt, sheet_styles.bottomAltRow ]
+                            : sheet_styles.sectionRowAlt
+                        // info: this will only display properly if the data is even amount bc of the last row
+                    }>
                         <Pressable onPress={() => { Linking.openURL(item.url); }}
                             style={({ pressed }) => [
                                 {

@@ -73,9 +73,16 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
                     </Pressable>
                     <View style={sheet_styles.sheetRow}>
                         <Text style={sheet_styles.sectionTitleText}>How do I do this?</Text>
-                        <View style={sheet_styles.sectionContainer}>
-                            {helpData.map((item) => (
-                                <View key={item.item} style={sheet_styles.sectionRow}>
+                        <View style={[ sheet_styles.sectionContainer, { alignItems: 'flex-start' } ]}>
+                            {helpData.map((item, index) => (
+                                <View
+                                    key={item.item}
+                                    style={!(index % 2) ? sheet_styles.sectionRow
+                                        : (index === helpData.length - 1)
+                                            ? [ sheet_styles.sectionRowAlt, sheet_styles.bottomAltRow ]
+                                            : sheet_styles.sectionRowAlt
+                                        // info: this will only display properly if the data is even amount
+                                    }>
                                     <Text style={sheet_styles.numberText}>{item.item}. </Text>
                                     <Text style={sheet_styles.bodyText}>{item.text}</Text>
                                 </View>

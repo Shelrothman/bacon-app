@@ -14,7 +14,9 @@ export const sheet_styles = StyleSheet.create({
         backgroundColor: '#25292e',
         borderRadius: 10,
         color: '#fff',
-        padding: 10,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     container: {
         flex: 1,
@@ -52,11 +54,29 @@ export const sheet_styles = StyleSheet.create({
     },
     sectionRow: {
         flexDirection: 'row',
-        paddingVertical: 5,
+        padding: 10,
+    },
+    sectionRowAlt: {
+        flexDirection: 'row',
+        padding: 10,
+        width: '100%',
+        backgroundColor: '#343940', // todo: implement this in
     },
     numberText: {
         color: '#ccc',
         fontSize: 14,
         textAlign: 'left',
+    },
+    tmdbLogo: {
+        textAlign: 'right',
+        transform: [ { translateY: 3 } ]
+    },
+    bottomAltRow: {
+        borderBottomEndRadius: 10,
+        borderBottomStartRadius: 10,
+    },
+    topAltRow: {
+        borderTopEndRadius: 10,
+        borderTopStartRadius: 10,
     },
 });

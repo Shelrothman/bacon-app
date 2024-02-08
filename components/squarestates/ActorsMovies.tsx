@@ -18,6 +18,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
     // console.log(currentActorHref)
 
     // todo: if currentActorHref is null or blank, set it to a default image
+    // and todo: also, have a placeholder while its loading
 
     return (
         <View >

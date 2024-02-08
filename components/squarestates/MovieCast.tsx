@@ -14,7 +14,7 @@ export function MovieCast(props: MovieCastProps) {
     const [ modalVisible, setModalVisible ] = useState(false);
     const { currentMovieTitle, currentMovieOverview, currentMovieReleaseDate } = useAppContext();
     const { handleGetMoviesfromActorNode } = useGetData();
-
+    // todo: - make fixed height for modal infos for both
 
     return (
         <View>

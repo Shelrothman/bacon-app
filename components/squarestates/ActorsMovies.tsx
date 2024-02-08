@@ -15,17 +15,21 @@ export function ActorsMovies(props: ActorsMoviesProps) {
     const [ modalVisible, setModalVisible ] = useState(false);
     const { currentActorHref } = useAppContext();
     const { handleGetCast } = useGetData();
+    // console.log(currentActorHref)
+
+    // todo: if currentActorHref is null or blank, set it to a default image
 
     return (
         <View >
             {modalVisible && <InfoModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
-                innerContent={<><Image
-                    source={{ uri: `https://image.tmdb.org/t/p/w185${currentActorHref}` }}
-                    style={modal_styles.image} />
-                    <Text style={modal_styles.movieOverview}>{props.actorName}</Text>
-                </>}
+                innerContent={<View style={modal_styles.actorModalContainer}>
+                    <Image
+                        source={{ uri: `https://image.tmdb.org/t/p/w185${currentActorHref}` }}
+                        style={modal_styles.image} />
+                    <Text style={modal_styles.actorName}>{props.actorName}</Text>
+                </View>}
             />}
             <SquareHeader
                 title={`${props.actorName} Movies`}

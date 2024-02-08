@@ -9,6 +9,7 @@ export const modal_styles = StyleSheet.create({
         padding: 10,
         // elevation: 2,
         backgroundColor: '#2196F3',
+        margin: 10,
     },
     exitText: {
         color: '#000',
@@ -16,6 +17,7 @@ export const modal_styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         fontFamily: 'Bacon-Inline',
+        // padding: 5,
     },
     releaseDate: {
         textAlign: 'right',
@@ -26,11 +28,33 @@ export const modal_styles = StyleSheet.create({
         fontSize: 16,
         overflow: 'scroll',
     },
+    actorName: {
+        fontFamily: 'Bacon-Bold',
+        fontSize: 20,
+        textAlign: 'center',
+    },
     movieTitle: {
         textAlign: 'center',
         fontFamily: 'Bacon-Limelight',
         textDecorationLine: 'underline',
         fontSize: 25,
     },
-    image: { width: 185, height: 150 },
+    image: {
+        width: 185,
+        height: 150,
+        marginVertical: 10,
+        marginHorizontal: 10,
+    },
+    actorModalContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlignVertical: 'center',
+        textAlign: 'center',
+        width: 200,
+        maxWidth: 200,
+        height: 200,
+        maxHeight: 200,
+    },
 });

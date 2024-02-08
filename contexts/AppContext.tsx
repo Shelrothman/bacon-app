@@ -55,6 +55,8 @@ export function useAppContext() {
     return useContext(AppContext);
 }
 
+const ERR_MSG = (x: string) => `An unknown error occurred while attempting to get the ${x}, please try again. If this issue persists, please contact support, shel.programmer@gmail.com.`
+
 const AppProvider = (props: Props) => {
     const [ squareState, setSquareState ] = useState<BaconSquareState>('movieInput');
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
@@ -88,9 +90,7 @@ const AppProvider = (props: Props) => {
             }
             return { id: feature_object.id, actors: featureCast };
         } catch (error) {
-            return alert(
-                `An unknown error occurred while attempting to get the cast, please try again. If this issue persists, please contact support, shel.programmer@gmail.com.`
-            );
+            return alert(ERR_MSG('cast'));
         }
     }
     /** the movie title will always exist for this since it comes from an existing actor entity */
@@ -102,9 +102,7 @@ const AppProvider = (props: Props) => {
             }
             return { id: actorID, features: featureListResult };
         } catch (error) {
-            return alert(
-                `An unknown error occurred while attempting to get the movies, please try again. If this issue persists, please contact support, shel.programmer@gmail.com.`
-            );
+            return alert(ERR_MSG('movies'));
         }
     }
 

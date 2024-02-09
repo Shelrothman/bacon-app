@@ -189,6 +189,8 @@ export class MovieActorStore {
         }
     }
 
+    // todo: assess which methods no longer are needed
+
     /** 
      * @method getMovieTitleById
      * gets the movie title by id
@@ -202,6 +204,14 @@ export class MovieActorStore {
         } else {
             return null;
         }
+    }
+
+    async getMovieInfoById(id: number): Promise<MovieTMDB | null> {
+        const url = `${this.api_base}/movie/${id}?api_key=${this.api_key}`;
+        const response = await fetch(url);
+        const data = await response.json() as MovieTMDB;
+        if (data) return data;
+        else return null;
     }
 
     /** converts response to @type {BaconFeature} */

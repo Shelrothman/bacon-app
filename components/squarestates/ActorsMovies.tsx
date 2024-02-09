@@ -14,7 +14,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
 
     const [ modalVisible, setModalVisible ] = useState(false);
     const { currentActorHref } = useAppContext();
-    const { handleGetCast } = useGetData();
+    const { handleGetCastAndSetMovieInfoWithTitle: handleGetCast } = useGetData();
     // console.log(currentActorHref)
 
     // todo: if currentActorHref is null or blank, set it to a default image

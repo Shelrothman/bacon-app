@@ -28,7 +28,8 @@ export function SuggestionList(props: SuggestionListProps) {
     const [ movieSuggestionList, setMovieSuggestionList ] = useState<BaconMovieOption[]>([]);
     const [ actorSuggestionList, setActorSuggestionList ] = useState<BaconActorOption[]>([]);
     const {
-        handleGetCast,
+        handleGetCastAndSetMovieInfoWithTitle,
+        getCastAndSetMovieInfoWithId,
         getMovieSuggestions,
         getActorSuggestions,
         handleGetMoviesfromActorNode
@@ -53,7 +54,7 @@ export function SuggestionList(props: SuggestionListProps) {
 
     const renderSearchInputNode = () => <SearchInputNode
         inputSearch={inputSearch}
-        pressHandler={() => handleGetCast(inputSearch, false, true)}
+        pressHandler={() => handleGetCastAndSetMovieInfoWithTitle(inputSearch, true)}
     />
 
     return (
@@ -64,7 +65,7 @@ export function SuggestionList(props: SuggestionListProps) {
                 release_date={result.release_date}
                 title={result.title}
                 inputMode={0}
-                handleOnPress={() => handleGetCast(result.title, true, true)}
+                handleOnPress={() => getCastAndSetMovieInfoWithId(result.id)}
             />) : actorSuggestionList.map(result => <SuggestionNode
                 key={result.id + result.name}
                 title={result.name}

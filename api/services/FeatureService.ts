@@ -40,4 +40,9 @@ export class FeatureService {
         return featureName;
     }
 
+    getFeatureInfo = async (feature_id: number) => {
+        const featureInfo = await this.dataStore.getMovieInfoById(feature_id);
+        return featureInfo;
+    }
+
 }    

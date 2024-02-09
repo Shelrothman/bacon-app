@@ -2,6 +2,10 @@ import { createContext, useContext, useState } from 'react';
 import { BaconServiceFactory } from '../api/services/ServiceFactory';
 import { BaconActorList, BaconFeatureList, BaconSquareState } from '../types/api';
 
+// TODO: honestly should refactor to objects with properties for actor and movie each instea of all these separate states
+
+type MovieInfo = { overview: string, title: string, releaseDate: string };
+
 type ContextProps = {
     /** can be one of 4: movieInput, actorInput, movieCast, actorsMovies */
     squareState: BaconSquareState;
@@ -9,7 +13,7 @@ type ContextProps = {
     isLoading: boolean;
     setIsLoading: (isLoading: boolean) => void;
     /** gets the cast of the user-entered movie */
-    getCastAndSetMovieInfo: (movieName: string, changeMap: boolean) => Promise<BaconActorList | void>;
+    // getCastAndSetMovieInfoFromTitle: (movieName: string, changeMap: boolean) => Promise<BaconActorList | void>;
     /** gets the movies of the user-selected actor */
     getMovies: (actorID: number, changeMap: boolean) => Promise<BaconFeatureList | void>;
     /** cast of actors for the current movie */
@@ -45,6 +49,8 @@ type ContextProps = {
     /** active text in inputSearch */
     inputTitle: string;
     setInputTitle: (inputTitle: string) => void;
+    /** sets the states for movie data */
+    setMovieInfo: (feature_object: MovieInfo) => void;
 };
 
 const AppContext = createContext<Partial<ContextProps>>({});
@@ -71,28 +77,37 @@ const AppProvider = (props: Props) => {
     const [ inputTitle, setInputTitle ] = useState<string>('');
     const [ currentActorHref, setCurrentActorHref ] = useState<string>('');
 
-    const featureService = BaconServiceFactory.createFeatureService();
+    // const featureService = BaconServiceFactory.createFeatureService();
     const actorService = BaconServiceFactory.createActorService();
 
 
     // TODO: these functions are only used in one place, so move them there.
     /** gets the cast and sets the currentMovieTitle with official title */
-    async function getCastAndSetMovieInfo(movieName: string): Promise<BaconActorList | void> {
-        try {
-            const feature_object = await featureService.getFeatureByTitle(movieName);
-            if (!feature_object) return alert('No Movie found with provided title, please try again.');
-            setCurrentMovieOverview(feature_object.overview);
-            setCurrentMovieTitle(feature_object.title);
-            setCurrentMovieReleaseDate(feature_object.releaseDate);
-            const featureCast = await featureService.getFeatureCastByMovieId(feature_object.id);
-            if (!featureCast) {
-                return alert(`No cast found for ${movieName}. Please try again.`);
-            }
-            return { id: feature_object.id, actors: featureCast };
-        } catch (error) {
-            return alert(ERR_MSG('cast'));
-        }
+    // async function getCastAndSetMovieInfoFromTitle(
+    //     movieName: string,
+    //     // fromSuggestion: boolean = false,
+    //     // providedId?: number
+    // ): Promise<BaconActorList | void> {
+    //     try {
+    //         const feature_object = await featureService.getFeatureByTitle(movieName);
+    //         if (!feature_object) return alert('No Movie found with provided title, please try again.');
+    //         setMovieInfo(feature_object);
+    //         const featureCast = await featureService.getFeatureCastByMovieId(feature_object.id);
+    //         if (!featureCast) {
+    //             return alert(`No cast found for ${movieName}. Please try again.`);
+    //         }
+    //         return { id: feature_object.id, actors: featureCast };
+    //     } catch (error) {
+    //         return alert(ERR_MSG('cast'));
+    //     }
+    // }
+
+    function setMovieInfo(feature: MovieInfo) {
+        setCurrentMovieOverview(feature.overview);
+        setCurrentMovieTitle(feature.title);
+        setCurrentMovieReleaseDate(feature.releaseDate);
     }
+
     /** the movie title will always exist for this since it comes from an existing actor entity */
     async function getMovies(actorID: number): Promise<BaconFeatureList | void> {
         try {
@@ -112,7 +127,7 @@ const AppProvider = (props: Props) => {
             setSquareState,
             sessionMap,
             setSessionMap,
-            getCastAndSetMovieInfo,
+            // getCastAndSetMovieInfoFromTitle,
             getMovies,
             isLoading,
             setIsLoading,
@@ -134,6 +149,7 @@ const AppProvider = (props: Props) => {
             setInputTitle,
             currentActorHref,
             setCurrentActorHref,
+            setMovieInfo
         }}>
             {props.children}
         </AppContext.Provider>

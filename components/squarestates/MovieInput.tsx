@@ -12,10 +12,10 @@ export function MovieInput() {
 
     const [ searchMode, setSearchMode ] = useState<boolean>(false);
     const { inputTitle, setInputTitle, squareState } = useAppContext();
-    const { handleGetCast, handleGetMoviesFromInput } = useGetData();
+    const { handleGetCastAndSetMovieInfoWithTitle: handleGetCast, handleGetMoviesFromInput } = useGetData();
 
     const handleSubmit = () => {
-        if (squareState === 'movieInput') return handleGetCast(inputTitle!, false, true);
+        if (squareState === 'movieInput') return handleGetCast(inputTitle!, true);
         return handleGetMoviesFromInput(inputTitle!, true);
     }
 

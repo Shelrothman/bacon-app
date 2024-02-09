@@ -10,8 +10,11 @@ type SuggestionNodeProps = {
     title: string;
     release_date?: string;
     known_for?: BaconMovie;
+    /** either movieInput or actorInput */
     inputMode: InputMode;
 };
+const THEATRE_ICON = 'theater';
+const MOVIE_ICON = 'movie-open-star';
 
 // TODO: return hwew to customize the look for the suggestion node for actorInput
 
@@ -33,7 +36,7 @@ export function SuggestionNode(props: SuggestionNodeProps) {
                 <Text style={text_style.suggestionTitle}>
                     {title} {`\n`}
                 </Text>
-                <MaterialCommunityIcons name={inputMode === InputMode.movieInput ? 'theater' : 'movie-open-star'} size={20} color="black" />
+                <MaterialCommunityIcons name={inputMode === InputMode.movieInput ? THEATRE_ICON : MOVIE_ICON} size={20} color="black" />
                 <Text style={text_style.suggestionReleaseDate}>
                     {`\t\t`}{release_date && release_date}
                     {known_for && (known_for?.title || known_for?.name || 'no known movies')}

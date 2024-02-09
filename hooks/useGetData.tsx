@@ -4,17 +4,19 @@ import { useAppContext } from "../contexts/AppContext";
 import { BaconActorOption, BaconMovieOption } from "../types/api";
 
 // TODO: this and app context really need to be refactored for performance
+const ERR_MSG_CAST = "An unknown error occurred while attempting to get the cast, please try again. If this issue persists, please contact support, shel.programmer@gmail.com."
 
 /**
  * @hook useGetData - get cast of movie and/or actors movies for the UI
  */
 const useGetData = () => {
     const {
-        setSquareState, getCastAndSetMovieInfo, setIsLoading, setCurrentCardCast,
+        setSquareState, setIsLoading, setCurrentCardCast,
         getMovies, setCurrentCardMovies, setCurrentActorName, setCurrentActorID,
-        setSessionMap, sessionMap, setCurrentActorHref
+        setSessionMap, sessionMap, setCurrentActorHref, setMovieInfo
     } = useAppContext();
     const actorService = BaconServiceFactory.createActorService();
+    const featureService = BaconServiceFactory.createFeatureService();
 
     /** appends new session step to tree */
     const handleChangeMap = (id: number) => {
@@ -26,23 +28,55 @@ const useGetData = () => {
      * gets the cast of the movie
      * either from search or from an actorNode press
      * @param {string} movieTitle - the movie title to get the cast for
-     * @param {boolean} isActorNodePress - if the call is from an actorNode press
      * @param {boolean} changeMap - if the call should change the sessionMap
      */
-    const handleGetCast = (movieTitle: string, isActorNodePress: boolean, changeMap: boolean) => {
+    const handleGetCastAndSetMovieInfoWithTitle = async (movieTitle: string, changeMap: boolean) => {
         if (movieTitle.length < 1) return;
-        if (!isActorNodePress) Keyboard.dismiss(); // pickup: is this redundant?
+        Keyboard.dismiss();
         setIsLoading && setIsLoading(true);
-        getCastAndSetMovieInfo && getCastAndSetMovieInfo(movieTitle, changeMap).then((result) => {
-            if (result) {
-                setCurrentCardCast && setCurrentCardCast(result);
-                setSquareState && setSquareState('movieCast');
-                if (changeMap) handleChangeMap(result.id);
+        try {
+            const feature_object = await featureService.getFeatureByTitle(movieTitle);
+            if (!feature_object) return alert('No Movie found with provided title, please try again.');
+            setMovieInfo!({
+                overview: feature_object.overview,
+                title: feature_object.title,
+                releaseDate: feature_object.releaseDate
+            })
+            const featureCast = await featureService.getFeatureCastByMovieId(feature_object.id);
+            if (featureCast) {
+                setCurrentCardCast!({ id: feature_object.id, actors: featureCast });
+                setSquareState!('movieCast');
+                if (changeMap) handleChangeMap(feature_object.id);
             }
-        }).finally(() => {
-            setIsLoading && setIsLoading(false);
-        });
-    };
+        } catch (error) {
+            return alert(ERR_MSG_CAST);
+        }
+        setIsLoading && setIsLoading(false);
+    }
+
+    /** used for a suggestion node query and does the same logic as getting it with title */
+    const getCastAndSetMovieInfoWithId = async (movieId: number) => {
+        Keyboard.dismiss();
+        setIsLoading && setIsLoading(true);
+        try {
+            const movieInfo = await featureService.getFeatureInfo(movieId);
+            if (!movieInfo) return alert('No Movie found with provided title, please try again.');
+            setMovieInfo!({
+                overview: movieInfo.overview,
+                title: movieInfo.title || movieInfo.original_title,
+                releaseDate: movieInfo.release_date
+            })
+            const featureCast = await featureService.getFeatureCastByMovieId(movieId);
+            if (featureCast) {
+                setCurrentCardCast!({ id: movieId, actors: featureCast });
+                setSquareState!('movieCast');
+                handleChangeMap(movieId);
+            }
+        } catch (error) {
+            return alert(ERR_MSG_CAST);
+        }
+        setIsLoading && setIsLoading(false);
+    }
 
     /**
      * gets all the movies an actor has been in
@@ -110,7 +144,8 @@ const useGetData = () => {
     }
 
     return {
-        handleGetCast,
+        handleGetCastAndSetMovieInfoWithTitle,
+        getCastAndSetMovieInfoWithId,
         handleGetMoviesfromActorNode,
         getMovieSuggestions,
         getActorSuggestions,

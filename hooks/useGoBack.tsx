@@ -11,7 +11,7 @@ const PERSISTANCE_MSG = 'If this issue persists, please contact support, shel.pr
 const useGoBack = () => {
 
     const { setIsLoading, setSquareState, squareState, sessionMap, setSessionMap } = useAppContext();
-    const { handleGetCast, handleGetMoviesfromActorNode } = useGetData();
+    const { handleGetCastAndSetMovieInfoWithTitle: handleGetCast, handleGetMoviesfromActorNode } = useGetData();
 
     /** takes user back to the movieInput screen when they are on their first step */
     const handleLastGoBack = () => {
@@ -39,7 +39,7 @@ const useGoBack = () => {
             return alert(`An unknown error occurred while attempting to get the last movie info, please try again. ${PERSISTANCE_MSG}`);
         }
         setSessionMap && setSessionMap(sessionMap.slice(0, sessionMap.length - 1));
-        handleGetCast && handleGetCast(lastMovieTitle, true, false);
+        handleGetCast && handleGetCast(lastMovieTitle, false);
     };
     /**
      * handles the back button press that brings the user back to the previous screen

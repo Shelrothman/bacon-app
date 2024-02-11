@@ -54,8 +54,12 @@ const useGetData = () => {
         setIsLoading && setIsLoading(false);
     }
 
-    /** used for a suggestion node query and does the same logic as getting it with title */
-    const getCastAndSetMovieInfoWithId = async (movieId: number) => {
+    /** 
+     * used for a suggestion node query and does the same logic as getting it with title 
+     * @param {number} movieId - the movie id to get the cast for
+     * @param {boolean} changeMap - if the call should change the sessionMap, TRUE BY DEFAULT
+     * */
+    const getCastAndSetMovieInfoWithId = async (movieId: number, changeMap: boolean = true) => {
         Keyboard.dismiss();
         setIsLoading && setIsLoading(true);
         try {
@@ -70,7 +74,7 @@ const useGetData = () => {
             if (featureCast) {
                 setCurrentCardCast!({ id: movieId, actors: featureCast });
                 setSquareState!('movieCast');
-                handleChangeMap(movieId);
+                if (changeMap) handleChangeMap(movieId);
             }
         } catch (error) {
             return alert(ERR_MSG_CAST);

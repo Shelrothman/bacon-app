@@ -2,7 +2,11 @@ import { BaconServiceFactory } from "../api/services/ServiceFactory";
 import { useAppContext } from "../contexts/AppContext";
 import useGetData from "./useGetData";
 
+// TODO: refactor to useQuery and useMutation from react-query or something similar
+
 const PERSISTANCE_MSG = 'If this issue persists, please contact support, shel.programmer@gmail.com.';
+
+// TODO: FIXME: When going back to like ghostbusters for example, it will go back to the one from 1984, not the one from 2016, even when the 2016 one is the one in the game.
 
 /**
  * @hook useGoBack - handles the back button press that brings the user back to the previous screen
@@ -11,7 +15,7 @@ const PERSISTANCE_MSG = 'If this issue persists, please contact support, shel.pr
 const useGoBack = () => {
 
     const { setIsLoading, setSquareState, squareState, sessionMap, setSessionMap } = useAppContext();
-    const { handleGetCastAndSetMovieInfoWithTitle: handleGetCast, handleGetMoviesfromActorNode } = useGetData();
+    const { handleGetMoviesfromActorNode, getCastAndSetMovieInfoWithId } = useGetData();
 
     /** takes user back to the movieInput screen when they are on their first step */
     const handleLastGoBack = () => {
@@ -33,13 +37,9 @@ const useGoBack = () => {
     /** takes user back to the movieCast of the movie-id of the sessionStep before the step where goBack is called from  */
     const handleGoBackFromActorsMovies = async (sessionMap: number[]) => {
         const secondToLastId = sessionMap[ sessionMap.length - 2 ];
-        const featureService = BaconServiceFactory.createFeatureService();
-        const lastMovieTitle = await featureService.getFeatureName(secondToLastId);
-        if (!lastMovieTitle) {
-            return alert(`An unknown error occurred while attempting to get the last movie info, please try again. ${PERSISTANCE_MSG}`);
-        }
         setSessionMap && setSessionMap(sessionMap.slice(0, sessionMap.length - 1));
-        handleGetCast && handleGetCast(lastMovieTitle, false);
+        return getCastAndSetMovieInfoWithId(secondToLastId, false);
+
     };
     /**
      * handles the back button press that brings the user back to the previous screen

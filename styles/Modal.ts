@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+// TODO: figure out why onluy some images get cut off at top
+
 export const modal_styles = StyleSheet.create({
     exitButtonWrapper: {
         alignSelf: 'flex-end',

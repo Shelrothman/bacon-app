@@ -11,14 +11,13 @@ import { modal_styles } from '../../styles/Modal'
 type ActorsMoviesProps = BaconFeatureList & { actorName: string; };
 
 export function ActorsMovies(props: ActorsMoviesProps) {
-
     const [ modalVisible, setModalVisible ] = useState(false);
     const { currentActorHref } = useAppContext();
     const { handleGetCastAndSetMovieInfoWithTitle } = useGetData();
-    // console.log(currentActorHref)
 
-    // todo: if currentActorHref is null or blank, set it to a default image
-    // and todo: also, have a placeholder while its loading
+    const uriSource = currentActorHref
+        ? { uri: `https://image.tmdb.org/t/p/w185${currentActorHref}`, cache: 'force-cache' }
+        : require('../../assets/unavailablecon.jpg');
 
     return (
         <View >
@@ -27,8 +26,10 @@ export function ActorsMovies(props: ActorsMoviesProps) {
                 setModalVisible={setModalVisible}
                 innerContent={<View style={modal_styles.actorModalContainer}>
                     <Image
-                        source={{ uri: `https://image.tmdb.org/t/p/w185${currentActorHref}` }}
-                        style={modal_styles.image} />
+                        source={uriSource}
+                        style={modal_styles.image}
+                        defaultSource={require('../../assets/loadcon.png')}
+                    />
                     <Text style={modal_styles.actorName}>{'\n'}{props.actorName}</Text>
                 </View>}
             />}

@@ -1,8 +1,7 @@
 import { createContext, useContext, useState } from 'react';
-import { BaconServiceFactory } from '../api/services/ServiceFactory';
 import { BaconActorList, BaconFeatureList, BaconSquareState } from '../types/api';
 
-// TODO: honestly should refactor to objects with properties for actor and movie each instea of all these separate states
+// TODO(future): honestly should refactor to objects with properties for actor and movie each instea of all these separate states
 
 type MovieInfo = { overview: string, title: string, releaseDate: string };
 
@@ -12,10 +11,6 @@ type ContextProps = {
     setSquareState: (squareState: BaconSquareState) => void;
     isLoading: boolean;
     setIsLoading: (isLoading: boolean) => void;
-    /** gets the cast of the user-entered movie */
-    // getCastAndSetMovieInfoFromTitle: (movieName: string, changeMap: boolean) => Promise<BaconActorList | void>;
-    /** gets the movies of the user-selected actor */
-    getMovies: (actorID: number, changeMap: boolean) => Promise<BaconFeatureList | void>;
     /** cast of actors for the current movie */
     currentCardCast: BaconActorList | null;
     setCurrentCardCast: (baconActorList: BaconActorList) => void;
@@ -24,7 +19,6 @@ type ContextProps = {
     setCurrentCardMovies: (baconFeatures: BaconFeatureList) => void;
     /** current title requested by user */
     currentMovieTitle: string;
-    setCurrentMovieTitle: (movieTitle: string) => void;
     /** current actor selected by user onPress */
     currentActorName: string;
     setCurrentActorName: (actorName: string) => void;
@@ -33,10 +27,8 @@ type ContextProps = {
     setCurrentActorID: (actorID: number) => void;
     /** the overview for the current movie */
     currentMovieOverview: string;
-    setCurrentMovieOverview: (movieOverview: string) => void;
     /** release date of current movie */
     currentMovieReleaseDate: string;
-    setCurrentMovieReleaseDate: (movieReleaseDate: string) => void;
     /** current actor href */
     currentActorHref: string;
     setCurrentActorHref: (actorHref: string) => void;
@@ -50,7 +42,7 @@ type ContextProps = {
     inputTitle: string;
     setInputTitle: (inputTitle: string) => void;
     /** sets the states for movie data */
-    setMovieInfo: (feature_object: MovieInfo) => void;
+    setMovieDataContext: (feature_object: MovieInfo) => void;
 };
 
 const AppContext = createContext<Partial<ContextProps>>({});
@@ -60,8 +52,6 @@ interface Props { children: React.ReactNode; }
 export function useAppContext() {
     return useContext(AppContext);
 }
-
-const ERR_MSG = (x: string) => `An unknown error occurred while attempting to get the ${x}, please try again. If this issue persists, please contact support, shel.programmer@gmail.com.`
 
 const AppProvider = (props: Props) => {
     const [ squareState, setSquareState ] = useState<BaconSquareState>('movieInput');
@@ -77,48 +67,10 @@ const AppProvider = (props: Props) => {
     const [ inputTitle, setInputTitle ] = useState<string>('');
     const [ currentActorHref, setCurrentActorHref ] = useState<string>('');
 
-    // const featureService = BaconServiceFactory.createFeatureService();
-    const actorService = BaconServiceFactory.createActorService();
-
-
-    // TODO: these functions are only used in one place, so move them there.
-    /** gets the cast and sets the currentMovieTitle with official title */
-    // async function getCastAndSetMovieInfoFromTitle(
-    //     movieName: string,
-    //     // fromSuggestion: boolean = false,
-    //     // providedId?: number
-    // ): Promise<BaconActorList | void> {
-    //     try {
-    //         const feature_object = await featureService.getFeatureByTitle(movieName);
-    //         if (!feature_object) return alert('No Movie found with provided title, please try again.');
-    //         setMovieInfo(feature_object);
-    //         const featureCast = await featureService.getFeatureCastByMovieId(feature_object.id);
-    //         if (!featureCast) {
-    //             return alert(`No cast found for ${movieName}. Please try again.`);
-    //         }
-    //         return { id: feature_object.id, actors: featureCast };
-    //     } catch (error) {
-    //         return alert(ERR_MSG('cast'));
-    //     }
-    // }
-
-    function setMovieInfo(feature: MovieInfo) {
+    function setMovieDataContext(feature: MovieInfo) {
         setCurrentMovieOverview(feature.overview);
         setCurrentMovieTitle(feature.title);
         setCurrentMovieReleaseDate(feature.releaseDate);
-    }
-
-    /** the movie title will always exist for this since it comes from an existing actor entity */
-    async function getMovies(actorID: number): Promise<BaconFeatureList | void> {
-        try {
-            const featureListResult = await actorService.getFeaturesByActorId(actorID);
-            if (!featureListResult) {
-                return alert('cannot find any features for the requested actor. Please try again.');
-            }
-            return { id: actorID, features: featureListResult };
-        } catch (error) {
-            return alert(ERR_MSG('movies'));
-        }
     }
 
     return (
@@ -127,8 +79,6 @@ const AppProvider = (props: Props) => {
             setSquareState,
             sessionMap,
             setSessionMap,
-            // getCastAndSetMovieInfoFromTitle,
-            getMovies,
             isLoading,
             setIsLoading,
             currentCardCast,
@@ -136,20 +86,17 @@ const AppProvider = (props: Props) => {
             currentCardMovies,
             setCurrentCardMovies,
             currentMovieTitle,
-            setCurrentMovieTitle,
             currentActorName,
             setCurrentActorName,
             currentActorID,
             setCurrentActorID,
             currentMovieOverview,
-            setCurrentMovieOverview,
             currentMovieReleaseDate,
-            setCurrentMovieReleaseDate,
             inputTitle,
             setInputTitle,
             currentActorHref,
             setCurrentActorHref,
-            setMovieInfo
+            setMovieDataContext
         }}>
             {props.children}
         </AppContext.Provider>

@@ -2,8 +2,8 @@ import { Keyboard } from "react-native";
 import { BaconServiceFactory } from "../api/services/ServiceFactory";
 import { useAppContext } from "../contexts/AppContext";
 import { BaconActorOption, BaconMovieOption } from "../types/api";
+import { MovieTMDB } from "../types/tmdb";
 
-// TODO: this and app context really need to be refactored for performance
 const ERR_MSG_CAST = "An unknown error occurred while attempting to get the cast, please try again. If this issue persists, please contact support, shel.programmer@gmail.com."
 
 /**
@@ -12,8 +12,8 @@ const ERR_MSG_CAST = "An unknown error occurred while attempting to get the cast
 const useGetData = () => {
     const {
         setSquareState, setIsLoading, setCurrentCardCast,
-        getMovies, setCurrentCardMovies, setCurrentActorName, setCurrentActorID,
-        setSessionMap, sessionMap, setCurrentActorHref, setMovieInfo
+        setCurrentCardMovies, setCurrentActorName, setCurrentActorID,
+        setSessionMap, sessionMap, setCurrentActorHref, setMovieDataContext
     } = useAppContext();
     const actorService = BaconServiceFactory.createActorService();
     const featureService = BaconServiceFactory.createFeatureService();
@@ -37,17 +37,11 @@ const useGetData = () => {
         try {
             const feature_object = await featureService.getFeatureByTitle(movieTitle);
             if (!feature_object) return alert('No Movie found with provided title, please try again.');
-            setMovieInfo!({
+            await handleSetMovieInfoAndGetCast(feature_object.id, changeMap, {
                 overview: feature_object.overview,
                 title: feature_object.title,
-                releaseDate: feature_object.releaseDate
-            })
-            const featureCast = await featureService.getFeatureCastByMovieId(feature_object.id);
-            if (featureCast) {
-                setCurrentCardCast!({ id: feature_object.id, actors: featureCast });
-                setSquareState!('movieCast');
-                if (changeMap) handleChangeMap(feature_object.id);
-            }
+                release_date: feature_object.releaseDate
+            } as MovieTMDB);
         } catch (error) {
             return alert(ERR_MSG_CAST);
         }
@@ -65,21 +59,31 @@ const useGetData = () => {
         try {
             const movieInfo = await featureService.getFeatureInfo(movieId);
             if (!movieInfo) return alert('No Movie found with provided title, please try again.');
-            setMovieInfo!({
-                overview: movieInfo.overview,
-                title: movieInfo.title || movieInfo.original_title,
-                releaseDate: movieInfo.release_date
-            })
-            const featureCast = await featureService.getFeatureCastByMovieId(movieId);
-            if (featureCast) {
-                setCurrentCardCast!({ id: movieId, actors: featureCast });
-                setSquareState!('movieCast');
-                if (changeMap) handleChangeMap(movieId);
-            }
+            await handleSetMovieInfoAndGetCast(movieId, changeMap, movieInfo);
         } catch (error) {
             return alert(ERR_MSG_CAST);
         }
         setIsLoading && setIsLoading(false);
+    }
+
+    /**
+     * common logic for getting the cast and setting the movie info
+     * @param movieId - the id of the movie to get the cast for 
+     * @param changeMap - if the call should change the sessionMap
+     * @param movie - the movie object to set the movie info with
+     */
+    async function handleSetMovieInfoAndGetCast(movieId: number, changeMap: boolean, movie: MovieTMDB) {
+        setMovieDataContext!({
+            overview: movie.overview,
+            title: movie.title,
+            releaseDate: movie.release_date
+        })
+        const featureCast = await featureService.getFeatureCastByMovieId(movieId);
+        if (featureCast) {
+            setCurrentCardCast!({ id: movieId, actors: featureCast });
+            setSquareState!('movieCast');
+            if (changeMap) handleChangeMap(movieId);
+        }
     }
 
     /**
@@ -90,16 +94,17 @@ const useGetData = () => {
      */
     const handleGetMoviesfromActorNode = async (id: number, actorName: string, changeMap: boolean) => {
         setIsLoading && setIsLoading(true);
-        const result = await getMovies!(id, changeMap);
-        if (result) {
-            setCurrentCardMovies && setCurrentCardMovies(result);
-            setSquareState && setSquareState('actorsMovies');
-            setCurrentActorName && setCurrentActorName(actorName);
-            setCurrentActorID && setCurrentActorID(id);
-            const imgSrc = await actorService.getActorImageSrc(id);
-            setCurrentActorHref && setCurrentActorHref(imgSrc || '');
-            if (changeMap) handleChangeMap(id);
+        const featureListResult = await actorService.getFeaturesByActorId(id);
+        if (!featureListResult) {
+            return alert('cannot find any features for the requested actor. Please try again.');
         }
+        setCurrentCardMovies && setCurrentCardMovies({ id, features: featureListResult });
+        setSquareState && setSquareState('actorsMovies');
+        setCurrentActorName && setCurrentActorName(actorName);
+        setCurrentActorID && setCurrentActorID(id);
+        const imgSrc = await actorService.getActorImageSrc(id);
+        setCurrentActorHref && setCurrentActorHref(imgSrc || '');
+        if (changeMap) handleChangeMap(id);
         setIsLoading && setIsLoading(false);
     };
 

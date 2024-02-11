@@ -14,7 +14,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
 
     const [ modalVisible, setModalVisible ] = useState(false);
     const { currentActorHref } = useAppContext();
-    const { handleGetCastAndSetMovieInfoWithTitle: handleGetCast } = useGetData();
+    const { handleGetCastAndSetMovieInfoWithTitle } = useGetData();
     // console.log(currentActorHref)
 
     // todo: if currentActorHref is null or blank, set it to a default image
@@ -44,7 +44,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
                             id={feature.id}
                             title={feature.title}
                             characterName={feature.characterName}
-                            handleMovieNodePress={() => handleGetCast(feature.title, true)}
+                            handleMovieNodePress={() => handleGetCastAndSetMovieInfoWithTitle(feature.title, true)}
                         />
                     )
                 })}

@@ -9,16 +9,11 @@ import { FooterButton } from './FooterButton';
 import CustomActionSheet from './menu/CustomActionSheet';
 
 
-
-
 export default function Footer() {
+
     const [ actionSheetVisible, setActionSheetVisible ] = useState(false);
-    const {
-        setSquareState, setSessionMap, sessionMap, setInputTitle, isLoading
-    } = useAppContext()
-    const { handleGoBack } = useGoBack();
-
-
+    const { sessionMap, isLoading } = useAppContext()
+    const { handleGoBack, handleReset } = useGoBack();
 
     return (
         <>
@@ -37,12 +32,7 @@ export default function Footer() {
             <FooterButton
                 icon={<MaterialCommunityIcons name="restart" size={24} color="white" />}
                 text='Reset'
-                handlePress={() => {
-                    setInputTitle && setInputTitle('');
-                    setSessionMap && setSessionMap([]);
-                    setSquareState && setSquareState('movieInput');
-                    return;
-                }}
+                handlePress={() => handleReset()}
             />
             <FooterButton
                 icon={<Ionicons name="menu" size={24} color="white" />}

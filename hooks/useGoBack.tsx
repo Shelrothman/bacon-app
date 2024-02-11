@@ -6,7 +6,6 @@ import useGetData from "./useGetData";
 
 const PERSISTANCE_MSG = 'If this issue persists, please contact support, shel.programmer@gmail.com.';
 
-// TODO: FIXME: When going back to like ghostbusters for example, it will go back to the one from 1984, not the one from 2016, even when the 2016 one is the one in the game.
 
 /**
  * @hook useGoBack - handles the back button press that brings the user back to the previous screen
@@ -14,7 +13,7 @@ const PERSISTANCE_MSG = 'If this issue persists, please contact support, shel.pr
  */
 const useGoBack = () => {
 
-    const { setIsLoading, setSquareState, squareState, sessionMap, setSessionMap } = useAppContext();
+    const { setSquareState, squareState, sessionMap, setSessionMap, setInputTitle } = useAppContext();
     const { handleGetMoviesfromActorNode, getCastAndSetMovieInfoWithId } = useGetData();
 
     /** takes user back to the movieInput screen when they are on their first step */
@@ -49,16 +48,22 @@ const useGoBack = () => {
         try {
             if (!sessionMap) return;
             if (sessionMap.length === 1) return handleLastGoBack();
-            setIsLoading && setIsLoading(true);
+            // setIsLoading && setIsLoading(true);
             if (squareState === 'movieCast') return handleGoBackFromMovieCast(sessionMap);
             else return handleGoBackFromActorsMovies(sessionMap);
         } catch (error) {
-            setIsLoading && setIsLoading(false);
+            // setIsLoading && setIsLoading(false);
             return alert(`An unknown error occurred while attempting to go back from ${squareState}, please try again. ${PERSISTANCE_MSG}`);
         }
     };
+    /** resets the app to its initial state */
+    const handleReset = () => {
+        setInputTitle!('');
+        setSessionMap!([]);
+        setSquareState!('movieInput');
+    }
 
-    return { handleGoBack };
+    return { handleGoBack, handleReset };
 }
 
 export default useGoBack;

@@ -8,7 +8,3 @@ export enum InputMode {
     movieInput,
     actorInput
 }
-
-// TODO: make an enum for the square state
-
-// dasdjkhas resetting the swticher stil 

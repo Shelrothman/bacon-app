@@ -16,8 +16,6 @@ type SuggestionNodeProps = {
 const THEATRE_ICON = 'theater';
 const MOVIE_ICON = 'movie-open-star';
 
-// TODO: return hwew to customize the look for the suggestion node for actorInput
-
 /**
  * @component
  * a clickable option for the user to choose to search by

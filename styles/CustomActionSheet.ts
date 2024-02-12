@@ -60,7 +60,7 @@ export const sheet_styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 10,
         width: '100%',
-        backgroundColor: '#343940', // todo: implement this in
+        backgroundColor: '#343940',
     },
     numberText: {
         color: '#ccc',

@@ -1,8 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { BaconActorList, BaconFeature, BaconFeatureList, BaconSquareState } from '../types/api';
 
-// TODO(future): honestly should refactor to objects with properties for actor and movie each instea of all these separate states
-
 type MovieInfo = { overview: string, title: string, releaseDate: string };
 
 type ContextProps = {

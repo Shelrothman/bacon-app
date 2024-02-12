@@ -13,7 +13,7 @@ type CustomActionSheetProps = {
     onClose: () => void;
 };
 
-// TODO: maybe, future: "App Info"
+// TODO: maybe, future: "App Info" section
 
 const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
 

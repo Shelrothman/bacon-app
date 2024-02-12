@@ -134,7 +134,6 @@ const useGetData = () => {
 
     /** gets the suggestionList based on current value of searchInput in actorInput mode */
     async function getActorSuggestions(prefix: string): Promise<BaconActorOption[]> {
-        // todo(future): refactor to useQuery
         try {
             const actorService = BaconServiceFactory.createActorService();
             const suggestions = await actorService.getListOfActorsByPrefix(prefix);

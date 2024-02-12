@@ -8,12 +8,8 @@ import Footer from './components/Footer';
 import { MainSquare } from './components/squarestates/MainSquare';
 import { AppProvider } from './contexts/AppContext';
 import { container_style } from './styles';
-// import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
 
 // TODO: a cool engagin splash screeen like ready to get that off your tongue yahoo thing
-
-// const queryClient = new QueryClient();
 
 export default function App() {
 

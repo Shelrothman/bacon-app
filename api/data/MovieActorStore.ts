@@ -24,24 +24,11 @@ export class MovieActorStore {
     static init = () => new MovieActorStore();
 
     /**
+     * @disabled
      * fetch config details for the api
      * INFO: not used right now but may need a dynamioc way to get this in the future: 
      * https://developer.themoviedb.org/docs/image-basics 
-     *     */
-    // async getActorImageHrefPrefix(): Promise<string> {
-    //     const url = `${config.API_BASE_URL}/configuration?api_key=${this.api_key}`;
-    //     const response = await fetch(url);
-    //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    //     const data = await response.json() as any;
-    //     if (data && data.images && data.images.length > 0) {
-    //         const baseUrl = data.images.secure_base_url;
-    //         console.log('baseUrl', data)
-    //         const size = data.images.progile_sizes[ 1 ]; // the second smallest size
-    //         return `${baseUrl}${size}`;
-    //     } else {
-    //         return '';
-    //     }
-    // }
+     */
 
     /**
      * 
@@ -176,7 +163,7 @@ export class MovieActorStore {
         }
     }
 
-    async getActorIdByName(name: string): Promise<number | null> {
+    private async getActorIdByName(name: string): Promise<number | null> {
         const url = `${this.api_base}/search/person?query=${name}${this.url_suffix}`;
         const response = await fetch(url);
         const data = await response.json() as { results: ActorTMDB[] };
@@ -184,23 +171,6 @@ export class MovieActorStore {
             // info: we force the top one, user can always search again or use a suggestion.
             const actorId = data.results[ 0 ].id;
             return actorId;
-        } else {
-            return null;
-        }
-    }
-
-    // todo: assess which methods no longer are needed
-
-    /** 
-     * @method getMovieTitleById
-     * gets the movie title by id
-     */
-    async getMovieTitleById(id: number): Promise<string | null> {
-        const url = `${this.api_base}/movie/${id}?api_key=${this.api_key}`;
-        const response = await fetch(url);
-        const data = await response.json() as { title: string, original_title: string };
-        if (data && (data.title || data.original_title)) {
-            return data.title || data.original_title;
         } else {
             return null;
         }

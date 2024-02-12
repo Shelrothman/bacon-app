@@ -8,11 +8,12 @@ import Footer from './components/Footer';
 import { MainSquare } from './components/squarestates/MainSquare';
 import { AppProvider } from './contexts/AppContext';
 import { container_style } from './styles';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 
 // TODO: a cool engagin splash screeen like ready to get that off your tongue yahoo thing
 
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
 export default function App() {
 
@@ -34,26 +35,24 @@ export default function App() {
 
     // info: we are using the RootSiblingParent to allow for the use of the Toasts
     return (
-        <QueryClientProvider client={queryClient}>
-            <RootSiblingParent>
-                <AppProvider>
-                    <SafeAreaView style={container_style.appRootContainer} onLayout={onLayoutRootView}>
-                        <StatusBar style="light" />{/* light so it shows on dark. */}
-                        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
-                            {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
-                            <ScrollView keyboardShouldPersistTaps='handled' keyboardDismissMode='on-drag' showsVerticalScrollIndicator={false}>
-                                <View style={container_style.mainSquareWrapper}>
-                                    <MainSquare />
-                                </View>
-                            </ScrollView>
-                        </KeyboardAvoidingView>
-                        <View style={container_style.footerOuterWrapper}>
-                            <Footer />
-                        </View>
-                    </SafeAreaView>
-                </AppProvider>
-            </RootSiblingParent>
-        </QueryClientProvider>
+        <RootSiblingParent>
+            <AppProvider>
+                <SafeAreaView style={container_style.appRootContainer} onLayout={onLayoutRootView}>
+                    <StatusBar style="light" />{/* light so it shows on dark. */}
+                    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} enabled={true} >
+                        {/* info: dismiss it with a tap or a drag anywhere outside the input and keyboard*/}
+                        <ScrollView keyboardShouldPersistTaps='handled' keyboardDismissMode='on-drag' showsVerticalScrollIndicator={false}>
+                            <View style={container_style.mainSquareWrapper}>
+                                <MainSquare />
+                            </View>
+                        </ScrollView>
+                    </KeyboardAvoidingView>
+                    <View style={container_style.footerOuterWrapper}>
+                        <Footer />
+                    </View>
+                </SafeAreaView>
+            </AppProvider>
+        </RootSiblingParent>
     );
 }
 

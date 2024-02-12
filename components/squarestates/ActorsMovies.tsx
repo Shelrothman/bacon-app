@@ -33,10 +33,7 @@ export function ActorsMovies(props: ActorsMoviesProps) {
                     <Text style={modal_styles.actorName}>{'\n'}{props.actorName}</Text>
                 </View>}
             />}
-            <SquareHeader
-                title={`${props.actorName} Movies`}
-                setModalVisible={setModalVisible}
-            />
+            <SquareHeader title={`${props.actorName} Movies`} setModalVisible={setModalVisible} />
             <ScrollView showsVerticalScrollIndicator={true}>
                 {props.features.map((feature) => {
                     return (

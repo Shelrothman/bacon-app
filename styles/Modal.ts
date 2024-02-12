@@ -31,7 +31,7 @@ export const modal_styles = StyleSheet.create({
         fontFamily: 'Bacon-Bold',
         fontSize: 20,
         textAlign: 'center',
-        marginBottom: 10,
+        marginBottom: 5,
     },
     movieTitle: {
         textAlign: 'center',

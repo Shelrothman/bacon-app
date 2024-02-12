@@ -6,7 +6,7 @@ import { container_style } from '../styles';
 import { BaconMovieOption, BaconActorOption } from '../types/api';
 import { SearchInputNode } from './nodes/SearchInputNode';
 import { SuggestionNode } from './nodes/SuggestionNode';
-
+// import { useQuery } from "@tanstack/react-query"; TODO: apply tanstack-query if needed after first release feedback.
 
 type SuggestionListProps = {
     inputSearch: string;
@@ -46,6 +46,7 @@ export function SuggestionList(props: SuggestionListProps) {
             getMovieSuggestions && getMovieSuggestions(inputSearch).then((results) => {
                 setMovieSuggestionList(results);
             }).finally(() => void 0);
+            // if (suggestions) setMovieSuggestionList(suggestions);
         }
         getActorSuggestions && getActorSuggestions(inputSearch).then((results) => {
             setActorSuggestionList(results);

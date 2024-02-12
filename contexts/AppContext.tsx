@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { BaconActorList, BaconFeatureList, BaconSquareState } from '../types/api';
+import { BaconActorList, BaconFeature, BaconFeatureList, BaconSquareState } from '../types/api';
 
 // TODO(future): honestly should refactor to objects with properties for actor and movie each instea of all these separate states
 
@@ -16,15 +16,12 @@ type ContextProps = {
     setCurrentCardCast: (baconActorList: BaconActorList) => void;
     /** movies of the current actor */
     currentCardMovies: BaconFeatureList | null;
-    setCurrentCardMovies: (baconFeatures: BaconFeatureList) => void;
     /** current title requested by user */
     currentMovieTitle: string;
     /** current actor selected by user onPress */
     currentActorName: string;
-    setCurrentActorName: (actorName: string) => void;
     /** id of the currentActor */
     currentActorID: number;
-    setCurrentActorID: (actorID: number) => void;
     /** the overview for the current movie */
     currentMovieOverview: string;
     /** release date of current movie */
@@ -43,6 +40,8 @@ type ContextProps = {
     setInputTitle: (inputTitle: string) => void;
     /** sets the states for movie data */
     setMovieDataContext: (feature_object: MovieInfo) => void;
+    /** sets the states for actor data */
+    setActorDataContext: (baconFeatureList: BaconFeature[], actorId: number, actorName: string) => void;
 };
 
 const AppContext = createContext<Partial<ContextProps>>({});
@@ -73,6 +72,13 @@ const AppProvider = (props: Props) => {
         setCurrentMovieReleaseDate(feature.releaseDate);
     }
 
+    function setActorDataContext(baconFeatureList: BaconFeature[], actorId: number, actorName: string) {
+        setCurrentCardMovies({ id: actorId, features: baconFeatureList });
+        setSquareState('actorsMovies');
+        setCurrentActorName(actorName);
+        setCurrentActorID(actorId);
+    }
+
     return (
         <AppContext.Provider value={{
             squareState,
@@ -84,19 +90,17 @@ const AppProvider = (props: Props) => {
             currentCardCast,
             setCurrentCardCast,
             currentCardMovies,
-            setCurrentCardMovies,
             currentMovieTitle,
             currentActorName,
-            setCurrentActorName,
             currentActorID,
-            setCurrentActorID,
             currentMovieOverview,
             currentMovieReleaseDate,
             inputTitle,
             setInputTitle,
             currentActorHref,
             setCurrentActorHref,
-            setMovieDataContext
+            setMovieDataContext,
+            setActorDataContext
         }}>
             {props.children}
         </AppContext.Provider>

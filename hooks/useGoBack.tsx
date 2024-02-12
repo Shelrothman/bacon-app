@@ -2,7 +2,7 @@ import { BaconServiceFactory } from "../api/services/ServiceFactory";
 import { useAppContext } from "../contexts/AppContext";
 import useGetData from "./useGetData";
 
-// TODO: refactor to useQuery and useMutation from react-query or something similar
+// TODO: (future after first release) refactor to useQuery and useMutation from react-query or something similar
 
 const PERSISTANCE_MSG = 'If this issue persists, please contact support, shel.programmer@gmail.com.';
 

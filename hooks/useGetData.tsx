@@ -12,8 +12,8 @@ const ERR_MSG_CAST = "An unknown error occurred while attempting to get the cast
 const useGetData = () => {
     const {
         setSquareState, setIsLoading, setCurrentCardCast,
-        setCurrentCardMovies, setCurrentActorName, setCurrentActorID,
-        setSessionMap, sessionMap, setCurrentActorHref, setMovieDataContext
+        // setCurrentCardMovies, setCurrentActorName, setCurrentActorID,
+        setSessionMap, sessionMap, setCurrentActorHref, setMovieDataContext, setActorDataContext
     } = useAppContext();
     const actorService = BaconServiceFactory.createActorService();
     const featureService = BaconServiceFactory.createFeatureService();
@@ -98,10 +98,7 @@ const useGetData = () => {
         if (!featureListResult) {
             return alert('cannot find any features for the requested actor. Please try again.');
         }
-        setCurrentCardMovies && setCurrentCardMovies({ id, features: featureListResult });
-        setSquareState && setSquareState('actorsMovies');
-        setCurrentActorName && setCurrentActorName(actorName);
-        setCurrentActorID && setCurrentActorID(id);
+        setActorDataContext!(featureListResult, id, actorName);
         const imgSrc = await actorService.getActorImageSrc(id);
         setCurrentActorHref && setCurrentActorHref(imgSrc || '');
         if (changeMap) handleChangeMap(id);
@@ -113,10 +110,7 @@ const useGetData = () => {
         setIsLoading && setIsLoading(true);
         actorService.getActorFeaturesObject(actorName).then((resultObj) => {
             if (resultObj && resultObj.features && resultObj.id) {
-                setCurrentCardMovies && setCurrentCardMovies(resultObj);
-                setSquareState && setSquareState('actorsMovies');
-                setCurrentActorName && setCurrentActorName(actorName);
-                setCurrentActorID && setCurrentActorID(resultObj.id);
+                setActorDataContext!(resultObj.features, resultObj.id, actorName);
                 if (changeMap) handleChangeMap(resultObj.id);
             }
         }).finally(() => {
@@ -140,6 +134,7 @@ const useGetData = () => {
 
     /** gets the suggestionList based on current value of searchInput in actorInput mode */
     async function getActorSuggestions(prefix: string): Promise<BaconActorOption[]> {
+        // todo(future): refactor to useQuery
         try {
             const actorService = BaconServiceFactory.createActorService();
             const suggestions = await actorService.getListOfActorsByPrefix(prefix);

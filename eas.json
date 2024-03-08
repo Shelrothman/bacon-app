@@ -1,0 +1,42 @@
+{
+    "cli": {
+        "version": ">= 3.18.3"
+    },
+    "build": {
+        "development": {
+            "developmentClient": true,
+            "distribution": "internal",
+            "env": {
+                // TODO: (asap): make myself a new testing key
+                "EXPO_PUBLIC_TMDB_API_KEY_V3": "71c221c650a7a72e1c750a1563fb8e5e"
+            }
+        },
+        "preview": {
+            "channel": "preview",
+            // use internal to be able to share your build URLs with anyone, and they will be able to install the builds to their devices straight from the Expo websit
+            "distribution": "internal",
+            "env": {
+                // TODO: (asap): make myself a new testing key
+                "EXPO_PUBLIC_TMDB_API_KEY_V3": "71c221c650a7a72e1c750a1563fb8e5e"
+            }
+        },
+        "production": {
+            "channel": "main",
+            "ios": {
+                "buildConfiguration": "Release"
+            },
+            "env": {
+                "EXPO_PUBLIC_TMDB_API_KEY_V3": "71c221c650a7a72e1c750a1563fb8e5e"
+            }
+        }
+    },
+    "submit": {
+        "production": {
+            "ios": {
+                "appleId": "shel.programmer@gmail.com",
+                "ascAppId": "6479176181",
+                "appleTeamId": "LS86WU648R"
+            }
+        }
+    }
+}

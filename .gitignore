@@ -9,6 +9,7 @@ docs/
 .expo/
 dist/
 web-build/
+eas.json
 
 # Native
 *.orig.*

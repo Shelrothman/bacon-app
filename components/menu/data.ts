@@ -14,8 +14,8 @@ const supportData = [
     {
         icon: "📝",
         text: "Write a review",
-        url: "https://www.google.com/search?q=todo&rlz=1C1GCEA_enUS997US997&oq=todo&gs_lcrp=EgZjaHJvbWUyFAgAEEUYORhDGIMBGLEDGIAEGIoFMhIIARAAGEMYgwEYsQMYgAQYigUyDAgCEAAYQxiABBiKBTIMCAMQABhDGIAEGIoFMgwIBBAAGEMYgAQYigUyDQgFEC4YgwEYsQMYgAQyDAgGEAAYQxiABBiKBTIKCAcQABixAxiABDINCAgQLhivARjHARiABDINCAkQABiDARixAxiABNIBBzY4NWowajeoAgCwAgA&sourceid=chrome&ie=UTF-8"
-        // link: `itms-apps://itunes.apple.com/app/viewContentsUserReviews/id${require("../../../eas.json").submit.production.ios.ascAppId}?action=write-review` <--- use this but with bacon.
+        url: "itms-apps://itunes.apple.com/app/viewContentsUserReviews/id6479176181?action=write-review"
+        // TODO: use dynamic link: `itms-apps://itunes.apple.com/app/viewContentsUserReviews/id${require("../../../eas.json").submit.production.ios.ascAppId}?action=write-review` <--- use this but with bacon.
     },
     {
         icon: "⭐",

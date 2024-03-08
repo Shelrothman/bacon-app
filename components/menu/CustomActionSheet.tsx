@@ -44,7 +44,7 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
         {
             icon: <Foundation name="social-instagram" size={24} color="white" />,
             text: 'Instagram',
-            url: 'https://www.instagram.com/00.shel/',
+            url: 'https://www.instagram.com/0.0.shel',
         },
         {
             icon: <FontAwesome5 name="tiktok" size={24} color="white" />,
@@ -54,7 +54,7 @@ const CustomActionSheet = ({ visible, onClose }: CustomActionSheetProps) => {
         {
             icon: <FontAwesome name="linkedin-square" size={24} color="white" />,
             text: 'LinkedIn',
-            url: 'https://www.linkedin.com/in/shelby-anne-rothman/',
+            url: 'https://www.linkedin.com/in/shelby-anne-rothman',
         },
     ];
 

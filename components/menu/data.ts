@@ -27,11 +27,11 @@ const supportData = [
         text: "Report a bug",
         url: "https://github.com/Shelrothman/bacon-app/issues/new"
     },
-    {
-        icon: "🪙",
-        text: "Buy the developer a coffee",
-        url: "https://account.venmo.com/u/shelRothman"
-    },
+    /*     { APPLE is freaking scrouge about payments. If i have this donation option, without it going through their payment, it will get rejected. thats so fucked fuck you apple but also hi love you.
+            icon: "🪙",
+            text: "Buy the developer a coffee",
+            url: "https://account.venmo.com/u/shelRothman"
+        }, */
 ];
 
 
